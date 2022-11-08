@@ -1,0 +1,61 @@
+#login {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+#login .left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+  background-color: #29292D;
+}
+
+#login .left img {
+  max-width: 600px;
+}
+
+#login .right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#login .right .title {
+  margin-bottom: 4px;
+}
+
+#login .row {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+#login .right .ant-form-item {
+  max-width: 80%;
+}
+
+#login .right .ant-input-affix-wrapper {
+  padding: 0 11px;
+}
+
+#login .right input {
+  height: 40px;
+}
+
+#login .right .button {
+  margin-top: 16px;
+  // margin-left: 10%;
+  width: 100%;
+  height: 40px;
+  background-color: #29292D;
+  border-radius: 9px;
+  font-size: 14px;
+}
