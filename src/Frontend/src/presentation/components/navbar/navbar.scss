@@ -1,0 +1,45 @@
+#navbar {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: 100px;
+  height: 100vh;
+  background-color: #29292D;
+}
+
+#navbar .itemsContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+  margin-top: 150px;
+}
+
+#navbar .item {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+  cursor: pointer;
+}
+
+#navbar .item svg {
+  font-size: 40px;
+  padding: auto;
+  color: white;
+}
+
+#navbar .item:last-child {
+  padding-left: 2px;
+}
+
+#navbar .settingsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+}

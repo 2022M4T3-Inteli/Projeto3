@@ -8,6 +8,10 @@ const Router: React.FC = () => {
       <Routes>
         <Route path='/' element={<Login />}/>
         <Route path='/home' element={<Home />}/>
+        <Route path='/location' element={<Home />}/>
+        <Route path='/history' element={<Home />}/>
+        <Route path='/tags' element={<Home />}/>
+        <Route path='/settings' element={<Home />}/>
       </Routes>
     </BrowserRouter>
   )

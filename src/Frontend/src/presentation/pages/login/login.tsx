@@ -5,7 +5,7 @@ import Logo from '/src/assets/logo.png'
 
 const Login: React.FC = () => {
   const onFinish = (values: any) => {
-    console.log('Success:', values);
+    window.location.href = '/home'
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -36,7 +36,7 @@ const Login: React.FC = () => {
             <Form.Item
               label="Registro de funcionário"
               name="username"
-              rules={[{ required: true, message: 'Por favor, preencha com o seu registro!' }]}
+              rules={[{ required: true, message: 'Por favor, preencha com o seu registro! ' }]}
             >
               <Input />
             </Form.Item>
