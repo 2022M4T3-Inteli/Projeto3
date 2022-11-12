@@ -7,6 +7,10 @@ import TrackChangesIcon from '@mui/icons-material/TrackChanges'
 import SettingsRemoteIcon from '@mui/icons-material/SettingsRemote'
 
 const Home: React.FC = () => {
+  const goTo: Function = (url: string) => {
+    window.location.href = url
+  }
+
   return (
     <div id="home">
       <Header />
@@ -23,7 +27,7 @@ const Home: React.FC = () => {
           </div>
         </div>
         <div className="row bottomSide">
-          <div className="col location">
+          <div onClick={() => goTo("/location")} className="col location">
             <p className='text'>Localização</p>
             <TrackChangesIcon className="icon" />
           </div>
