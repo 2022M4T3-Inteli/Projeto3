@@ -1,56 +1,27 @@
-#login {
-  display: flex;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-}
-
-#login .left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  height: 100%;
-  background-color: #29292D;
-}
-
-#login .left img {
-  max-width: 600px;
-}
-
-#login .right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-#login .right .title {
+#login .title {
   margin-bottom: 4px;
 }
 
 #login .row {
-  width: 80%;
+  width: 60%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
 }
 
-#login .right .ant-form-item {
-  max-width: 80%;
+#login .ant-form-item {
+  max-width: 100%;
+  margin: 16px 0;
 }
 
-#login .right .ant-input-affix-wrapper {
+#login .ant-input-affix-wrapper {
   padding: 0 11px;
 }
 
-#login .right input {
+#login input {
   height: 40px;
 }
 
-#login .right .button {
+#login .button {
   margin-top: 16px;
   // margin-left: 10%;
   width: 100%;
@@ -61,7 +32,7 @@
   font-weight: 700;
 }
 
-#login .right .newAcess {
+#login .newAcess {
   position: absolute  ;
   right: 20px;
   bottom: 10px;
@@ -70,6 +41,6 @@
   color: #29292D;
 }
 
-#login .right .newAcess:hover {
+#login .newAcess:hover {
   text-decoration: underline;
 }

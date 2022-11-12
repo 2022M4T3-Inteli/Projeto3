@@ -1,19 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Home, Login, Signup, Aproval, Location} from '../../presentation/pages'
+import { Home, Acess } from '../../presentation/pages'
 
 const Router: React.FC = () => {
+  if(!localStorage.getItem("logged")) {
+    localStorage.setItem("logged", "false")
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Login />}/>
-        <Route path='/signup' element={<Signup />}/>
-        <Route path='/aproval' element={<Aproval />}/>
-        <Route path='/home' element={<Home />}/>
-        <Route path='/location' element={<Location />}/>
-        <Route path='/history' element={<Home />}/>
-        <Route path='/tags' element={<Home />}/>
-        <Route path='/settings' element={<Home />}/>
+        {
+          localStorage.getItem("logged") == 'true' ? <Route path='/*' element={<Home />} /> :
+            <Route path='/*' element={<Acess />} />
+        }
       </Routes>
     </BrowserRouter>
   )

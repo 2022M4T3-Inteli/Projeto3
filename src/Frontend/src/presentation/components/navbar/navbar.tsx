@@ -7,6 +7,7 @@ import TrackChangesIcon from '@mui/icons-material/TrackChanges'
 import HistoryIcon from '@mui/icons-material/History'
 import SettingsRemoteIcon from '@mui/icons-material/SettingsRemote'
 import SettingsIcon from '@mui/icons-material/Settings'
+import { Link } from 'react-router-dom'
 
 const Navbar: React.FC = () => {
   const goTo: Function = (url: string) => {
@@ -16,7 +17,7 @@ const Navbar: React.FC = () => {
   const items = [
     {
       name: 'Home',
-      url: '/home',
+      url: '/',
       icon: <HomeIcon />
     },
     {
@@ -41,17 +42,21 @@ const Navbar: React.FC = () => {
         {
           items.map((item, index) => {
             return (
-              <div key={`item-${index}`} onClick={() => goTo(item.url)} className="item">
-                {item.icon}
-              </div>
+              <Link key={`item-${index}`} to={item.url}>
+                <div className="item">
+                  {item.icon}
+                </div>
+              </Link>
             )
           })
         }
       </div>
       <div className="settingsContainer">
-        <div onClick={() => goTo('/settings')} className="item">
-          <SettingsIcon />
-        </div>
+        <Link to="/settings">
+          <div className="item">
+            <SettingsIcon />
+          </div>
+        </Link>
       </div>
     </div>
   )

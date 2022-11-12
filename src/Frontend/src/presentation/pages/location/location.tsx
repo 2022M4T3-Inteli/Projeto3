@@ -105,9 +105,6 @@ const Location: React.FC = () => {
 
   return (
     <div id="location">
-      <Header />
-      <Navbar />
-
       <div className="container">
         <div className="row filter">
           Filtro

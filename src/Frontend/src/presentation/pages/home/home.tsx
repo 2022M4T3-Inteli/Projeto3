@@ -1,42 +1,24 @@
 import React, { useState } from 'react'
+import { Route, Routes } from "react-router-dom"
 import { Header, Navbar } from '../../components'
 import './home.scss'
-import HistoryIcon from '@mui/icons-material/History'
-import CategoryIcon from '@mui/icons-material/Category'
-import TrackChangesIcon from '@mui/icons-material/TrackChanges'
-import SettingsRemoteIcon from '@mui/icons-material/SettingsRemote'
+
+import { Login, Signup, Aproval, Location, Navigation } from '../../../presentation/pages'
 
 const Home: React.FC = () => {
-  const goTo: Function = (url: string) => {
-    window.location.href = url
-  }
 
   return (
     <div id="home">
       <Header />
       <Navbar />
-      <div className="container">
-        <div className="row topSide">
-          <div className="col">
-            <p className='text'>Histórico</p>
-            <HistoryIcon className="icon" />
-          </div>
-          <div className="col">
-            <p className='text'>Categorias</p>
-            <CategoryIcon className="icon" />
-          </div>
-        </div>
-        <div className="row bottomSide">
-          <div onClick={() => goTo("/location")} className="col location">
-            <p className='text'>Localização</p>
-            <TrackChangesIcon className="icon" />
-          </div>
-          <div className="col">
-            <p className='text'>Tags</p>
-            <SettingsRemoteIcon className="icon" />
-          </div>
-        </div>
-      </div>
+
+      <Routes>
+        <Route path='/' element={<Navigation />} />
+        <Route path='location' element={<Location />} />
+        <Route path='history' element={<Navigation />} />
+        <Route path='tags' element={<Navigation />} />
+        <Route path='settings' element={<Navigation />} />
+      </Routes>
     </div>
   )
 }

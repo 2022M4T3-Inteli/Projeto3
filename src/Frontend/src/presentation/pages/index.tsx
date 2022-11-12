@@ -1,5 +1,7 @@
 export { default as Home } from './home/home'
+export { default as Acess } from './acess/acess'
 export { default as Login } from './login/login'
 export { default as Signup } from './signup/signup'
 export { default as Aproval } from './aproval/aproval'
+export { default as Navigation } from './navigation/navigation'
 export { default as Location } from './location/location'

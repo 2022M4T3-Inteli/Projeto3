@@ -2,16 +2,15 @@ import React from 'react'
 import './aproval.scss'
 import WarningAmberIcon from '@mui/icons-material/WarningAmber'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Link } from 'react-router-dom';
 
 const Aproval: React.FC = () => {
-  const logout: Function = () => {
-    window.location.href = '/'
-  }
-
   return (
     <div id="aproval">
       <div className="logoutContainer">
-        <ArrowBackIcon onClick={() => logout()} className='logout' />
+        <Link to="/">
+        <ArrowBackIcon className='logout' />
+        </Link>
       </div>
       <div className="imageContainer">
         <WarningAmberIcon className='image' />
