@@ -22,14 +22,18 @@
   height: 40px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 24px;
   cursor: pointer;
 }
 
 #navbar .item svg {
   font-size: 40px;
   padding: auto;
-  color: white;
+  color: #f5f5f5;
+}
+
+#navbar .item:hover svg {
+  color: #CCFE00;
 }
 
 #navbar .item:last-child {

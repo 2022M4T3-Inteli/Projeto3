@@ -1,26 +1,35 @@
 import React from 'react'
-import { Form, Input, Button } from 'antd'
-import './login.scss'
+import { Form, Input, Button, message } from 'antd'
+import './signup.scss'
 import Logo from '/src/assets/logo.png'
 
-const Login: React.FC = () => {
-  const onFinish = (values: any) => {
-    window.location.href = '/home'
+const Signup: React.FC = () => {
+  const onFinish: any = (values: any) => {
+    if (values.password === values.passwordConfirmation) {
+      window.location.href = '/aproval'
+    }
+    else {
+      info()
+    }
   };
 
-  const onFinishFailed = (errorInfo: any) => {
+  const onFinishFailed: any = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
+  const info: Function = () => {
+    message.info('As senhas não coincidem', 3);
+  };
+
   return (
-    <div id="login">
+    <div id="signup">
       <div className="left">
         <img src={Logo} alt="" />
       </div>
       <div className="right">
         <div className="row">
-          <h1 className='title'>Login</h1>
-          <p className='text'>Identifique-se para acessar a ferramenta</p>
+          <h1 className='title'>Signup</h1>
+          <p className='text'>Preencha seus dados para um novo acesso</p>
         </div>
 
         <div className="row">
@@ -41,7 +50,7 @@ const Login: React.FC = () => {
               <Input />
             </Form.Item>
 
-            <Form.Item
+            <Form.Item 
               label="Senha"
               name="password"
               rules={[{ required: true, message: 'Por favor, preencha com a sua senha!' }]}
@@ -49,19 +58,24 @@ const Login: React.FC = () => {
               <Input.Password />
             </Form.Item>
 
+            <Form.Item 
+              label="Confirmação da senha"
+              name="passwordConfirmation"
+              rules={[{ required: true, message: 'Por favor, preencha com a senha previamente informada!' }]}
+            >
+              <Input.Password />
+            </Form.Item>
+
             <Form.Item>
               <Button className='button' type="primary" htmlType="submit">
-                Acessar a ferramenta
+                Criar novo acesso
               </Button>
             </Form.Item>
           </Form>
         </div>
-
-
-        <a href='/signup' className="newAcess">Novo acesso</a>
       </div>
     </div>
   )
 }
 
-export default Login
+export default Signup

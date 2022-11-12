@@ -2,13 +2,9 @@ import React from 'react'
 import './navbar.scss'
 
 import HomeIcon from '@mui/icons-material/Home'
-import LocationOnIcon from '@mui/icons-material/LocationOn'
+// import LocationOnIcon from '@mui/icons-material/LocationOn'
+import TrackChangesIcon from '@mui/icons-material/TrackChanges'
 import HistoryIcon from '@mui/icons-material/History'
-// import ReorderIcon from '@mui/icons-material/Reorder'
-// import SubjectIcon from '@mui/icons-material/Subject'
-import SpeakerPhoneIcon from '@mui/icons-material/SpeakerPhone'
-// import DockIcon from '@mui/icons-material/Dock'
-// import DvrIcon from '@mui/icons-material/Dvr'
 import SettingsRemoteIcon from '@mui/icons-material/SettingsRemote'
 import SettingsIcon from '@mui/icons-material/Settings'
 
@@ -26,7 +22,7 @@ const Navbar: React.FC = () => {
     {
       name: 'Location',
       url: '/location',
-      icon: <LocationOnIcon />
+      icon: <TrackChangesIcon />
     },
     {
       name: 'History',
@@ -45,7 +41,7 @@ const Navbar: React.FC = () => {
         {
           items.map((item, index) => {
             return (
-              <div onClick={() => goTo(item.url)} className="item">
+              <div key={`item-${index}`} onClick={() => goTo(item.url)} className="item">
                 {item.icon}
               </div>
             )
