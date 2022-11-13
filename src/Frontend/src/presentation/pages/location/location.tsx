@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Header, Navbar } from '../../components'
 import './location.scss'
-;
+  ;
 import BatteryCharging20Icon from '@mui/icons-material/BatteryCharging20'
 import BatteryCharging50Icon from '@mui/icons-material/BatteryCharging50'
 import BatteryCharging80Icon from '@mui/icons-material/BatteryCharging80'
@@ -9,10 +9,12 @@ import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 
 
 type TagType = {
-  id: string;
+  id: number;
+  macAdress: string;
   name: string;
   battery: any;
   isMoving: boolean
+  position: [number, number]
 }
 
 const batteryLevel: Function = (level: number) => {
@@ -34,7 +36,7 @@ const batteryLevel: Function = (level: number) => {
 
   console.log(type, level, difference)
 
-  switch(type) {
+  switch (type) {
     case 0:
       return <BatteryCharging20Icon className='icon low' />
     case 1:
@@ -50,53 +52,68 @@ const Location: React.FC = () => {
   const [active, setActive] = useState(-1)
   const tags: TagType[] = [
     {
-      id: 'abc',
+      id: 0,
+      macAdress: 'abc',
       name: "Tag 1",
       battery: batteryLevel(28),
-      isMoving: true
+      isMoving: true,
+      position: [100, 250]
     },
     {
-      id: 'abc',
+      id: 1,
+      macAdress: 'abc',
       name: "Tag 2",
       battery: batteryLevel(50),
-      isMoving: true
-
+      isMoving: true,
+      position: [100, 350]
     },
     {
-      id: 'abc',
+      id: 2,
+      macAdress: 'abc',
       name: "Tag 3",
       battery: batteryLevel(72),
-      isMoving: false
+      isMoving: false,
+      position: [50, 450]
     },
     {
-      id: 'abc',
+      id: 3,
+      macAdress: 'abc',
       name: "Tag 4",
       battery: batteryLevel(89),
-      isMoving: true
+      isMoving: true,
+      position: [175, 600]
     },
     {
-      id: 'abc',
+      id: 4,
+      macAdress: 'abc',
       name: "Tag 5",
       battery: batteryLevel(10),
-      isMoving: false
+      isMoving: false,
+      position: [200, 250]
     },
     {
-      id: 'abc',
+      id: 5,
+      macAdress: 'abc',
       name: "Tag 6",
       battery: batteryLevel(0),
-      isMoving: true
+      isMoving: true,
+      position: [120, 520]
     },
     {
-      id: 'abc',
+      id: 6,
+      macAdress: 'abc',
       name: "Tag 7",
       battery: batteryLevel(100),
-      isMoving: true
+      isMoving: true,
+      position: [300, 450]
     },
     {
-      id: 'abc',
+      id: 7,
+      macAdress: 'abc',
       name: "Tag 8",
-      battery:  batteryLevel(45),
-      isMoving: false
+      battery: batteryLevel(45),
+      isMoving: false,
+      position: [300, 150]
     }
   ]
 
@@ -110,6 +127,19 @@ const Location: React.FC = () => {
       setTimeout(() => setActive(-1), 80)
       setTimeout(() => document.getElementsByClassName("rightSide")[0].scrollTop = 0, 200)
     }
+  }
+
+  const showTag: Function = (tag: any, index: number) => {
+    return (
+      <div
+        className={`tag ${tag.isMoving ? 'active' : ''}`}
+        style={
+          {
+            top: `${tag.position[0]}px`,
+            left: `${tag.position[1]}px`
+          }}>
+      </div>
+    )
   }
 
   const showTags: Function = () => {
@@ -160,9 +190,13 @@ const Location: React.FC = () => {
         </div>
         <div className="row">
           <div className="col leftSide">
+            {
+              tags.map((tag, index) => {
+                return showTag(tag, index)
+              })
+            }
           </div>
           <div className="col rightSide">
-
             {
               showTags()
             }
