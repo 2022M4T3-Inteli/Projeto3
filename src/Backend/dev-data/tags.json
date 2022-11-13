@@ -1,0 +1,10 @@
+[
+  {
+    "macAddress": 1234,
+    "accel": {
+      "accelX": 20,
+      "accelY": 25,
+      "accelZ": 30
+    }
+  }
+]
