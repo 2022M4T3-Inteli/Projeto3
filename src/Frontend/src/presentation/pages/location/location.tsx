@@ -9,45 +9,94 @@ import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 
 
 type TagType = {
+  id: string;
   name: string;
-  battery: any
+  battery: any;
+  isMoving: boolean
+}
+
+const batteryLevel: Function = (level: number) => {
+  let type = 0
+  let difference = Math.abs(20 - level)
+
+  if (Math.abs(50 - level) < difference) {
+    difference = Math.abs(50 - level)
+    type = 1
+  }
+  if (Math.abs(80 - level) < difference) {
+    difference = Math.abs(80 - level)
+    type = 2
+  }
+  if (Math.abs(100 - level) < difference) {
+    difference = Math.abs(100 - level)
+    type = 3
+  }
+
+  console.log(type, level, difference)
+
+  switch(type) {
+    case 0:
+      return <BatteryCharging20Icon className='icon low' />
+    case 1:
+      return <BatteryCharging50Icon className='icon' />
+    case 2:
+      return <BatteryCharging80Icon className='icon' />
+    case 3:
+      return <BatteryChargingFullIcon className='icon' />
+  }
 }
 
 const Location: React.FC = () => {
   const [active, setActive] = useState(-1)
   const tags: TagType[] = [
     {
+      id: 'abc',
       name: "Tag 1",
-      battery: <BatteryCharging50Icon className='icon' />
+      battery: batteryLevel(28),
+      isMoving: true
     },
     {
+      id: 'abc',
       name: "Tag 2",
-      battery: <BatteryChargingFullIcon className='icon' />
+      battery: batteryLevel(50),
+      isMoving: true
 
     },
     {
+      id: 'abc',
       name: "Tag 3",
-      battery: <BatteryCharging20Icon className='icon' />
+      battery: batteryLevel(72),
+      isMoving: false
     },
     {
+      id: 'abc',
       name: "Tag 4",
-      battery: <BatteryCharging80Icon className='icon' />
+      battery: batteryLevel(89),
+      isMoving: true
     },
     {
+      id: 'abc',
       name: "Tag 5",
-      battery: <BatteryCharging80Icon className='icon' />
+      battery: batteryLevel(10),
+      isMoving: false
     },
     {
-      name: "Tag 3",
-      battery: <BatteryCharging20Icon className='icon' />
+      id: 'abc',
+      name: "Tag 6",
+      battery: batteryLevel(0),
+      isMoving: true
     },
     {
-      name: "Tag 4",
-      battery: <BatteryCharging80Icon className='icon' />
+      id: 'abc',
+      name: "Tag 7",
+      battery: batteryLevel(100),
+      isMoving: true
     },
     {
-      name: "Tag 5",
-      battery: <BatteryCharging80Icon className='icon' />
+      id: 'abc',
+      name: "Tag 8",
+      battery:  batteryLevel(45),
+      isMoving: false
     }
   ]
 
@@ -111,7 +160,6 @@ const Location: React.FC = () => {
         </div>
         <div className="row">
           <div className="col leftSide">
-            Visualização
           </div>
           <div className="col rightSide">
 

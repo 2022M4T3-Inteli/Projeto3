@@ -20,9 +20,9 @@
 
 #location .col {
   display: flex;
-  height: 100%;
+  height: calc(100% - 20px);
   flex: 1;
-  background-color: red;
+  margin-top: 20px;
 }
 
 #location .container .filter {
@@ -37,8 +37,17 @@
   width: 70%;
   flex: none;
   margin-right: 40px;
-  background-color: #d2d2d2;
+  background-image: url('/src/assets/blueprint.png');
+  background-size: cover;
+  border-radius: 9px;
 }
+
+// #location .container .leftSide {
+//   animation-name: fade;
+//   animation-duration: 0.5s;
+//   animation-delay: 5s;
+//   animation-iteration-count: infinite;
+// }
 
 #location .container .rightSide {
   flex: 1;
@@ -108,3 +117,16 @@
   color: #29292D;
   font-weight: bold;
 }
+
+#location .rightSide .low {
+  color: #E50000;
+}
+
+// @keyframes fade {
+//   0% {
+//     opacity: 1;
+//   }
+//   100% {
+//     opacity: 0;
+//   }
+// }
