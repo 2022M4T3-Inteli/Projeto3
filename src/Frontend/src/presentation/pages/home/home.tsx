@@ -20,6 +20,8 @@ const Home: React.FC = () => {
           <Route path='categories/add' element={<CategoriesAdd />} />
           <Route path='categories/edit' element={<CategoriesEdit />} />
           <Route path='tags' element={<TagsList />} />
+          <Route path='tags/add' element={<TagsAdd />} />
+          <Route path='tags/edit' element={<TagsEdit />} />
           <Route path='settings' element={<Location />} />
         </Routes>
       </div>
