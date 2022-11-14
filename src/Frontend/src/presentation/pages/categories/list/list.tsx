@@ -14,32 +14,28 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 
-type TagType = {
+type CategoryType = {
   id: number;
-  macAdress: string;
   name: string;
-  category: string;
-  battery: any;
-  isMoving: boolean
-  position: [number, number]
+  nTags: number;
 }
 
-const columns: ColumnsType<TagType> = [
+const columns: ColumnsType<CategoryType> = [
   {
-    title: 'Nome',
+    title: 'Categoria',
     dataIndex: 'name',
     key: 'name',
   },
   {
-    title: 'Status',
-    dataIndex: 'battery',
-    key: 'status',
+    title: 'Número de Tags',
+    dataIndex: 'nTags',
+    key: 'nTags',
   },
-  {
-    title: 'Categoria',
-    dataIndex: 'category',
-    key: 'category',
-  },
+  // {
+  //   title: 'Categoria',
+  //   dataIndex: 'category',
+  //   key: 'category',
+  // },
   {
     title: 'Action',
     key: 'action',
@@ -76,8 +72,6 @@ const batteryLevel: Function = (level: number) => {
     type = 3
   }
 
-  console.log(type, level, difference)
-
   switch (type) {
     case 0:
       return <BatteryCharging20Icon className='icon low' />
@@ -90,114 +84,21 @@ const batteryLevel: Function = (level: number) => {
   }
 }
 
-const data: TagType[] = [
+const data: CategoryType[] = [
   {
     id: 0,
-    macAdress: 'abc',
-    name: "Objeto 1",
-    battery: batteryLevel(28),
-    category: "Furadeiras",
-    isMoving: true,
-    position: [100, 250]
+    name: "Britadeiras",
+    nTags: 5
   },
   {
     id: 1,
-    macAdress: 'abc',
-    name: "Objeto 2",
-    battery: batteryLevel(50),
-    category: "Motoserras",
-    isMoving: true,
-    position: [100, 350]
+    name: "Furadeiras",
+    nTags: 8
   },
   {
-    id: 2,
-    macAdress: 'abc',
-    name: "Objeto 3",
-    battery: batteryLevel(72),
-    category: "Britadeiras",
-    isMoving: false,
-    position: [50, 450]
-  },
-  {
-    id: 3,
-    macAdress: 'abc',
-    name: "Objeto 4",
-    battery: batteryLevel(89),
-    category: "Motoserras",
-    isMoving: true,
-    position: [175, 600]
-  },
-  {
-    id: 4,
-    macAdress: 'abc',
-    name: "Objeto 5",
-    battery: batteryLevel(10),
-    category: "Britadeiras",
-    isMoving: false,
-    position: [200, 250]
-  },
-  {
-    id: 5,
-    macAdress: 'abc',
-    name: "Objeto 6",
-    battery: batteryLevel(0),
-    category: "Furadeiras",
-    isMoving: true,
-    position: [120, 520]
-  },
-  {
-    id: 6,
-    macAdress: 'abc',
-    name: "Objeto 7",
-    battery: batteryLevel(100),
-    category: "Motoserras",
-    isMoving: true,
-    position: [300, 450]
-  },
-  {
-    id: 7,
-    macAdress: 'abc',
-    name: "Objeto 8",
-    battery: batteryLevel(45),
-    category: "Britadeiras",
-    isMoving: false,
-    position: [300, 150]
-  },
-  {
-    id: 7,
-    macAdress: 'abc',
-    name: "Objeto 8",
-    battery: batteryLevel(45),
-    category: "Britadeiras",
-    isMoving: false,
-    position: [300, 150]
-  },
-  {
-    id: 7,
-    macAdress: 'abc',
-    name: "Objeto 8",
-    battery: batteryLevel(45),
-    category: "Britadeiras",
-    isMoving: false,
-    position: [300, 150]
-  },
-  {
-    id: 7,
-    macAdress: 'abc',
-    name: "Objeto 8",
-    battery: batteryLevel(45),
-    category: "Britadeiras",
-    isMoving: false,
-    position: [300, 150]
-  },
-  {
-    id: 7,
-    macAdress: 'abc',
-    name: "Objeto 8",
-    battery: batteryLevel(45),
-    category: "Britadeiras",
-    isMoving: false,
-    position: [300, 150]
+    id: 1,
+    name: "Motoserras",
+    nTags: 4
   }
 ]
 

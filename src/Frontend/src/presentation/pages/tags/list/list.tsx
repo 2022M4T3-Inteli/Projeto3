@@ -26,7 +26,7 @@ type TagType = {
 
 const columns: ColumnsType<TagType> = [
   {
-    title: 'Nome',
+    title: 'Tag',
     dataIndex: 'name',
     key: 'name',
   },
@@ -43,9 +43,9 @@ const columns: ColumnsType<TagType> = [
   {
     title: 'Action',
     key: 'action',
-    render: (_, record) => (
+    render: (_, obj, index) => (
       <Space size="middle">
-        <Link to={"/"}>
+        <Link onClick={() => localStorage.setItem("tagActived", String(index))} to={"/"}>
           <VisibilityIcon className='actionIcon' />
         </Link>
         <Link to={"/categories/edit"}>
@@ -75,8 +75,6 @@ const batteryLevel: Function = (level: number) => {
     difference = Math.abs(100 - level)
     type = 3
   }
-
-  console.log(type, level, difference)
 
   switch (type) {
     case 0:

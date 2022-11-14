@@ -36,8 +36,6 @@ const batteryLevel: Function = (level: number) => {
     type = 3
   }
 
-  console.log(type, level, difference)
-
   switch (type) {
     case 0:
       return <BatteryCharging20Icon className='icon low' />
@@ -50,8 +48,10 @@ const batteryLevel: Function = (level: number) => {
   }
 }
 
+
 const Location: React.FC = () => {
-  const [active, setActive] = useState(-1)
+  const [active, setActive] = useState(Number(localStorage.getItem("tagActived")))  
+
   const tags: TagType[] = [
     {
       id: 0,
@@ -124,42 +124,6 @@ const Location: React.FC = () => {
       category: "Britadeiras",
       isMoving: false,
       position: [300, 150]
-    },
-    {
-      id: 7,
-      macAdress: 'abc',
-      name: "Objeto 8",
-      battery: batteryLevel(45),
-      category: "Britadeiras",
-      isMoving: false,
-      position: [300, 150]
-    },
-    {
-      id: 7,
-      macAdress: 'abc',
-      name: "Objeto 8",
-      battery: batteryLevel(45),
-      category: "Britadeiras",
-      isMoving: false,
-      position: [300, 150]
-    },
-    {
-      id: 7,
-      macAdress: 'abc',
-      name: "Objeto 8",
-      battery: batteryLevel(45),
-      category: "Britadeiras",
-      isMoving: false,
-      position: [300, 150]
-    },
-    {
-      id: 7,
-      macAdress: 'abc',
-      name: "Objeto 8",
-      battery: batteryLevel(45),
-      category: "Britadeiras",
-      isMoving: false,
-      position: [300, 150]
     }
   ]
 
@@ -176,11 +140,12 @@ const Location: React.FC = () => {
   }
 
   const showTag: Function = (tag: any, index: number) => {
+
     if (active !== -1) {
       if (index === active) {
         return (
           <div
-            onClick={() => setActive(index)}
+            onClick={() => handleActive(index)}
             className={`tag ${tag.isMoving ? 'active' : ''}`}
             style={
               {
@@ -193,7 +158,7 @@ const Location: React.FC = () => {
       else {
         return (
           <div
-            onClick={() => setActive(index)}
+            onClick={() => handleActive(index)}
             className={`tag outFocus ${tag.isMoving ? 'active' : ''}`}
             style={
               {
@@ -205,6 +170,7 @@ const Location: React.FC = () => {
       }
     }
     else {
+      localStorage.removeItem("tagActived")
       return (
         <div
           onClick={() => setActive(index)}
