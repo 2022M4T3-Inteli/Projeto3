@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom"
 import { Header, Navbar } from '../../components'
 import './home.scss'
 
-import { Login, Signup, Aproval, Location, Navigation } from '../../../presentation/pages'
+import { Location, CategoriesList, CategoriesAdd, CategoriesEdit } from '../../../presentation/pages'
 
 const Home: React.FC = () => {
 
@@ -13,11 +13,13 @@ const Home: React.FC = () => {
       <Navbar />
 
       <Routes>
-        <Route path='/' element={<Navigation />} />
-        <Route path='location' element={<Location />} />
-        <Route path='history' element={<Navigation />} />
-        <Route path='tags' element={<Navigation />} />
-        <Route path='settings' element={<Navigation />} />
+        <Route path='/' element={<Location />} />
+        <Route path='history' element={<Location />} />
+        <Route path='categories' element={<CategoriesList />} />
+        <Route path='categories/add' element={<CategoriesAdd />} />
+        <Route path='categories/edit' element={<CategoriesEdit />} />
+        <Route path='tags' element={<Location />} />
+        <Route path='settings' element={<Location />} />
       </Routes>
     </div>
   )

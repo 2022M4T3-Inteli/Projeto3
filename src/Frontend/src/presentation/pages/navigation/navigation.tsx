@@ -27,7 +27,7 @@ const Navigation: React.FC = () => {
         <div className="row bottomSide">
           <Link to="/location" className="col location">
             <p className='text'>Localização</p>
-            <TrackChangesIcon className="icon" />
+            {/* <TrackChangesIcon className="icon" /> */}
           </Link>
           <div className="col">
             <p className='text'>Tags</p>

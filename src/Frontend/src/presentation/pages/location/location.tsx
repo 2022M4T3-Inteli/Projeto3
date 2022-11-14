@@ -6,6 +6,7 @@ import BatteryCharging20Icon from '@mui/icons-material/BatteryCharging20'
 import BatteryCharging50Icon from '@mui/icons-material/BatteryCharging50'
 import BatteryCharging80Icon from '@mui/icons-material/BatteryCharging80'
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 
 
 type TagType = {
@@ -54,7 +55,7 @@ const Location: React.FC = () => {
     {
       id: 0,
       macAdress: 'abc',
-      name: "Tag 1",
+      name: "Objeto 1",
       battery: batteryLevel(28),
       isMoving: true,
       position: [100, 250]
@@ -62,7 +63,7 @@ const Location: React.FC = () => {
     {
       id: 1,
       macAdress: 'abc',
-      name: "Tag 2",
+      name: "Objeto 2",
       battery: batteryLevel(50),
       isMoving: true,
       position: [100, 350]
@@ -70,7 +71,7 @@ const Location: React.FC = () => {
     {
       id: 2,
       macAdress: 'abc',
-      name: "Tag 3",
+      name: "Objeto 3",
       battery: batteryLevel(72),
       isMoving: false,
       position: [50, 450]
@@ -78,7 +79,7 @@ const Location: React.FC = () => {
     {
       id: 3,
       macAdress: 'abc',
-      name: "Tag 4",
+      name: "Objeto 4",
       battery: batteryLevel(89),
       isMoving: true,
       position: [175, 600]
@@ -86,7 +87,7 @@ const Location: React.FC = () => {
     {
       id: 4,
       macAdress: 'abc',
-      name: "Tag 5",
+      name: "Objeto 5",
       battery: batteryLevel(10),
       isMoving: false,
       position: [200, 250]
@@ -94,7 +95,7 @@ const Location: React.FC = () => {
     {
       id: 5,
       macAdress: 'abc',
-      name: "Tag 6",
+      name: "Objeto 6",
       battery: batteryLevel(0),
       isMoving: true,
       position: [120, 520]
@@ -102,7 +103,7 @@ const Location: React.FC = () => {
     {
       id: 6,
       macAdress: 'abc',
-      name: "Tag 7",
+      name: "Objeto 7",
       battery: batteryLevel(100),
       isMoving: true,
       position: [300, 450]
@@ -110,7 +111,7 @@ const Location: React.FC = () => {
     {
       id: 7,
       macAdress: 'abc',
-      name: "Tag 8",
+      name: "Objeto 8",
       battery: batteryLevel(45),
       isMoving: false,
       position: [300, 150]
@@ -130,16 +131,47 @@ const Location: React.FC = () => {
   }
 
   const showTag: Function = (tag: any, index: number) => {
-    return (
-      <div
-        className={`tag ${tag.isMoving ? 'active' : ''}`}
-        style={
-          {
-            top: `${tag.position[0]}px`,
-            left: `${tag.position[1]}px`
-          }}>
-      </div>
-    )
+    if (active !== -1) {
+      if (index === active) {
+        return (
+          <div
+            onClick={() => setActive(index)}
+            className={`tag ${tag.isMoving ? 'active' : ''}`}
+            style={
+              {
+                top: `${tag.position[0]}px`,
+                left: `${tag.position[1]}px`
+              }}>
+          </div>
+        )
+      }
+      else {
+        return (
+          <div
+            onClick={() => setActive(index)}
+            className={`tag outFocus ${tag.isMoving ? 'active' : ''}`}
+            style={
+              {
+                top: `${tag.position[0]}px`,
+                left: `${tag.position[1]}px`
+              }}>
+          </div>
+        )
+      }
+    }
+    else {
+      return (
+        <div
+          onClick={() => setActive(index)}
+          className={`tag ${tag.isMoving ? 'active' : ''}`}
+          style={
+            {
+              top: `${tag.position[0]}px`,
+              left: `${tag.position[1]}px`
+            }}>
+        </div>
+      )
+    }
   }
 
   const showTags: Function = () => {
@@ -149,8 +181,11 @@ const Location: React.FC = () => {
       content.push(
         <div
           onClick={() => handleActive(active)}
-          className={'item active'}
+          className={`item active`}
         >
+          {
+            tags[active].isMoving ? <DirectionsRunIcon className='runningIcon' /> : ''
+          }
           <div className="name">
             {tags[active].name}
           </div>
@@ -168,6 +203,9 @@ const Location: React.FC = () => {
             onClick={() => handleActive(index)}
             className={index === active ? 'item active' : 'item'}
           >
+            {
+              tag.isMoving ? <DirectionsRunIcon className='runningIcon' /> : ''
+            }
             <div className="name">
               {tag.name}
             </div>

@@ -51,6 +51,7 @@
   border-right: 20px solid transparent;
 
   border-bottom: 35px solid #E50000;
+  cursor: pointer;
 }
 
 #location .container .leftSide .active {
@@ -59,12 +60,9 @@
   animation-iteration-count: infinite;
 }
 
-// #location .container .leftSide {
-//   animation-name: fade;
-//   animation-duration: 0.5s;
-//   animation-delay: 5s;
-//   animation-iteration-count: infinite;
-// }
+#location .container .leftSide .outFocus {
+  border-bottom: 35px solid #e5000075;
+}
 
 #location .container .rightSide {
   flex: 1;
@@ -99,7 +97,8 @@
   flex: none;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  position: relative;
   margin: 30px 30px 0px 30px;
   width: calc(100% - 60px);
   height: 75px;
@@ -121,6 +120,11 @@
 #location .rightSide .name {
   font-size: 16px;
   font-weight: bold;
+  width: calc(100% - 124px);
+  // max-width: calc(100% - 108px);
+  margin-left: 48px;
+  text-align: left;
+  word-wrap: break-word;
 }
 
 #location .rightSide .active {
@@ -130,9 +134,19 @@
 #location .rightSide .icon {
   font-size: 60px;
   transform: rotate(90deg);
+  margin-right: 16px;
   // color: #29292D;
   color: #29292D;
   font-weight: bold;
+}
+
+#location .rightSide .runningIcon {
+  position: absolute;
+  left: 16px;
+
+  animation-name: fade;
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
 }
 
 #location .rightSide .low {

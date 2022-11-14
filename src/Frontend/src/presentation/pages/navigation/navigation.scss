@@ -86,3 +86,13 @@
   visibility: hidden;
   opacity: 0;
 }
+
+#navigation .location {
+  background-image: url("/src/assets/location.png");
+  opacity: 0.75;
+  background-size: cover;
+  // content: '';
+}
+#navigation .location:hover {
+  opacity: 1;
+}
