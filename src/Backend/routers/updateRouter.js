@@ -4,6 +4,9 @@ const updateController = require("../controllers/updateController");
 const router = express.Router();
 
 // routes middleware
-router.route("/").get(updateController.update);
+router
+  .route("/")
+  .get(updateController.update)
+  .post(updateController.postRequest);
 
 module.exports = router;
