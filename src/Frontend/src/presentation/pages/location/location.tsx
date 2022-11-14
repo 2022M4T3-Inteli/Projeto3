@@ -13,6 +13,7 @@ type TagType = {
   id: number;
   macAdress: string;
   name: string;
+  category: string;
   battery: any;
   isMoving: boolean
   position: [number, number]
@@ -57,6 +58,7 @@ const Location: React.FC = () => {
       macAdress: 'abc',
       name: "Objeto 1",
       battery: batteryLevel(28),
+      category: "Furadeiras",
       isMoving: true,
       position: [100, 250]
     },
@@ -65,6 +67,7 @@ const Location: React.FC = () => {
       macAdress: 'abc',
       name: "Objeto 2",
       battery: batteryLevel(50),
+      category: "Motoserras",
       isMoving: true,
       position: [100, 350]
     },
@@ -73,6 +76,7 @@ const Location: React.FC = () => {
       macAdress: 'abc',
       name: "Objeto 3",
       battery: batteryLevel(72),
+      category: "Britadeiras",
       isMoving: false,
       position: [50, 450]
     },
@@ -81,6 +85,7 @@ const Location: React.FC = () => {
       macAdress: 'abc',
       name: "Objeto 4",
       battery: batteryLevel(89),
+      category: "Motoserras",
       isMoving: true,
       position: [175, 600]
     },
@@ -89,6 +94,7 @@ const Location: React.FC = () => {
       macAdress: 'abc',
       name: "Objeto 5",
       battery: batteryLevel(10),
+      category: "Britadeiras",
       isMoving: false,
       position: [200, 250]
     },
@@ -97,6 +103,7 @@ const Location: React.FC = () => {
       macAdress: 'abc',
       name: "Objeto 6",
       battery: batteryLevel(0),
+      category: "Furadeiras",
       isMoving: true,
       position: [120, 520]
     },
@@ -105,6 +112,7 @@ const Location: React.FC = () => {
       macAdress: 'abc',
       name: "Objeto 7",
       battery: batteryLevel(100),
+      category: "Motoserras",
       isMoving: true,
       position: [300, 450]
     },
@@ -113,6 +121,43 @@ const Location: React.FC = () => {
       macAdress: 'abc',
       name: "Objeto 8",
       battery: batteryLevel(45),
+      category: "Britadeiras",
+      isMoving: false,
+      position: [300, 150]
+    },
+    {
+      id: 7,
+      macAdress: 'abc',
+      name: "Objeto 8",
+      battery: batteryLevel(45),
+      category: "Britadeiras",
+      isMoving: false,
+      position: [300, 150]
+    },
+    {
+      id: 7,
+      macAdress: 'abc',
+      name: "Objeto 8",
+      battery: batteryLevel(45),
+      category: "Britadeiras",
+      isMoving: false,
+      position: [300, 150]
+    },
+    {
+      id: 7,
+      macAdress: 'abc',
+      name: "Objeto 8",
+      battery: batteryLevel(45),
+      category: "Britadeiras",
+      isMoving: false,
+      position: [300, 150]
+    },
+    {
+      id: 7,
+      macAdress: 'abc',
+      name: "Objeto 8",
+      battery: batteryLevel(45),
+      category: "Britadeiras",
       isMoving: false,
       position: [300, 150]
     }
@@ -222,25 +267,25 @@ const Location: React.FC = () => {
 
   return (
     <div id="location">
-      <div className="container">
-        <div className="row filter">
-          Filtro
+      {/* <div className="container"> */}
+      <div className="filter">
+        Filter
+      </div>
+      <div className="row">
+        <div className="col leftSide">
+          {
+            tags.map((tag, index) => {
+              return showTag(tag, index)
+            })
+          }
         </div>
-        <div className="row">
-          <div className="col leftSide">
-            {
-              tags.map((tag, index) => {
-                return showTag(tag, index)
-              })
-            }
-          </div>
-          <div className="col rightSide">
-            {
-              showTags()
-            }
-          </div>
+        <div className="col rightSide">
+          {
+            showTags()
+          }
         </div>
       </div>
+      {/* </div> */}
     </div>
   )
 }

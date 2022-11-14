@@ -1,11 +1,6 @@
 #location {
-  display: flex;
-}
-
-#location .container {
-  width: calc(100vw - 100px);
-  height: calc(100vh - 170px);
-  margin: 135px 60px 20px 160px;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,20 +15,18 @@
 
 #location .col {
   display: flex;
-  height: calc(100% - 20px);
   flex: 1;
-  margin-top: 20px;
 }
 
-#location .container .filter {
+#location  .filter {
   align-items: center;
   width: 100%;
-  height: 40px;
+  // height: 20px;
   background-color: #e9e9e9;
   ;
 }
 
-#location .container .leftSide {
+#location .leftSide {
   width: 70%;
   flex: none;
   position: relative;
@@ -43,7 +36,7 @@
   border-radius: 9px;
 }
 
-#location .container .leftSide .tag {
+#location .leftSide .tag {
   position: absolute;
   width: 0;
   height: 0;
@@ -54,18 +47,17 @@
   cursor: pointer;
 }
 
-#location .container .leftSide .active {
+#location .leftSide .active {
   animation-name: fade;
   animation-duration: 0.8s;
   animation-iteration-count: infinite;
 }
 
-#location .container .leftSide .outFocus {
+#location .leftSide .outFocus {
   border-bottom: 35px solid #e5000075;
 }
 
-#location .container .rightSide {
-  flex: 1;
+#location .rightSide {
   display: flex;
   flex-direction: column;
   align-items: center;

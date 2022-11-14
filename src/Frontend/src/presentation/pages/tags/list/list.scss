@@ -1,25 +1,25 @@
-#categories-list {
+#tags-list {
   width: 100%;
   height: 100%;
 }
 
-#categories-list .table {
+#tags-list .table {
   border-radius: 9px;
 }
 
-#categories-list .buttonContainer {
+#tags-list .buttonContainer {
   display: flex;
   justify-content: flex-end;
   width: 100%;
   margin-bottom: 8px;
 }
 
-#categories-list .buttonContainer button:hover {
+#tags-list .buttonContainer button:hover {
   border: solid 1px #CCFE00;
   color: #CCFE00;
 }
 
-#categories-list .table .icon {
+#tags-list .table .icon {
   display: flex;
   top: 10%;
   left: 14px;
@@ -31,14 +31,15 @@
   font-weight: bold;
 }
 
-#categories-list .table .low {
+#tags-list .table .low {
   color: #e50000;
 }
 
-#categories-list .table .actionIcon {
+#tags-list .table .actionIcon {
   color: #29292D;
 }
 
-#categories-list .table .actionIcon:hover {
+
+#tags-list .table .actionIcon:hover {
   color: #CCFE00;
 }

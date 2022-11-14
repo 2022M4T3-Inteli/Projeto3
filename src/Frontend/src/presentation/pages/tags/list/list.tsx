@@ -162,52 +162,16 @@ const data: TagType[] = [
     category: "Britadeiras",
     isMoving: false,
     position: [300, 150]
-  },
-  {
-    id: 7,
-    macAdress: 'abc',
-    name: "Objeto 8",
-    battery: batteryLevel(45),
-    category: "Britadeiras",
-    isMoving: false,
-    position: [300, 150]
-  },
-  {
-    id: 7,
-    macAdress: 'abc',
-    name: "Objeto 8",
-    battery: batteryLevel(45),
-    category: "Britadeiras",
-    isMoving: false,
-    position: [300, 150]
-  },
-  {
-    id: 7,
-    macAdress: 'abc',
-    name: "Objeto 8",
-    battery: batteryLevel(45),
-    category: "Britadeiras",
-    isMoving: false,
-    position: [300, 150]
-  },
-  {
-    id: 7,
-    macAdress: 'abc',
-    name: "Objeto 8",
-    battery: batteryLevel(45),
-    category: "Britadeiras",
-    isMoving: false,
-    position: [300, 150]
   }
 ]
 
 
 const List: React.FC = () => {
   return (
-    <div id="categories-list">
+    <div id="tags-list">
       <div className="buttonContainer">
-        <Link to={"/categories/add"}>
-          <Button>Adicionar Categoria</Button>
+        <Link to={"/tags/add"}>
+          <Button>Adicionar Tag</Button>
         </Link>
       </div>
       <Table className='table' columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
