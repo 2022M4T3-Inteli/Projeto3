@@ -192,12 +192,12 @@ const Location: any = (Parent: any) => {
 
   const showTag: Function = (tag: any, index: number) => {
     if (tag.name.toLowerCase().includes(search.toLowerCase())) {
-      if (filter.includes(tag.category) || filter.length === 0) {
+      if (filter.includes(tag.category) || !filter[0]) {
         if (active !== -1) {
           if (index === active) {
             return (
               <div
-                key={`tag-location-${index}`}
+                key={`tag-${tag.name}`}
                 onClick={() => handleActive(index)}
                 className={`tag ${tag.isMoving ? 'active' : ''}`}
                 style={
@@ -211,7 +211,7 @@ const Location: any = (Parent: any) => {
           else {
             return (
               <div
-                key={`tag-location-${index}`}
+                key={`tag-location-${tag.name}`}
                 onClick={() => handleActive(index)}
                 className={`tag outFocus ${tag.isMoving ? 'active' : ''}`}
                 style={
@@ -245,10 +245,10 @@ const Location: any = (Parent: any) => {
     let content: any = []
 
     if (active !== -1 && tags[active].name.toLowerCase().includes(search.toLowerCase())) {
-      if (filter.includes(tags[active].category) || filter.length === 0) {
+      if (filter.includes(tags[active].category) || !filter[0]) {
         content.push(
           <div
-            key="tag-0"
+            key={`tag-${tags[active].name}`}
             onClick={() => handleActive(active)}
             className={`item active`}
           >
@@ -268,7 +268,7 @@ const Location: any = (Parent: any) => {
 
     tags.map((tag: TagType, index) => {
       if (index != active && tag.name.toLowerCase().includes(search.toLowerCase())) {
-        if (filter.includes(tag.category) || filter.length === 0) {
+        if (filter.includes(tag.category) || !filter[0]) {
           content.push(
             <div
               key={`tag-${index}`}
