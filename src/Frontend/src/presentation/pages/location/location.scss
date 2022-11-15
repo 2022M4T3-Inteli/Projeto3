@@ -68,7 +68,7 @@
   flex: none;
   position: relative;
   margin-right: 40px;
-  background-image: url('/src/assets/blueprint.png');
+  background-image: url('/src/assets/blueprint3.png');
   background-size: cover;
   border-radius: 9px;
 }
@@ -80,7 +80,7 @@
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
 
-  border-bottom: 35px solid #E50000;
+  border-bottom: 35px solid #CCFE00;
   cursor: pointer;
 }
 
@@ -91,7 +91,7 @@
 }
 
 #location .leftSide .outFocus {
-  border-bottom: 35px solid #e5000050;
+  border-bottom: 35px solid #CCFE0050;
 }
 
 #location .rightSide {

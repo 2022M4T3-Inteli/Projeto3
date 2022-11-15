@@ -176,8 +176,6 @@ const Location: any = (Parent: any) => {
   ]
 
   const handleActive: Function = (index: number) => {
-    console.log("index ", index)
-    console.log("active ", active)
     if (index !== active) {
       setTimeout(() => Parent.props.changeTag(index), 80)
       setTimeout(() => document.getElementsByClassName("rightSide")[0].scrollTop = 0, 200)
@@ -187,7 +185,20 @@ const Location: any = (Parent: any) => {
       setTimeout(() => Parent.props.changeTag(-1), 80)
       setTimeout(() => document.getElementsByClassName("rightSide")[0].scrollTop = 0, 200)
     }
-    console.log("new active ", active)
+  }
+
+  const handleSearch: Function = (value: string) => {
+    setSearch(value)
+    if(active != -1) {
+      handleActive(-1)
+    }
+  }
+
+  const handleFilter: Function = (value: string[]) => {
+    if(active != -1) {
+      handleActive(-1)
+    }
+    setFilter(value)
   }
 
   const showTag: Function = (tag: any, index: number) => {
@@ -226,7 +237,7 @@ const Location: any = (Parent: any) => {
         else {
           return (
             <div
-              key={`tag-location-${index}`}
+              key={`tag-location-${tag.name}`}
               onClick={() => handleActive(index)}
               className={`tag ${tag.isMoving ? 'active' : ''}`}
               style={
@@ -271,7 +282,7 @@ const Location: any = (Parent: any) => {
         if (filter.includes(tag.category) || !filter[0]) {
           content.push(
             <div
-              key={`tag-${index}`}
+              key={`tag-${tag.name}`}
               onClick={() => handleActive(index)}
               className={index === active ? 'item active' : 'item'}
             >
@@ -292,7 +303,7 @@ const Location: any = (Parent: any) => {
 
     if (content.length === 0) {
       content.push(
-        <p className='text'>Nenhuma tag encontrada</p>
+        <p key={`text-0`} className='text'>Nenhuma tag encontrada</p>
       )
     }
 
@@ -300,7 +311,6 @@ const Location: any = (Parent: any) => {
   }
 
   const { Search } = Input
-  const onSearch = (value: string) => console.log(value)
 
   const options = [
     ...categories.map((category) => (
@@ -315,11 +325,11 @@ const Location: any = (Parent: any) => {
     <div id="location">
       {/* <div className="container"> */}
       <div className="filter">
-        <Search className='search' allowClear placeholder="Buscar por Tag" onChange={(e) => setSearch(e.target.value)} value={search} />
+        <Search className='search' allowClear placeholder="Buscar por Tag" onChange={(e) => handleSearch(e.target.value)} value={search} />
         <Select
           className='select'
           mode="multiple"
-          onChange={(value) => setFilter(value)}
+          onChange={(value) => handleFilter(value)}
           notFoundContent="Categoria não encontrada"
           placeholder="Categorias"
           autoClearSearchValue
