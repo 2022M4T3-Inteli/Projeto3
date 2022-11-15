@@ -4,12 +4,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 
 #location .row {
   width: 100%;
-  height: 100%;
+  min-height: 95%;
   display: flex;
 }
 
@@ -18,12 +17,50 @@
   flex: 1;
 }
 
-#location  .filter {
+#location .filter {
+  display: flex;
   align-items: center;
-  width: 100%;
+  justify-content: flex-start;
+  width: 70%;
   // height: 20px;
-  background-color: #e9e9e9;
-  ;
+  // background-color: #e9e9e9;
+}
+
+#location .filter .search {
+  width: 25%;
+  margin-bottom: 8px;
+  border-radius: 9px;
+  outline: none;
+}
+
+#location .filter .select {
+  margin-left: 8px;
+  max-width: 75%;
+  margin-bottom: 8px;
+  border-radius: 9px;
+  outline: none;
+}
+
+#location .search .ant-input-affix-wrapper:focus-within,
+.search .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
+.search button:hover {
+  border-color: #CCFE00;
+  box-shadow: none;
+  outline: none;
+}
+
+#location .ant-select:not(.ant-select-disabled):hover .ant-select-selector,
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: #CCFE00;
+  box-shadow: none;
+  outline: none;
+}
+
+#location .ant-select:not(.ant-select-disabled):focus-within .ant-select-selector,
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: #CCFE00;
+  box-shadow: none;
+  outline: none;
 }
 
 #location .leftSide {
@@ -117,6 +154,12 @@
   margin-left: 48px;
   text-align: left;
   word-wrap: break-word;
+}
+
+#location .rightSide .text {
+  margin-top: 16px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 #location .rightSide .active {

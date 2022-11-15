@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './navbar.scss'
 import { Tooltip } from 'antd'
 
@@ -12,12 +12,16 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import { Link } from 'react-router-dom'
 import { TagsAdd } from '../../pages'
 
-const Navbar: React.FC = () => {
+const Navbar: any = (Parent: any) => {
   const goTo: Function = (url: string) => {
     window.location.href = url
   }
 
-  const [active, setActive] = useState(0)
+  const [active, setActive] = useState(Parent.props.actualPage)
+
+  useEffect(() => {
+    setActive(Parent.props.actualPage)
+  }, [Parent.props.actualPage])
 
   const items = [
     {
@@ -48,7 +52,8 @@ const Navbar: React.FC = () => {
   ]
 
   const navigation: Function = (index: number) => {
-    setActive(index)
+    Parent.props.changeTag(-1)
+    Parent.props.changePage(index)
   }
 
   return (

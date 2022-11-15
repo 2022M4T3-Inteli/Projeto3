@@ -20,41 +20,6 @@ type CategoryType = {
   nTags: number;
 }
 
-const columns: ColumnsType<CategoryType> = [
-  {
-    title: 'Categoria',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Número de Tags',
-    dataIndex: 'nTags',
-    key: 'nTags',
-  },
-  // {
-  //   title: 'Categoria',
-  //   dataIndex: 'category',
-  //   key: 'category',
-  // },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <Link to={"/"}>
-          <VisibilityIcon className='actionIcon' />
-        </Link>
-        <Link to={"/categories/edit"}>
-          <EditIcon className='actionIcon' />
-        </Link>
-        <Link to={"/categories"}>
-          <DeleteIcon className='actionIcon' />
-        </Link>
-      </Space>
-    )
-  }
-]
-
 const batteryLevel: Function = (level: number) => {
   let type = 0
   let difference = Math.abs(20 - level)
@@ -103,7 +68,46 @@ const data: CategoryType[] = [
 ]
 
 
-const List: React.FC = () => {
+const List: any = (Parent: any) => {
+  const handleActive: Function = (index: number) => {
+    Parent.props.changePage(index)
+  }
+
+  const columns: ColumnsType<CategoryType> = [
+    {
+      title: 'Categoria',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Número de Tags',
+      dataIndex: 'nTags',
+      key: 'nTags',
+    },
+    // {
+    //   title: 'Categoria',
+    //   dataIndex: 'category',
+    //   key: 'category',
+    // },
+    {
+      title: 'Ações',
+      key: 'action',
+      render: (_, obj, index) => (
+        <Space size="middle">
+          <Link onClick={() => handleActive(index)} to={"/"}>
+            <VisibilityIcon className='actionIcon' />
+          </Link>
+          <Link to={"/categories/edit"}>
+            <EditIcon className='actionIcon' />
+          </Link>
+          <Link to={"/categories"}>
+            <DeleteIcon className='actionIcon' />
+          </Link>
+        </Space>
+      )
+    }
+  ]
+
   return (
     <div id="categories-list">
       <div className="buttonContainer">

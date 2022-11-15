@@ -24,41 +24,6 @@ type TagType = {
   position: [number, number]
 }
 
-const columns: ColumnsType<TagType> = [
-  {
-    title: 'Tag',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'battery',
-    key: 'status',
-  },
-  {
-    title: 'Categoria',
-    dataIndex: 'category',
-    key: 'category',
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, obj, index) => (
-      <Space size="middle">
-        <Link onClick={() => localStorage.setItem("tagActived", String(index))} to={"/"}>
-          <VisibilityIcon className='actionIcon' />
-        </Link>
-        <Link to={"/categories/edit"}>
-          <EditIcon className='actionIcon' />
-        </Link>
-        <Link to={"/categories"}>
-          <DeleteIcon className='actionIcon' />
-        </Link>
-      </Space>
-    )
-  }
-]
-
 const batteryLevel: Function = (level: number) => {
   let type = 0
   let difference = Math.abs(20 - level)
@@ -164,7 +129,47 @@ const data: TagType[] = [
 ]
 
 
-const List: React.FC = () => {
+const List: any = (Parent: any) => {
+  const handleActive: Function = (index: number) => {
+    Parent.props.changeTag(index)
+    Parent.props.changePage(0)
+  }
+
+  const columns: ColumnsType<TagType> = [
+    {
+      title: 'Tag',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'battery',
+      key: 'status',
+    },
+    {
+      title: 'Categoria',
+      dataIndex: 'category',
+      key: 'category',
+    },
+    {
+      title: 'Ações',
+      key: 'action',
+      render: (_, obj, index) => (
+        <Space size="middle">
+          <Link onClick={() => handleActive(index)} to={"/"}>
+            <VisibilityIcon className='actionIcon' />
+          </Link>
+          <Link to={"/categories/edit"}>
+            <EditIcon className='actionIcon' />
+          </Link>
+          <Link to={"/categories"}>
+            <DeleteIcon className='actionIcon' />
+          </Link>
+        </Space>
+      )
+    }
+  ]
+
   return (
     <div id="tags-list">
       <div className="buttonContainer">
