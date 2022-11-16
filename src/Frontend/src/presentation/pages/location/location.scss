@@ -71,6 +71,7 @@
   background-image: url('/src/assets/blueprint2.png');
   background-size: cover;
   border-radius: 9px;
+  border: 1px solid #d9d9d9;
 }
 
 #location .leftSide .tag {
@@ -101,24 +102,30 @@
   background-color: #f8f8f8;
   border-radius: 9px;
   overflow-y: scroll;
+  border: 1px solid #d9d9d9;
 }
 
 ::-webkit-scrollbar {
+  border-radius: 9px;
   width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
+  margin: 1px;
+  border-radius: 9px;
   background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
+  border-radius: 9px;
   background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
+  border-radius: 9px;
   background: #555;
 }
 
@@ -133,8 +140,12 @@
   height: 75px;
   max-height: 100%;
   background-color: #f0f0f0;
-  border: solid 1px black;
+  border: 1px solid #d9d9d9;
   border-radius: 9px;
+}
+
+#location .rightSide .item:last-child {
+  margin-bottom: 30px;
 }
 
 #location .rightSide .item:hover {
@@ -144,6 +155,10 @@
   width: calc(100% - 58px);
   height: 77px;
   cursor: pointer;
+}
+
+#location .rightSide .item:last-child:hover {
+  margin-bottom: 30px;
 }
 
 #location .rightSide .name {

@@ -3,8 +3,24 @@
   height: 100%;
 }
 
-#categories-list .table {
+#categories-list .ant-table table {
+  border: 1px solid #d9d9d9;
   border-radius: 9px;
+}
+
+#categories-list .ant-table thead tr:first-child th:first-child {
+  border-radius: 9px 0 0 0;
+  border: 0px;
+}
+
+#categories-list .ant-table thead tr:first-child th:last-child  {
+  border-radius: 0 9px 0 0;
+  border-top: 0px solid #d9d9d9;
+  border-left: 0px solid #d9d9d9;
+}
+
+#categories-list .ant-table tbody tr:last-child td {
+  border-bottom: 0px;
 }
 
 #categories-list .buttonContainer {

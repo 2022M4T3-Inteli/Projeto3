@@ -177,7 +177,7 @@ const List: any = (Parent: any) => {
           <Button>Adicionar Tag</Button>
         </Link>
       </div>
-      <Table className='table' columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
+      <Table rowKey="name" className='table' columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
     </div>
   )
 }

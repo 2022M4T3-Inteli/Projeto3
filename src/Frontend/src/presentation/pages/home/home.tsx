@@ -1,13 +1,33 @@
-import React, { useState } from 'react'
-import { Route, Routes } from "react-router-dom"
+import React, { useState, useEffect } from 'react'
+import { Route, Routes, useLocation } from "react-router-dom"
 import { Header, Navbar } from '../../components'
 import './home.scss'
 
 import { Location, CategoriesList, CategoriesAdd, CategoriesEdit, TagsList, TagsAdd, TagsEdit } from '../../../presentation/pages'
 
+const verifyPage: Function = () => {
+  let path = String(useLocation().pathname)
+  
+  if (path.includes("/history")) {
+    return 1
+  }
+  else if (path.includes("/categories")) {
+    return 2
+  }
+  else if (path.includes("/tags")) {
+    return 3
+  }
+  else if (path.includes("/configuration")) {
+    return 5
+  }
+  else {
+    return 0
+  }
+}
+
 const Home: React.FC = () => {
   const [actualTag, setActualTag] = useState(-1)
-  const [actualPage, setActualPage] = useState(0)
+  const [actualPage, setActualPage] = useState(verifyPage())
 
   const props: any = {
     changeTag: (index: number) => setActualTag(index),
@@ -15,6 +35,7 @@ const Home: React.FC = () => {
     actualTag: actualTag,
     actualPage: actualPage
   }
+
 
   return (
     <div id="home" >

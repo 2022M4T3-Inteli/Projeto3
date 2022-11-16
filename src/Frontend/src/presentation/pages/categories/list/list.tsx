@@ -115,7 +115,7 @@ const List: any = (Parent: any) => {
           <Button>Adicionar Categoria</Button>
         </Link>
       </div>
-      <Table className='table' columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
+      <Table rowKey="name" className='table' columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
     </div>
   )
 }
