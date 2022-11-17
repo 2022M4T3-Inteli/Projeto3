@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Select, Tag } from 'antd';
-import type { CustomTagProps } from 'rc-select/lib/BaseSelect';
-import { Input } from 'antd';
+import { Select, Tag } from 'antd'
+import type { CustomTagProps } from 'rc-select/lib/BaseSelect'
+import { Input, Button, Popover } from 'antd'
 import { Header, Navbar } from '../../components'
 import './location.scss'
   ;
@@ -107,7 +107,7 @@ const Location: any = (Parent: any) => {
       name: "Objeto 1",
       battery: batteryLevel(28),
       category: "Furadeiras",
-      isMoving: true,
+      isMoving: false,
       position: [100, 250]
     },
     {
@@ -134,7 +134,7 @@ const Location: any = (Parent: any) => {
       name: "Objeto 4",
       battery: batteryLevel(89),
       category: "Motoserras",
-      isMoving: true,
+      isMoving: false,
       position: [175, 600]
     },
     {
@@ -152,7 +152,7 @@ const Location: any = (Parent: any) => {
       name: "Objeto 6",
       battery: batteryLevel(0),
       category: "Furadeiras",
-      isMoving: true,
+      isMoving: false,
       position: [120, 520]
     },
     {
@@ -161,7 +161,7 @@ const Location: any = (Parent: any) => {
       name: "Objeto 7",
       battery: batteryLevel(100),
       category: "Motoserras",
-      isMoving: true,
+      isMoving: false,
       position: [300, 450]
     },
     {
@@ -189,13 +189,13 @@ const Location: any = (Parent: any) => {
 
   const handleSearch: Function = (value: string) => {
     setSearch(value)
-    if(active != -1) {
+    if (active != -1) {
       handleActive(-1)
     }
   }
 
   const handleFilter: Function = (value: string[]) => {
-    if(active != -1) {
+    if (active != -1) {
       handleActive(-1)
     }
     setFilter(value)
@@ -207,6 +207,7 @@ const Location: any = (Parent: any) => {
         if (active !== -1) {
           if (index === active) {
             return (
+              // <Popover content={showInfo(index)} title={tag.name} trigger="focus">
               <div
                 key={`tag-${tag.name}`}
                 onClick={() => handleActive(index)}
@@ -217,10 +218,12 @@ const Location: any = (Parent: any) => {
                     left: `${tag.position[1]}px`
                   }}>
               </div>
+              // </Popover>
             )
           }
           else {
             return (
+              // <Popover content={showInfo(index)} title={tag.name} trigger="focus">
               <div
                 key={`tag-location-${tag.name}`}
                 onClick={() => handleActive(index)}
@@ -231,11 +234,13 @@ const Location: any = (Parent: any) => {
                     left: `${tag.position[1]}px`
                   }}>
               </div>
+              // </Popover>
             )
           }
         }
         else {
           return (
+            // <Popover content={showInfo(index)} title={tag.name} trigger="focus">
             <div
               key={`tag-location-${tag.name}`}
               onClick={() => handleActive(index)}
@@ -246,9 +251,41 @@ const Location: any = (Parent: any) => {
                   left: `${tag.position[1]}px`
                 }}>
             </div>
+            // </Popover>
           )
         }
       }
+    }
+  }
+
+  const [buttonActivated, setButtonActivated] = useState(false)
+
+  const handleActivated: Function = (e: any) => {
+    // if(buttonActivated) {
+    //   fetch("")
+    // }
+    setButtonActivated(!buttonActivated)
+  }
+
+  const showInfo: Function = () => {
+    if (active != -1) {
+      return (
+        <div
+          className="info"
+          style={
+            {
+              top: `${tags[active].position[0]}px`,
+              left: `${tags[active].position[1] + 60}px`
+            }
+          }>
+          <div className="name">
+            {tags[active].name}
+          </div>
+          <div className='buttonContainer' onClick={(e) => handleActivated(e)}>
+            <div className={buttonActivated ? 'buttonActivated' : 'buttonDesactived'}>Acionar Tag</div>
+          </div>
+        </div>
+      )
     }
   }
 
@@ -346,6 +383,9 @@ const Location: any = (Parent: any) => {
             tags.map((tag, index) => {
               return showTag(tag, index)
             })
+          }
+          {
+            showInfo()
           }
         </div>
         <div className="col rightSide">

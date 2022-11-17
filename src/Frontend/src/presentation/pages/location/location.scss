@@ -95,6 +95,57 @@
   border-bottom: 35px solid #CCFE0050;
 }
 
+#location .leftSide .info {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 120px;
+  width: 160px;
+  background: #f5f5f5;
+  border: 1px solid #d9d9d9;
+  border-radius: 9px;
+  font-size: 16px;
+}
+
+#location .leftSide .info .name {
+  font-weight: bold;
+  padding: 8px;
+}
+
+#location .leftSide .info .buttonContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+#location .leftSide .info .buttonActivated  {
+  padding: 8px;
+  border-radius: 9px;
+  border: 1px solid #CCFE00;
+  color: #CCFE00;
+  cursor: pointer;
+}
+
+#location .leftSide .info .buttonDesactived {
+  border: 1px solid #d9d9d9;
+  color: #29292D;
+  padding: 8px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+#location .leftSide .info .buttonDesactived:hover {
+  color: #CCFE00;
+  border: 1px solid #CCFE00;
+}
+
+#location .left .info .buttonActivated {
+  color: #CCFE00;
+  border: 1px solid #CCFE00;
+}
+
 #location .rightSide {
   display: flex;
   flex-direction: column;
