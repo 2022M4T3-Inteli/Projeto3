@@ -1,5 +1,5 @@
 import React from 'react'
-import { Space, Table, Button } from 'antd'
+import { Space, Table, Button, Popover } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { Link } from 'react-router-dom'
 
@@ -13,6 +13,7 @@ import DirectionsRunIcon from '@mui/icons-material/DirectionsRun'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import InfoIcon from '@mui/icons-material/Info'
 
 type TagType = {
   id: number;
@@ -22,6 +23,11 @@ type TagType = {
   battery: any;
   isMoving: boolean
   position: [number, number]
+}
+
+type NewTagType = {
+  id: number;
+  macAddess: string;
 }
 
 const batteryLevel: Function = (level: number) => {
@@ -52,6 +58,17 @@ const batteryLevel: Function = (level: number) => {
       return <BatteryChargingFullIcon className='icon' />
   }
 }
+
+const newTags: NewTagType[] = [
+  {
+    id: 0,
+    macAddess: "32-146-23-62"
+  },
+  {
+    id: 1,
+    macAddess: "74-123-46-98"
+  }
+]
 
 const data: TagType[] = [
   {
@@ -170,9 +187,24 @@ const List: any = (Parent: any) => {
     }
   ]
 
+  const content: any = (
+    <div>Clique em Adicionar Tag</div>
+  )
+
+  const haveNewTags: Function = () => {
+    if (newTags.length > 0) {
+      return (
+        <Popover placement='bottom' content={content} title="Novas tags encontradas" trigger="click">
+          <InfoIcon className='icon' />
+        </Popover>
+      )
+    }
+  }
+
   return (
     <div id="tags-list">
       <div className="buttonContainer">
+        { haveNewTags() }
         <Link to={"/tags/add"}>
           <Button>Adicionar Tag</Button>
         </Link>
