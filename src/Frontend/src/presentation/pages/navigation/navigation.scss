@@ -1,0 +1,98 @@
+#navigation {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+#navigation .container {
+  width: calc(100% - 100px);
+  height: calc(100% - 120px);
+  margin: 110px 0px 0px 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #29292D;
+}
+
+#navigation .row {
+  width: calc(100% - 80px);
+  height: calc(100% - 40px);
+  display: flex;
+  justify-content: center;
+  // margin: 20px;
+  align-items: center;
+}
+
+#navigation .col {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 40px);
+  margin: 0px 20px;
+  background-color: #f8f8f8;
+  border: solid 1px #29292D;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #29292D;
+}
+
+#navigation .col:hover {
+  border-color: #CCFE00;
+  margin: 2.5px 20px;
+  height: calc(100% - 35px);
+  // background-color: #f4f4f4;
+  border: solid 2px #CCFE00;
+  // color: #CCFE00;
+}
+
+#navigation .topSide {
+  height: 300px;
+}
+
+#navigation .bottomSide {
+  height: 600px;
+}
+
+#navigation .location {
+  width: 60%;
+  flex: none;
+}
+
+#navigation .col:hover > .text {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+#navigation .col:hover > .icon {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+#navigation .col .text {
+  position: absolute;
+  margin: 0;
+  opacity: 1;
+  visibility: visible;
+}
+
+#navigation .col .icon {
+  font-size: 40px;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+}
+
+#navigation .location {
+  background-image: url("/src/assets/location.png");
+  opacity: 0.75;
+  background-size: cover;
+  // content: '';
+}
+#navigation .location:hover {
+  opacity: 1;
+}
