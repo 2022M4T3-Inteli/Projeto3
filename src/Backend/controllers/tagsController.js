@@ -39,5 +39,5 @@ exports.postTagStatus = function (req, res) {
 
   console.log(isTagActivated);
 
-  res.status(200).end();
+  res.status(200).json(req.body).end();
 };
