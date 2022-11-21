@@ -28,7 +28,7 @@ type CategoryType = {
 }
 
 const sendStatus: Function = async (status: boolean) => {
-  await fetch("http://10.254.16.253:8000/api/tags/tagStatus", {
+  await fetch("http://10.128.64.69:8000/api/tags/tagStatus", {
     method: "POST",
     // mode: 'cors',
     headers: {
@@ -42,7 +42,7 @@ const sendStatus: Function = async (status: boolean) => {
 }
 
 const getStatus: Function = async () => {
-  await fetch("http://10.254.16.253:8000/api/tags/tagStatus", {
+  await fetch("http://10.128.64.69:8000/api/tags/tagStatus", {
     method: "GET",
     // mode: 'cors',
     // headers: {
@@ -128,7 +128,7 @@ const Location: any = (Parent: any) => {
         name: "Objeto 2",
         battery: batteryLevel(50),
         category: "Motoserras",
-        isMoving: getStatus().isMoving,
+        isMoving: false,
         position: [100, 350]
       },
       {
@@ -204,7 +204,7 @@ const Location: any = (Parent: any) => {
       name: "Objeto 2",
       battery: batteryLevel(50),
       category: "Motoserras",
-      isMoving: getStatus().isMoving,
+      isMoving: false,
       position: [100, 350]
     },
     {
@@ -254,19 +254,19 @@ const Location: any = (Parent: any) => {
     }
   ]
 
-  useEffect(() => {
-    setInterval(() => {
-      setTags([...tagExamples, {
-        id: 2,
-        macAdress: 'abc',
-        name: "Objeto 3",
-        battery: batteryLevel(72),
-        category: "Britadeiras",
-        isMoving: false,
-        position: [50, 450]
-      }])
-    }, 3000)
-  }, [tags])
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     setTags([...tagExamples, {
+  //       id: 2,
+  //       macAdress: 'abc',
+  //       name: "Objeto 2",
+  //       battery: batteryLevel(72),
+  //       category: "Britadeiras",
+  //       isMoving: getStatus().isMoving,
+  //       position: [50, 450]
+  //     }])
+  //   }, 30000)
+  // }, [tags])
 
   useEffect(() => {
     setActive(Parent.props.actualTag)
