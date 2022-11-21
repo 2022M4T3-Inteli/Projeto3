@@ -2,6 +2,7 @@ const cors = require("cors");
 const express = require("express");
 const morgan = require("morgan");
 const tagsRouter = require("./routers/tagsRouter");
+const usersRouter = require("./routers/usersRouter");
 ////////////////////////////////////////////////////////////////////////
 
 const app = express();
@@ -13,5 +14,6 @@ if (process.env.NODE_ENV == "development") app.use(morgan("dev")); // http reque
 
 // routers
 app.use("/api/tags", tagsRouter);
+app.use("/api/users", usersRouter);
 
 module.exports = app;

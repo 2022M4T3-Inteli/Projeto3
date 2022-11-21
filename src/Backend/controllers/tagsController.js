@@ -1,43 +1,114 @@
-// MOCK DATA
-let tagReading;
-let isTagActivated;
+const Tag = require("./../models/tagModel");
 ////////////////////////////////////////////////////////////////////////////////////
 
 // ROUTE HANDLERS
-exports.tagUpdate = function (req, res) {
-  if (!tagReading)
-    tagReading = {
-      macAddr: req.body.macAddress,
-      isMoving: req.body.isMoving,
-    };
-  tagReading.positions = req.body.positions;
-  tagReading.isMoving = req.body.isMoving;
+exports.getAllTags = async function (req, res) {
+  try {
+    const _tags = await Tag.find();
 
-  if (!isTagActivated)
-    isTagActivated = {
-      macAddr: req.body.macAddr,
-      activated: false,
-    };
-
-  console.log(tagReading);
-
-  res.status(200).json(isTagActivated).end();
+    res
+      .status(200)
+      .json({
+        status: "success",
+        results: _tags.length,
+        data: _tags,
+      })
+      .end();
+  } catch (err) {
+    res
+      .status(400)
+      .json({
+        status: "fail",
+        message: err,
+      })
+      .end();
+  }
 };
 
-exports.getTagStatus = function (req, res) {
-  res
-    .status(200)
-    .json({
-      macAddr: tagReading.macAddr,
-      isMoving: tagReading.isMoving,
-    })
-    .end();
+exports.createNewTag = async function (req, res) {
+  try {
+    const _tag = await Tag.create(req.body);
+    res
+      .status(201)
+      .json({
+        status: "success",
+        data: _tag,
+      })
+      .end();
+  } catch (err) {
+    res
+      .status(400)
+      .json({
+        status: "fail",
+        message: err,
+      })
+      .end();
+  }
 };
 
-exports.postTagStatus = function (req, res) {
-  isTagActivated.activated = req.body.activated;
+exports.getTag = async function (req, res) {
+  try {
+    const _tag = await Tag.findById(req.params.id);
+    res
+      .status(200)
+      .json({
+        status: "success",
+        data: { _tag },
+      })
+      .end();
+  } catch (err) {
+    res
+      .status(400)
+      .json({
+        status: "fail",
+        message: err,
+      })
+      .end();
+  }
+};
 
-  console.log(isTagActivated);
+exports.updateTag = async function (req, res) {
+  try {
+    const _tag = await Tag.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
-  res.status(200).json(req.body).end();
+    res
+      .status(200)
+      .json({
+        status: "sucess",
+        data: { _tag },
+      })
+      .end();
+  } catch (err) {
+    res
+      .status(400)
+      .json({
+        status: "fail",
+        message: err,
+      })
+      .end();
+  }
+};
+
+exports.deleteTag = async function (req, res) {
+  try {
+    await Tag.findByIdAndDelete(req.params.id);
+    res
+      .status(200)
+      .json({
+        status: "sucess",
+        data: null,
+      })
+      .end();
+  } catch (err) {
+    res
+      .status(400)
+      .json({
+        status: "fail",
+        message: err,
+      })
+      .end();
+  }
 };
