@@ -27,6 +27,37 @@ type CategoryType = {
   name: string;
 }
 
+const sendStatus: Function = async (status: boolean) => {
+  await fetch("http://10.128.64.69:8000/api/tags/tagStatus", {
+    method: "POST",
+    // mode: 'cors',
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: JSON.stringify({ activated: status }),
+    // credentials: 'same-origin',
+    // referrerPolicy: 'unsafe-url'
+  })
+}
+
+const getStatus: Function = async () => {
+  await fetch("http://10.128.64.69:8000/api/tags/tagStatus", {
+    method: "GET",
+    // mode: 'cors',
+    // headers: {
+    //   'Content-Type': 'application/json'
+    //   // 'Content-Type': 'application/x-www-form-urlencoded',
+    // }
+    // credentials: 'same-origin',
+    // referrerPolicy: 'unsafe-url'
+  }).then((response) => response.json())
+    .then((json) => {
+      console.log(json.isMoving)
+      return json
+    })
+}
+
 const tagRender = (props: CustomTagProps) => {
   const { label, value, closable, onClose } = props
   const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
@@ -80,34 +111,91 @@ const Location: any = (Parent: any) => {
   const [active, setActive] = useState(-1)
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState([''])
+  const [tags, setTags] = useState(
+    [
+      {
+        id: 0,
+        macAdress: 'abc',
+        name: "Objeto 1",
+        battery: batteryLevel(28),
+        category: "Furadeiras",
+        isMoving: true,
+        position: [100, 250]
+      },
+      {
+        id: 1,
+        macAdress: 'abc',
+        name: "Objeto 2",
+        battery: batteryLevel(50),
+        category: "Motoserras",
+        isMoving: false,
+        position: [100, 350]
+      },
+      {
+        id: 2,
+        macAdress: 'abc',
+        name: "Objeto 3",
+        battery: batteryLevel(72),
+        category: "Britadeiras",
+        isMoving: false,
+        position: [50, 450]
+      },
+      {
+        id: 3,
+        macAdress: 'abc',
+        name: "Objeto 4",
+        battery: batteryLevel(89),
+        category: "Motoserras",
+        isMoving: false,
+        position: [175, 600]
+      },
+      {
+        id: 4,
+        macAdress: 'abc',
+        name: "Objeto 5",
+        battery: batteryLevel(10),
+        category: "Britadeiras",
+        isMoving: false,
+        position: [200, 250]
+      },
+      {
+        id: 5,
+        macAdress: 'abc',
+        name: "Objeto 6",
+        battery: batteryLevel(0),
+        category: "Furadeiras",
+        isMoving: false,
+        position: [120, 520]
+      },
+      {
+        id: 6,
+        macAdress: 'abc',
+        name: "Objeto 7",
+        battery: batteryLevel(100),
+        category: "Motoserras",
+        isMoving: false,
+        position: [300, 450]
+      },
+      {
+        id: 7,
+        macAdress: 'abc',
+        name: "Objeto 8",
+        battery: batteryLevel(45),
+        category: "Britadeiras",
+        isMoving: false,
+        position: [300, 150]
+      }
+    ]
+  )
 
-  useEffect(() => {
-    setActive(Parent.props.actualTag)
-  }, [Parent.props.actualTag])
-
-  const categories: CategoryType[] = [
-    {
-      id: 0,
-      name: "Furadeiras"
-    },
-    {
-      id: 1,
-      name: "Britadeiras"
-    },
-    {
-      id: 2,
-      name: "Motoserras"
-    }
-  ]
-
-  const tags: TagType[] = [
+  const tagExamples: TagType[] = [
     {
       id: 0,
       macAdress: 'abc',
       name: "Objeto 1",
       battery: batteryLevel(28),
       category: "Furadeiras",
-      isMoving: false,
+      isMoving: true,
       position: [100, 250]
     },
     {
@@ -116,17 +204,8 @@ const Location: any = (Parent: any) => {
       name: "Objeto 2",
       battery: batteryLevel(50),
       category: "Motoserras",
-      isMoving: true,
-      position: [100, 350]
-    },
-    {
-      id: 2,
-      macAdress: 'abc',
-      name: "Objeto 3",
-      battery: batteryLevel(72),
-      category: "Britadeiras",
       isMoving: false,
-      position: [50, 450]
+      position: [100, 350]
     },
     {
       id: 3,
@@ -172,6 +251,39 @@ const Location: any = (Parent: any) => {
       category: "Britadeiras",
       isMoving: false,
       position: [300, 150]
+    }
+  ]
+
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     setTags([...tagExamples, {
+  //       id: 2,
+  //       macAdress: 'abc',
+  //       name: "Objeto 2",
+  //       battery: batteryLevel(72),
+  //       category: "Britadeiras",
+  //       isMoving: getStatus().isMoving,
+  //       position: [50, 450]
+  //     }])
+  //   }, 30000)
+  // }, [tags])
+
+  useEffect(() => {
+    setActive(Parent.props.actualTag)
+  }, [Parent.props.actualTag])
+
+  const categories: CategoryType[] = [
+    {
+      id: 0,
+      name: "Furadeiras"
+    },
+    {
+      id: 1,
+      name: "Britadeiras"
+    },
+    {
+      id: 2,
+      name: "Motoserras"
     }
   ]
 
@@ -258,14 +370,15 @@ const Location: any = (Parent: any) => {
     }
   }
 
+
   const [buttonActivated, setButtonActivated] = useState(false)
 
-  const handleActivated: Function = (e: any) => {
-    // if(buttonActivated) {
-    //   fetch("")
-    // }
+  const handleActivated: Function = () => {
+    sendStatus(!buttonActivated)
     setButtonActivated(!buttonActivated)
   }
+
+
 
   const showInfo: Function = () => {
     if (active != -1) {
@@ -281,7 +394,7 @@ const Location: any = (Parent: any) => {
           <div className="name">
             {tags[active].name}
           </div>
-          <div className='buttonContainer' onClick={(e) => handleActivated(e)}>
+          <div onClick={() => handleActivated()} className='buttonContainer'>
             <div className={buttonActivated ? 'buttonActivated' : 'buttonDesactived'}>Acionar Tag</div>
           </div>
         </div>
@@ -314,7 +427,7 @@ const Location: any = (Parent: any) => {
       }
     }
 
-    tags.map((tag: TagType, index) => {
+    tags.map((tag: any, index) => {
       if (index != active && tag.name.toLowerCase().includes(search.toLowerCase())) {
         if (filter.includes(tag.category) || !filter[0]) {
           content.push(
