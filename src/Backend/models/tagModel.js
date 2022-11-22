@@ -6,6 +6,11 @@ const tagSchema = new mongoose.Schema({
     required: [true, "name is required."],
     trim: true,
   },
+  category: {
+    type: String,
+    required: [true, "category is required"],
+    trim: true,
+  },
   macAddress: {
     type: String,
     required: [true, "macAddress is required"],
@@ -14,10 +19,6 @@ const tagSchema = new mongoose.Schema({
   lastPosition: {
     type: Array,
     default: [0, 0, 0],
-  },
-  description: {
-    type: String,
-    trim: true,
   },
   createdAt: {
     type: Date,
