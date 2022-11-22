@@ -6,6 +6,7 @@ import {
   Select
 } from 'antd';
 import './add.scss'
+import { Link } from 'react-router-dom';
 
 type CategoryType = {
   id: number;
@@ -102,8 +103,13 @@ const Add: React.FC = () => {
 
         <Form.Item>
           <Button className='button' htmlType="submit">
-            Cadastrar Tag
+            Cadastrar
           </Button>
+          <Link to={"/tags"} >
+            <Button className='button'>
+              Cancelar
+            </Button>
+          </Link>
         </Form.Item>
       </Form>
     </div>

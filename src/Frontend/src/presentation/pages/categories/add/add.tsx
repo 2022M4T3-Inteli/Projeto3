@@ -6,6 +6,7 @@ import {
   Select
 } from 'antd';
 import './add.scss'
+import { Link } from 'react-router-dom';
 
 type CategoryType = {
   id: number;
@@ -70,40 +71,15 @@ const Add: React.FC = () => {
           <Input />
         </Form.Item>
 
-        {/* <Form.Item label="MAC Address da Tag">
-          <Select>
-            {
-              newDevices.map((device: Devices, index: number) => {
-                return (
-                  <Select.Option
-                    className="formSelect"
-                    bordered={false}
-                    value={device.macAddress}
-                    key={`${device.macAddress}-${index}`}>
-                    {device.macAddress}
-                  </Select.Option>
-                )
-              })
-            }
-          </Select>
-        </Form.Item>
-
-        <Form.Item label="Categoria da Tag">
-          <Select>
-            {
-              categories.map((category, index) => {
-                return (
-                  <Select.Option key={`${category}-${index}`} value={category.name}>{category.name}</Select.Option>
-                )
-              })
-            }
-          </Select>
-        </Form.Item> */}
-
         <Form.Item>
           <Button className='button' htmlType="submit">
-            Cadastrar Categoria
+            Cadastrar
           </Button>
+          <Link to={"/categories"} >
+            <Button className='button'>
+              Cancelar
+            </Button>
+          </Link>
         </Form.Item>
       </Form>
     </div>

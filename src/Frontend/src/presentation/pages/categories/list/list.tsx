@@ -1,5 +1,5 @@
 import React from 'react'
-import { Space, Table, Button } from 'antd'
+import { Space, Table, Button, Modal } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { Link } from 'react-router-dom'
 
@@ -13,6 +13,7 @@ import DirectionsRunIcon from '@mui/icons-material/DirectionsRun'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 type CategoryType = {
   id: number;
@@ -48,6 +49,25 @@ const batteryLevel: Function = (level: number) => {
       return <BatteryChargingFullIcon className='icon' />
   }
 }
+
+const { confirm } = Modal;
+
+const showConfirm: Function = () => {
+  confirm({
+    title: 'Você realmente desaja excluir a categoria?',
+    icon: <ExclamationCircleFilled />,
+    // content: 'Não poderá ser desfeita',
+    okText:"Excluir",
+    okType: 'danger',
+    cancelText: 'Não',
+    onOk() {
+      console.log('OK');
+    },
+    onCancel() {
+      console.log('Cancel');
+    },
+  });
+};
 
 const data: CategoryType[] = [
   {
@@ -100,9 +120,7 @@ const List: any = (Parent: any) => {
           <Link to={"/categories/edit"}>
             <EditIcon className='actionIcon' />
           </Link>
-          <Link to={"/categories"}>
-            <DeleteIcon className='actionIcon' />
-          </Link>
+          <DeleteIcon onClick={() => showConfirm()} className='actionIcon' />
         </Space>
       )
     }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Space, Table, Button, Popover } from 'antd'
+import { Space, Table, Button, Popover, Modal } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { Link } from 'react-router-dom'
 
@@ -14,6 +14,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import InfoIcon from '@mui/icons-material/Info'
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 type TagType = {
   id: number;
@@ -29,6 +30,25 @@ type NewTagType = {
   id: number;
   macAddess: string;
 }
+
+const { confirm } = Modal;
+
+const showConfirm: Function = () => {
+  confirm({
+    title: 'Você realmente desaja excluir a Tag?',
+    icon: <ExclamationCircleFilled />,
+    // content: 'Não poderá ser desfeita',
+    okText: "Excluir",
+    okType: 'danger',
+    cancelText: 'Não',
+    onOk() {
+      console.log('OK');
+    },
+    onCancel() {
+      console.log('Cancel');
+    },
+  });
+};
 
 const batteryLevel: Function = (level: number) => {
   let type = 0
@@ -176,12 +196,10 @@ const List: any = (Parent: any) => {
           <Link onClick={() => handleActive(index)} to={"/"}>
             <VisibilityIcon className='actionIcon' />
           </Link>
-          <Link to={"/categories/edit"}>
+          <Link to={"/tags/edit"}>
             <EditIcon className='actionIcon' />
           </Link>
-          <Link to={"/categories"}>
-            <DeleteIcon className='actionIcon' />
-          </Link>
+          <DeleteIcon onClick={() => showConfirm()} className='actionIcon' />
         </Space>
       )
     }
@@ -204,7 +222,7 @@ const List: any = (Parent: any) => {
   return (
     <div id="tags-list">
       <div className="buttonContainer">
-        { haveNewTags() }
+        {haveNewTags()}
         <Link to={"/tags/add"}>
           <Button>Adicionar Tag</Button>
         </Link>
