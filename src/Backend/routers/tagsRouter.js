@@ -4,6 +4,8 @@ const tagsController = require("./../controllers/tagsController");
 const router = express.Router();
 
 // routes middleware
+router.route("/stats").get(tagsController.getStats);
+
 router
   .route("/")
   .get(tagsController.getAllTags)

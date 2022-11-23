@@ -1,6 +1,7 @@
 const cors = require("cors");
 const express = require("express");
 const morgan = require("morgan");
+const categoryRouter = require("./routers/categoryRouter");
 const tagsRouter = require("./routers/tagsRouter");
 const usersRouter = require("./routers/usersRouter");
 ////////////////////////////////////////////////////////////////////////
@@ -13,6 +14,7 @@ app.use(cors());
 if (process.env.NODE_ENV == "development") app.use(morgan("dev")); // http requests logger
 
 // routers
+app.use("/api/category", categoryRouter);
 app.use("/api/tags", tagsRouter);
 app.use("/api/users", usersRouter);
 

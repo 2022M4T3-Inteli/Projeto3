@@ -1,17 +1,17 @@
-const Tag = require("./../models/tagModel");
+const Category = require("../models/categoryModel");
 ////////////////////////////////////////////////////////////////////////////////////
 
 // ROUTE HANDLERS
-exports.getAllTags = async function (req, res) {
+exports.getAllCategories = async function (req, res) {
   try {
-    const _tags = await Tag.find();
+    const _categories = await Category.find();
 
     res
       .status(200)
       .json({
         status: "success",
-        results: _tags.length,
-        data: _tags,
+        results: _categories.length,
+        data: _categories,
       })
       .end();
   } catch (err) {
@@ -25,14 +25,14 @@ exports.getAllTags = async function (req, res) {
   }
 };
 
-exports.createNewTag = async function (req, res) {
+exports.createNewCategory = async function (req, res) {
   try {
-    const _tag = await Tag.create(req.body);
+    const _category = await Category.create(req.body);
     res
       .status(201)
       .json({
         status: "success",
-        data: _tag,
+        data: _category,
       })
       .end();
   } catch (err) {
@@ -46,14 +46,14 @@ exports.createNewTag = async function (req, res) {
   }
 };
 
-exports.getTag = async function (req, res) {
+exports.getCategory = async function (req, res) {
   try {
-    const _tag = await Tag.findById(req.params.id);
+    const _category = await Category.findById(req.params.id);
     res
       .status(200)
       .json({
         status: "success",
-        data: { _tag },
+        data: { _category },
       })
       .end();
   } catch (err) {
@@ -67,18 +67,19 @@ exports.getTag = async function (req, res) {
   }
 };
 
-exports.updateTag = async function (req, res) {
+exports.updateCategory = async function (req, res) {
   try {
-    const _tag = await Tag.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const _category = await Category.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
 
     res
       .status(200)
       .json({
         status: "sucess",
-        data: { _tag },
+        data: { _category },
       })
       .end();
   } catch (err) {
@@ -92,46 +93,14 @@ exports.updateTag = async function (req, res) {
   }
 };
 
-exports.deleteTag = async function (req, res) {
+exports.deleteCategory = async function (req, res) {
   try {
-    await Tag.findByIdAndDelete(req.params.id);
+    await Category.findByIdAndDelete(req.params.id);
     res
       .status(200)
       .json({
         status: "sucess",
         data: null,
-      })
-      .end();
-  } catch (err) {
-    res
-      .status(400)
-      .json({
-        status: "fail",
-        message: err,
-      })
-      .end();
-  }
-};
-
-exports.getStats = async function (req, res) {
-  try {
-    const stats = await Tag.aggregate([
-      {
-        $group: {
-          _id: "$category",
-          results: { $sum: 1 },
-        },
-      },
-      {
-        $sort: { results: 1 },
-      },
-    ]);
-
-    res
-      .status(200)
-      .json({
-        status: "success",
-        data: { stats },
       })
       .end();
   } catch (err) {
