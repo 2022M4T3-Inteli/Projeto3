@@ -1,5 +1,6 @@
 const { CustomError, asyncHandler } = require("../utils/lib");
 const Category = require("../models/categoryModel");
+const Tag = require("./../models/tagModel");
 ////////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -7,6 +8,17 @@ const Category = require("../models/categoryModel");
  */
 exports.getAllCategories = asyncHandler(async function (req, res) {
   const _categories = await Category.find();
+  const _stats = await Tag.aggregate([
+    {
+      $group: {
+        _id: "$category",
+        results: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { results: 1 },
+    },
+  ]);
 
   res
     .status(200)
@@ -14,6 +26,7 @@ exports.getAllCategories = asyncHandler(async function (req, res) {
       status: "success",
       results: _categories.length,
       data: _categories,
+      stats: _stats,
     })
     .end();
 });

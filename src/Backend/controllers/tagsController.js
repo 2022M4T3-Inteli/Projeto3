@@ -72,27 +72,3 @@ exports.deleteTag = asyncHandler(async function (req, res, next) {
     })
     .end();
 });
-
-exports.getStats = asyncHandler(async function (req, res, next) {
-  const stats = await Tag.aggregate([
-    {
-      $group: {
-        _id: "$category",
-        results: { $sum: 1 },
-      },
-    },
-    {
-      $sort: { results: 1 },
-    },
-  ]);
-
-  if (!stats) return next(new CustomError("ID not found", 404));
-
-  res
-    .status(200)
-    .json({
-      status: "success",
-      data: { stats },
-    })
-    .end();
-});
