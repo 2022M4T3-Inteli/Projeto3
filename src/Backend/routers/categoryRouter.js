@@ -3,7 +3,9 @@ const categoryController = require("../controllers/categoryController");
 
 const router = express.Router();
 
-// routes middleware
+/**
+ * routes middleware
+ */
 router
   .route("/")
   .get(categoryController.getAllCategories)

@@ -1,9 +1,19 @@
 // environment variables
 require("dotenv").config({ path: "./config.env" });
-//////////////////////////////////////////////////////////
-
-// database
+const app = require("./app");
 const mongoose = require("mongoose");
+const { terminate } = require("./utils/lib");
+//////////////////////////////////////////////////////////////////
+
+/**
+ * unhandled (sync) exceptions handler
+ */
+process.on("uncaughtException", (err) => terminate(err));
+//////////////////////////////////////////////////////////////////
+
+/**
+ * database config
+ */
 
 const DB = process.env.DATABASE.replace(
   "<PASSWORD>",
@@ -13,11 +23,20 @@ const DB = process.env.DATABASE.replace(
 mongoose
   .connect(DB)
   .then((conn) => console.log(`DB connected to: ${conn.connections[0].name}`));
-//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-// server
-const app = require("./app");
+/**
+ * server config
+ */
 
-app.listen(process.env.PORT || 8000, process.env.HOST || "127.0.0.1", () =>
-  console.log(`Server running on port ${process.env.PORT || 8000}`)
+const server = app.listen(
+  process.env.PORT || 8000,
+  process.env.HOST || "127.0.0.1",
+  () => console.log(`Server running on port ${process.env.PORT}`)
 );
+//////////////////////////////////////////////////////////////////
+
+/**
+ * unhandled (async) rejections handler
+ */
+process.on("unhandledRejection", (err) => terminate(err, server));

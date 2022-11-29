@@ -3,9 +3,14 @@ const tagsController = require("./../controllers/tagsController");
 
 const router = express.Router();
 
-// routes middleware
+/**
+ * aggregation pipelines
+ */
 router.route("/stats").get(tagsController.getStats);
 
+/**
+ * routes middleware
+ */
 router
   .route("/")
   .get(tagsController.getAllTags)

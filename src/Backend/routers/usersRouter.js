@@ -3,13 +3,15 @@ const usersController = require("../controllers/usersController");
 
 const router = express.Router();
 
-// routes middleware
+/**
+ * routes middleware
+ */
 router
   .route("/")
   .get(usersController.getAllUsers)
   .post(usersController.createNewUser);
 router
-  .route(":id")
+  .route("/:id")
   .get(usersController.getUser)
   .patch(usersController.updateUser)
   .delete(usersController.deleteUser);
