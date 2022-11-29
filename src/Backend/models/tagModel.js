@@ -16,6 +16,14 @@ const tagSchema = new mongoose.Schema({
     required: [true, "macAddress is required"],
     unique: true,
   },
+  isMoving: {
+    type: Boolean,
+    default: false,
+  },
+  activated: {
+    type: Boolean,
+    default: false,
+  },
   lastPosition: {
     type: Array,
     default: [0, 0, 0],
