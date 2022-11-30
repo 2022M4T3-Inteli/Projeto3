@@ -1,4 +1,4 @@
-const { CustomError, asyncHandler } = require("../utils/lib");
+const { asyncHandler, CustomError, groupBy } = require("../utils/lib");
 const Category = require("../models/categoryModel");
 const Tag = require("./../models/tagModel");
 ////////////////////////////////////////////////////////////////////////////////////
@@ -8,25 +8,43 @@ const Tag = require("./../models/tagModel");
  */
 exports.getAllCategories = asyncHandler(async function (req, res) {
   const _categories = await Category.find();
-  const _stats = await Tag.aggregate([
-    {
-      $group: {
-        _id: "$category",
-        results: { $sum: 1 },
+  const _stats = (
+    await Tag.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          results: { $sum: 1 },
+        },
       },
-    },
-    {
-      $sort: { results: 1 },
-    },
-  ]);
+      {
+        $sort: { results: 1 },
+      },
+    ])
+  ).map(
+    (el) =>
+      new Object({
+        name: el._id,
+        results: el.results,
+      })
+  );
+
+  const _flat = groupBy([_stats, _categories].flat(), "name");
+  let _data = [];
+  for (const [key, value] of Object.entries(_flat)) {
+    let _temp = {};
+    const _spread = { ...value[0], ...value[1] };
+    _temp.name = _spread.name;
+    _temp.results = _spread.results;
+    _temp._id = _spread._doc._id;
+    _data.push(_temp);
+  }
 
   res
     .status(200)
     .json({
       status: "success",
       results: _categories.length,
-      data: _categories,
-      stats: _stats,
+      data: _data,
     })
     .end();
 });

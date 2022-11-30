@@ -1,4 +1,15 @@
 /**
+ * wrapper function to catch errors in async functions
+ *
+ * @param {function} fn
+ * @returns void
+ */
+const asyncHandler = function (fn) {
+  return (req, res, next) => fn(req, res, next).catch(next);
+};
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
  * @property isOperational : distinguish operational error from other unknown errors
  *
  * Error.captureStackTrace : creates the stack property on Error instance
@@ -18,6 +29,21 @@ class CustomError extends Error {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * used to merge objects based on commom property
+ * eg getAllCategories
+ */
+
+const groupBy = function (objectArray, property) {
+  return objectArray.reduce((acc, obj) => {
+    const key = obj[property];
+    const curGroup = acc[key] ?? [];
+
+    return { ...acc, [key]: [...curGroup, obj] };
+  }, {});
+};
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
  * handles uncaught (sync) exceptions and (async) rejections
  */
 const terminate = function (err, server) {
@@ -27,15 +53,4 @@ const terminate = function (err, server) {
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * wrapper function to catch errors in async functions
- *
- * @param {function} fn
- * @returns void
- */
-const asyncHandler = function (fn) {
-  return (req, res, next) => fn(req, res, next).catch(next);
-};
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
-module.exports = { CustomError, terminate, asyncHandler };
+module.exports = { asyncHandler, CustomError, groupBy, terminate };
