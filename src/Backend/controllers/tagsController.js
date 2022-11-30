@@ -3,10 +3,20 @@ const Tag = require("./../models/tagModel");
 ////////////////////////////////////////////////////////////////////////////////////
 
 /**
+ * ALIAS MIDDLEWARE: provides a route for new tags
+ */
+exports.aliasNewTags = function (req, res, next) {
+  req.query.sort = "-ratingsAverage,price,-maxGroupSize";
+  req.query.limit = 5;
+  next();
+};
+////////////////////////////////////////////////////////
+
+/**
  * ROUTE HANDLERS
  */
 exports.getAllTags = asyncHandler(async function (req, res, next) {
-  const _tags = await Tag.find();
+  const _tags = await Tag.find(req.query);
 
   res
     .status(200)

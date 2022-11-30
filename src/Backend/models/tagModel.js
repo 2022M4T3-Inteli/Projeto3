@@ -3,12 +3,12 @@ const mongoose = require("mongoose");
 const tagSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "name is required."],
+    default: "",
     trim: true,
   },
   category: {
     type: String,
-    required: [true, "category is required"],
+    default: "",
     trim: true,
   },
   macAddress: {

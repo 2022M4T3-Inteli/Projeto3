@@ -1,5 +1,5 @@
-const { asyncHandler, CustomError, groupBy } = require("../utils/lib");
 const Category = require("../models/categoryModel");
+const { asyncHandler, CustomError, groupBy } = require("../utils/lib");
 const Tag = require("./../models/tagModel");
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,7 +33,7 @@ exports.getAllCategories = asyncHandler(async function (req, res) {
   for (const [key, value] of Object.entries(_flat)) {
     let _temp = {};
     const _spread = { ...value[0], ...value[1] };
-    _temp.name = _spread.name;
+    _temp.name = _spread._doc.name;
     _temp.results = _spread.results;
     _temp._id = _spread._doc._id;
     _data.push(_temp);
