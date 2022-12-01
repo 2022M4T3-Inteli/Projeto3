@@ -31,8 +31,10 @@ exports.getAllCategories = asyncHandler(async function (req, res) {
   const _flat = groupBy([_stats, _categories].flat(), "name");
   let _data = [];
   for (const [key, value] of Object.entries(_flat)) {
-    let _temp = {};
     const _spread = { ...value[0], ...value[1] };
+    if (_spread.name === "") continue;
+
+    let _temp = {};
     _temp.name = _spread._doc.name;
     _temp.results = _spread.results;
     _temp._id = _spread._doc._id;
