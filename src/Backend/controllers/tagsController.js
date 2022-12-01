@@ -3,16 +3,6 @@ const Tag = require("./../models/tagModel");
 ////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * ALIAS MIDDLEWARE: provides a route for new tags
- */
-exports.aliasNewTags = function (req, res, next) {
-  req.query.sort = "-ratingsAverage,price,-maxGroupSize";
-  req.query.limit = 5;
-  next();
-};
-////////////////////////////////////////////////////////
-
-/**
  * ROUTE HANDLERS
  */
 exports.getAllTags = asyncHandler(async function (req, res, next) {
@@ -29,7 +19,26 @@ exports.getAllTags = asyncHandler(async function (req, res, next) {
 });
 
 exports.createNewTag = asyncHandler(async function (req, res, next) {
-  const _tag = await Tag.create(req.body);
+  const allTags = await Tag.find();
+
+  let _tagExists = false;
+  let _idTag = 0;
+  allTags.forEach((tag) => {
+    if (tag.macAddress === req.body.macAddress) {
+      _tagExists = true;
+      _idTag = String(tag._id);
+    }
+  });
+
+  let _tag = new Object();
+  if (_tagExists) {
+    _tag = await Tag.findByIdAndUpdate(_idTag, req.body, {
+      new: true,
+    });
+  } else {
+    _tag = await Tag.create(req.body);
+  }
+
   res
     .status(201)
     .json({

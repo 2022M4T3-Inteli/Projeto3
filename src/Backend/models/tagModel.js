@@ -26,7 +26,7 @@ const tagSchema = new mongoose.Schema({
   },
   lastPosition: {
     type: Array,
-    default: [0, 0, 0],
+    default: [0, 0],
   },
   createdAt: {
     type: Date,
