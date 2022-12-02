@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Space, Table, Button, Popover, Modal } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import './list.scss'
 
@@ -18,7 +18,7 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 
 type TagType = {
   id: number;
-  macAdress: string;
+  macAddress: string;
   name: string;
   category: string;
   battery: any;
@@ -32,23 +32,6 @@ type NewTagType = {
 }
 
 const { confirm } = Modal;
-
-const showConfirm: Function = () => {
-  confirm({
-    title: 'Você realmente desaja excluir a Tag?',
-    icon: <ExclamationCircleFilled />,
-    // content: 'Não poderá ser desfeita',
-    okText: "Excluir",
-    okType: 'danger',
-    cancelText: 'Não',
-    onOk() {
-      console.log('OK');
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-};
 
 const batteryLevel: Function = (level: number) => {
   let type = 0
@@ -93,7 +76,7 @@ const newTags: NewTagType[] = [
 const data: TagType[] = [
   {
     id: 0,
-    macAdress: 'abc',
+    macAddress: 'abc',
     name: "Objeto 1",
     battery: batteryLevel(28),
     category: "Furadeiras",
@@ -102,7 +85,7 @@ const data: TagType[] = [
   },
   {
     id: 1,
-    macAdress: 'abc',
+    macAddress: 'abc',
     name: "Objeto 2",
     battery: batteryLevel(50),
     category: "Motoserras",
@@ -111,7 +94,7 @@ const data: TagType[] = [
   },
   {
     id: 2,
-    macAdress: 'abc',
+    macAddress: 'abc',
     name: "Objeto 3",
     battery: batteryLevel(72),
     category: "Britadeiras",
@@ -120,7 +103,7 @@ const data: TagType[] = [
   },
   {
     id: 3,
-    macAdress: 'abc',
+    macAddress: 'abc',
     name: "Objeto 4",
     battery: batteryLevel(89),
     category: "Motoserras",
@@ -129,7 +112,7 @@ const data: TagType[] = [
   },
   {
     id: 4,
-    macAdress: 'abc',
+    macAddress: 'abc',
     name: "Objeto 5",
     battery: batteryLevel(10),
     category: "Britadeiras",
@@ -138,7 +121,7 @@ const data: TagType[] = [
   },
   {
     id: 5,
-    macAdress: 'abc',
+    macAddress: 'abc',
     name: "Objeto 6",
     battery: batteryLevel(0),
     category: "Furadeiras",
@@ -147,7 +130,7 @@ const data: TagType[] = [
   },
   {
     id: 6,
-    macAdress: 'abc',
+    macAddress: 'abc',
     name: "Objeto 7",
     battery: batteryLevel(100),
     category: "Motoserras",
@@ -156,7 +139,7 @@ const data: TagType[] = [
   },
   {
     id: 7,
-    macAdress: 'abc',
+    macAddress: 'abc',
     name: "Objeto 8",
     battery: batteryLevel(45),
     category: "Britadeiras",
@@ -167,10 +150,44 @@ const data: TagType[] = [
 
 
 const List: any = (Parent: any) => {
+  const navigate = useNavigate()
   const handleActive: Function = (index: number) => {
     Parent.props.changeTag(index)
     Parent.props.changePage(0)
   }
+
+  const [tags, setTags] = useState(Parent.props.tags)
+
+  useEffect(() => {
+    setTags(Parent.props.tags)
+    console.log(tags)
+  }, [Parent.props.tags])
+
+  async function deleteTag(id: string) {
+    await fetch(`http://10.254.18.38:8000/api/tags/${id}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(() => Parent.props.getTags()).then(() => navigate('/tags'))
+  }
+
+  const showConfirm: Function = (id: string) => {
+    confirm({
+      title: 'Você realmente desaja excluir a Tag?',
+      icon: <ExclamationCircleFilled />,
+      // content: 'Não poderá ser desfeita',
+      okText: "Excluir",
+      okType: 'danger',
+      cancelText: 'Não',
+      onOk() {
+        deleteTag(id)
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
 
   const columns: ColumnsType<TagType> = [
     {
@@ -196,10 +213,13 @@ const List: any = (Parent: any) => {
           <Link onClick={() => handleActive(index)} to={"/"}>
             <VisibilityIcon className='actionIcon' />
           </Link>
-          <Link to={"/tags/edit"}>
+          <Link
+            to={`/tags/edit/${obj._id}`}
+            state={{name: obj.name, macAddress: obj.macAddress, category: obj.category}}
+          >
             <EditIcon className='actionIcon' />
           </Link>
-          <DeleteIcon onClick={() => showConfirm()} className='actionIcon' />
+          <DeleteIcon onClick={() => showConfirm(obj._id)} className='actionIcon' />
         </Space>
       )
     }
@@ -227,7 +247,7 @@ const List: any = (Parent: any) => {
           <Button>Adicionar Tag</Button>
         </Link>
       </div>
-      <Table rowKey="name" className='table' columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
+      <Table rowKey="name" className='table' columns={columns} dataSource={tags} pagination={{ pageSize: 5 }} />
     </div>
   )
 }

@@ -10,16 +10,23 @@ import BatteryCharging50Icon from '@mui/icons-material/BatteryCharging50'
 import BatteryCharging80Icon from '@mui/icons-material/BatteryCharging80'
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import { stringify } from 'rc-field-form/es/useWatch'
 
+type BeaconType = {
+  id: number;
+  macAddress: string;
+  name: string;
+  position: [number, number];
+}
 
 type TagType = {
   id: number;
-  macAdress: string;
+  macAddress: string;
   name: string;
   category: string;
   battery: any;
   isMoving: boolean;
-  position: [number, number]
+  lastPosition: [number, number];
 }
 
 type CategoryType = {
@@ -27,34 +34,21 @@ type CategoryType = {
   name: string;
 }
 
-const sendStatus: Function = async (status: boolean) => {
-  await fetch("http://10.128.64.69:8000/api/tags/tagStatus", {
-    method: "POST",
+const sendStatus: Function = async (id: number, status: boolean) => {
+  console.log(id)
+  await fetch(`http://10.254.18.38:8000/api/tags/${id}`, {
+    method: "PATCH",
     // mode: 'cors',
     headers: {
       'Content-Type': 'application/json'
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: JSON.stringify({ activated: status }),
-    // credentials: 'same-origin',
-    // referrerPolicy: 'unsafe-url'
-  })
-}
-
-const getStatus: Function = async () => {
-  await fetch("http://10.128.64.69:8000/api/tags/tagStatus", {
-    method: "GET",
-    // mode: 'cors',
-    // headers: {
-    //   'Content-Type': 'application/json'
-    //   // 'Content-Type': 'application/x-www-form-urlencoded',
-    // }
+    body: JSON.stringify({ activated: status })
     // credentials: 'same-origin',
     // referrerPolicy: 'unsafe-url'
   }).then((response) => response.json())
     .then((json) => {
-      console.log(json.isMoving)
-      return json
+      console.log(json)
     })
 }
 
@@ -111,181 +105,54 @@ const Location: any = (Parent: any) => {
   const [active, setActive] = useState(-1)
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState([''])
-  const [tags, setTags] = useState(
-    [
-      {
-        id: 0,
-        macAdress: 'abc',
-        name: "Objeto 1",
-        battery: batteryLevel(28),
-        category: "Furadeiras",
-        isMoving: true,
-        position: [100, 250]
-      },
-      {
-        id: 1,
-        macAdress: 'abc',
-        name: "Objeto 2",
-        battery: batteryLevel(50),
-        category: "Motoserras",
-        isMoving: false,
-        position: [100, 350]
-      },
-      {
-        id: 2,
-        macAdress: 'abc',
-        name: "Objeto 3",
-        battery: batteryLevel(72),
-        category: "Britadeiras",
-        isMoving: false,
-        position: [50, 450]
-      },
-      {
-        id: 3,
-        macAdress: 'abc',
-        name: "Objeto 4",
-        battery: batteryLevel(89),
-        category: "Motoserras",
-        isMoving: false,
-        position: [175, 600]
-      },
-      {
-        id: 4,
-        macAdress: 'abc',
-        name: "Objeto 5",
-        battery: batteryLevel(10),
-        category: "Britadeiras",
-        isMoving: false,
-        position: [200, 250]
-      },
-      {
-        id: 5,
-        macAdress: 'abc',
-        name: "Objeto 6",
-        battery: batteryLevel(0),
-        category: "Furadeiras",
-        isMoving: false,
-        position: [120, 520]
-      },
-      {
-        id: 6,
-        macAdress: 'abc',
-        name: "Objeto 7",
-        battery: batteryLevel(100),
-        category: "Motoserras",
-        isMoving: false,
-        position: [300, 450]
-      },
-      {
-        id: 7,
-        macAdress: 'abc',
-        name: "Objeto 8",
-        battery: batteryLevel(45),
-        category: "Britadeiras",
-        isMoving: false,
-        position: [300, 150]
-      }
-    ]
-  )
+  const [tags, setTags] = useState(Parent.props.tags)
+
+  const [categories, setCategories] = useState(Parent.props.categories)
+
+  const beacons: BeaconType[] = [
+    {
+      id: 0,
+      macAddress: 'ada32',
+      name: 'Beacon 1',
+      position: [5, 5]
+    },
+    {
+      id: 1,
+      macAddress: 'ada32',
+      name: 'Beacon 2',
+      position: [5, 5]
+    },
+    {
+      id: 0,
+      macAddress: 'ada32',
+      name: 'Beacon 3',
+      position: [5, 50]
+    },
+
+  ]
 
   const tagExamples: TagType[] = [
     {
       id: 0,
-      macAdress: 'abc',
+      macAddress: 'abc',
       name: "Objeto 1",
       battery: batteryLevel(28),
       category: "Furadeiras",
       isMoving: true,
-      position: [100, 250]
-    },
-    {
-      id: 1,
-      macAdress: 'abc',
-      name: "Objeto 2",
-      battery: batteryLevel(50),
-      category: "Motoserras",
-      isMoving: false,
-      position: [100, 350]
-    },
-    {
-      id: 3,
-      macAdress: 'abc',
-      name: "Objeto 4",
-      battery: batteryLevel(89),
-      category: "Motoserras",
-      isMoving: false,
-      position: [175, 600]
-    },
-    {
-      id: 4,
-      macAdress: 'abc',
-      name: "Objeto 5",
-      battery: batteryLevel(10),
-      category: "Britadeiras",
-      isMoving: false,
-      position: [200, 250]
-    },
-    {
-      id: 5,
-      macAdress: 'abc',
-      name: "Objeto 6",
-      battery: batteryLevel(0),
-      category: "Furadeiras",
-      isMoving: false,
-      position: [120, 520]
-    },
-    {
-      id: 6,
-      macAdress: 'abc',
-      name: "Objeto 7",
-      battery: batteryLevel(100),
-      category: "Motoserras",
-      isMoving: false,
-      position: [300, 450]
-    },
-    {
-      id: 7,
-      macAdress: 'abc',
-      name: "Objeto 8",
-      battery: batteryLevel(45),
-      category: "Britadeiras",
-      isMoving: false,
-      position: [300, 150]
+      lastPosition: [100, 250]
     }
   ]
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     setTags([...tagExamples, {
-  //       id: 2,
-  //       macAdress: 'abc',
-  //       name: "Objeto 2",
-  //       battery: batteryLevel(72),
-  //       category: "Britadeiras",
-  //       isMoving: getStatus().isMoving,
-  //       position: [50, 450]
-  //     }])
-  //   }, 30000)
-  // }, [tags])
+  useEffect(() => {
+    setTags(Parent.props.tags)
+    setCategories(Parent.props.categories)
+    console.log(tags)
+  }, [Parent.props.tags, Parent.props.categories])
 
   useEffect(() => {
     setActive(Parent.props.actualTag)
   }, [Parent.props.actualTag])
 
-  const categories: CategoryType[] = [
-    {
-      id: 0,
-      name: "Furadeiras"
-    },
-    {
-      id: 1,
-      name: "Britadeiras"
-    },
-    {
-      id: 2,
-      name: "Motoserras"
-    }
-  ]
 
   const handleActive: Function = (index: number) => {
     if (index !== active) {
@@ -314,7 +181,7 @@ const Location: any = (Parent: any) => {
   }
 
   const showTag: Function = (tag: any, index: number) => {
-    if (tag.name.toLowerCase().includes(search.toLowerCase())) {
+    if (tag.name.toLowerCase().includes(search.toLowerCase()) && tag.name !== '') {
       if (filter.includes(tag.category) || !filter[0]) {
         if (active !== -1) {
           if (index === active) {
@@ -326,8 +193,8 @@ const Location: any = (Parent: any) => {
                 className={`tag ${tag.isMoving ? 'active' : ''}`}
                 style={
                   {
-                    top: `${tag.position[0]}px`,
-                    left: `${tag.position[1]}px`
+                    top: `${tag.lastPosition[0]}%`,
+                    left: `${tag.lastPosition[1]}%`
                   }}>
               </div>
               // </Popover>
@@ -342,8 +209,8 @@ const Location: any = (Parent: any) => {
                 className={`tag outFocus ${tag.isMoving ? 'active' : ''}`}
                 style={
                   {
-                    top: `${tag.position[0]}px`,
-                    left: `${tag.position[1]}px`
+                    top: `${tag.lastPosition[0]}%`,
+                    left: `${tag.lastPosition[1]}%`
                   }}>
               </div>
               // </Popover>
@@ -359,8 +226,8 @@ const Location: any = (Parent: any) => {
               className={`tag ${tag.isMoving ? 'active' : ''}`}
               style={
                 {
-                  top: `${tag.position[0]}px`,
-                  left: `${tag.position[1]}px`
+                  top: `${tag.lastPosition[0]}%`,
+                  left: `${tag.lastPosition[1]}%`
                 }}>
             </div>
             // </Popover>
@@ -373,12 +240,63 @@ const Location: any = (Parent: any) => {
 
   const [buttonActivated, setButtonActivated] = useState(false)
 
-  const handleActivated: Function = () => {
-    sendStatus(!buttonActivated)
+  const handleActivated: Function = (id: number) => {
+    sendStatus(id, !buttonActivated)
     setButtonActivated(!buttonActivated)
   }
 
+  const showBeacons: Function = () => {
+    let content: any = []
 
+    beacons.map((beacon, index) => {
+      switch (index) {
+        case 0:
+          return (
+            content.push(
+              <div
+                key={`beacon-${beacon.name}`}
+                className={`beacon`}
+                style={
+                  {
+                    top: `${beacon.position[0]}%`,
+                    left: `${beacon.position[1]}%`
+                  }}>
+              </div>
+            )
+          )
+        case 1:
+          return (
+            content.push(
+              <div
+                key={`beacon-${beacon.name}`}
+                className={`beacon`}
+                style={
+                  {
+                    top: `${beacon.position[0]}%`,
+                    right: `${beacon.position[1]}%`
+                  }}>
+              </div>
+            )
+          )
+        case 2:
+          return (
+            content.push(
+              <div
+                key={`beacon-${beacon.name}`}
+                className={`beacon`}
+                style={
+                  {
+                    bottom: `${beacon.position[0]}%`,
+                    left: `${beacon.position[1]}%`
+                  }}>
+              </div>
+            )
+          )
+      }
+    })
+
+    return content
+  }
 
   const showInfo: Function = () => {
     if (active != -1) {
@@ -387,14 +305,14 @@ const Location: any = (Parent: any) => {
           className="info"
           style={
             {
-              top: `${tags[active].position[0]}px`,
-              left: `${tags[active].position[1] + 60}px`
+              top: `${tags[active].lastPosition[0]}%`,
+              left: `calc(${tags[active].lastPosition[1]}% + 60px)`
             }
           }>
           <div className="name">
             {tags[active].name}
           </div>
-          <div onClick={() => handleActivated()} className='buttonContainer'>
+          <div onClick={() => handleActivated(tags[active]._id)} className='buttonContainer'>
             <div className={buttonActivated ? 'buttonActivated' : 'buttonDesactived'}>Acionar Tag</div>
           </div>
         </div>
@@ -405,7 +323,7 @@ const Location: any = (Parent: any) => {
   const showTags: Function = () => {
     let content: any = []
 
-    if (active !== -1 && tags[active].name.toLowerCase().includes(search.toLowerCase())) {
+    if (active !== -1 && tags[active].name.toLowerCase().includes(search.toLowerCase()) && tags[active].name !== '') {
       if (filter.includes(tags[active].category) || !filter[0]) {
         content.push(
           <div
@@ -419,15 +337,15 @@ const Location: any = (Parent: any) => {
             <div className="name">
               {tags[active].name}
             </div>
-            {
+            {/* {
               tags[active].battery
-            }
+            } */}
           </div>
         )
       }
     }
 
-    tags.map((tag: any, index) => {
+    tags.map((tag: any, index: number) => {
       if (index != active && tag.name.toLowerCase().includes(search.toLowerCase())) {
         if (filter.includes(tag.category) || !filter[0]) {
           content.push(
@@ -442,9 +360,9 @@ const Location: any = (Parent: any) => {
               <div className="name">
                 {tag.name}
               </div>
-              {
+              {/* {
                 tag.battery
-              }
+              } */}
             </div>
           )
         }
@@ -463,7 +381,7 @@ const Location: any = (Parent: any) => {
   const { Search } = Input
 
   const options = [
-    ...categories.map((category) => (
+    ...categories.map((category: any) => (
       {
         label: category.name,
         value: category.name
@@ -493,10 +411,17 @@ const Location: any = (Parent: any) => {
       <div className="row">
         <div className="col leftSide">
           {
-            tags.map((tag, index) => {
-              return showTag(tag, index)
+            showBeacons()
+          }
+
+          {
+            tags.map((tag: any, index: number) => {
+              if (tag.name !== '') {
+                return showTag(tag, index)
+              }
             })
           }
+
           {
             showInfo()
           }

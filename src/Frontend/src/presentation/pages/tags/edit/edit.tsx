@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './edit.scss'
 
 import {
@@ -7,38 +7,57 @@ import {
   Input,
   Select
 } from 'antd'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
-type CategoryType = {
-  id: number;
-  name: string;
-}
+const Edit: any = (Parent: any) => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const params = useParams()
+  const id = params.id
+  const [tag, setTag] = useState({
+    _id: '',
+    name: location.state.name,
+    macAddress: location.state.macAddress,
+    category: location.state.category
+  })
+  const [categories, setCategories] = useState(Parent.props.categories)
 
-type Devices = {
-  id: number;
-  macAddress: string;
-}
+  useEffect(() => {
+    setCategories(Parent.props.categories)
+  }, [Parent.props.categories])
 
-const Edit: React.FC = () => {
-  const categories: CategoryType[] = [
-    {
-      id: 0,
-      name: "Furadeiras"
-    },
-    {
-      id: 1,
-      name: "Britadeiras"
-    },
-    {
-      id: 2,
-      name: "Motoserras"
-    }
-  ]
-
-  const device: Devices = {
-    id: 1,
-    macAddress: "B6-50-D2-73-87-96"
+  async function getTag() {
+    await fetch(`http://10.254.18.38:8000/api/tags/${id}`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => response.json())
+      .then((json) => {
+        setTag(json.data._tag)
+        console.log(json.data._tag)
+      })
   }
+
+  async function editTag(values: any) {
+    await fetch(`http://10.254.18.38:8000/api/tags/${id}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values)
+    }).then(() => Parent.props.getTags()).then(() => navigate('/tags'))
+  }
+
+  const onFinish: any = (values: any) => {
+    if (values) {
+      editTag(values)
+    }
+  }
+
+  useEffect(() => {
+    getTag()
+  }, [])
 
   return (
     <div id="tags-edit">
@@ -50,32 +69,33 @@ const Edit: React.FC = () => {
 
         requiredMark={false}
         initialValues={{ remember: true }}
-        // onFinish={onFinish}
+        onFinish={onFinish}
         // onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <Form.Item
           label="Nome da Tag"
-          name="username"
-          rules={[{ required: true, message: 'Por favor, preencha com o seu registro! ' }]}
+          name="name"
+          rules={[{ required: true, message: 'Prrencha com o nome' }]}
+          initialValue={tag.name}
         >
           <Input />
         </Form.Item>
 
-        <Form.Item label="MAC Address da Tag">
-          <Select value={device.macAddress} disabled>
+        <Form.Item initialValue={tag.macAddress} label="MAC Address da Tag">
+          <Select value={tag.macAddress} disabled>
             <Select.Option
               className="formSelect"
               bordered={false}
-              value={device.macAddress}
-              key={`${device.macAddress}-0`}>
-              {device.macAddress}
+              value={tag.macAdress}
+              key={`${tag.macAdress}-0`}>
+              {tag.macAdress}
             </Select.Option>
             )
           </Select>
         </Form.Item>
 
-        <Form.Item label="Categoria da Tag">
+        <Form.Item name="category" initialValue={tag.category} label="Categoria da Tag">
           <Select>
             {
               categories.map((category, index) => {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   Form,
@@ -6,48 +6,37 @@ import {
   Select
 } from 'antd';
 import './add.scss'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-type CategoryType = {
-  id: number;
-  name: string;
-}
+const Add: any = (Parent: any) => {
+  const navigate = useNavigate()
+  const [newTags, setNewTags] = useState(Parent.props.newTags)
+  const [categories, setCategories] = useState(Parent.props.categories)
 
-type Devices = {
-  id: number;
-  macAddress: string;
-}
+  async function createTag(values: any) {
+    await fetch(`http://10.254.18.38:8000/api/tags/${values.id}`, {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    }).then(() => Parent.props.getTags()).then(() => navigate('/tags'))
+  }
 
-const Add: React.FC = () => {
-  const categories: CategoryType[] = [
-    {
-      id: 0,
-      name: "Furadeiras"
-    },
-    {
-      id: 1,
-      name: "Britadeiras"
-    },
-    {
-      id: 2,
-      name: "Motoserras"
+  const onFinish: any = (values: any) => {
+    if (values) {
+      console.log(values)
+      createTag(values)
     }
-  ]
+  }
 
-  const newDevices: Devices[] = [
-    {
-      id: 0,
-      macAddress: "58-91-D3-93-8D-5F"
-    },
-    {
-      id: 1,
-      macAddress: "B6-50-D2-73-87-96"
-    },
-    {
-      id: 2,
-      macAddress: "3F-B5-45-50-DC-A4"
-    }
-  ]
+  useEffect(() => {
+    setCategories(Parent.props.categories)
+  }, [Parent.props.categories])
+
+  useEffect(() => {
+    setNewTags(Parent.props.newTags)
+  }, [Parent.props.newTags])
 
   return (
     <div id="tags-add">
@@ -59,29 +48,29 @@ const Add: React.FC = () => {
 
         requiredMark={false}
         initialValues={{ remember: true }}
-        // onFinish={onFinish}
+        onFinish={onFinish}
         // onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <Form.Item
           label="Nome da Tag"
-          name="username"
-          rules={[{ required: true, message: 'Por favor, preencha com o seu registro! ' }]}
+          name="name"
+          rules={[{ required: true, message: 'Prencha com o nome' }]}
         >
           <Input />
         </Form.Item>
 
-        <Form.Item label="MAC Address da Tag">
+        <Form.Item name="id" label="MAC Address da Tag">
           <Select>
             {
-              newDevices.map((device: Devices, index: number) => {
+              newTags.map((newTag: any, index: number) => {
                 return (
                   <Select.Option
                     className="formSelect"
                     bordered={false}
-                    value={device.macAddress}
-                    key={`${device.macAddress}-${index}`}>
-                    {device.macAddress}
+                    value={newTag._id}
+                    key={`${newTag.macAddress}-${index}`}>
+                    {newTag.macAddress}
                   </Select.Option>
                 )
               })
@@ -89,10 +78,10 @@ const Add: React.FC = () => {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Categoria da Tag">
+        <Form.Item name='category' label="Categoria da Tag">
           <Select>
             {
-              categories.map((category, index) => {
+              categories.map((category: any, index: number) => {
                 return (
                   <Select.Option key={`${category}-${index}`} value={category.name}>{category.name}</Select.Option>
                 )

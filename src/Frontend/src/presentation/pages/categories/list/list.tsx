@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Space, Table, Button, Modal } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import './list.scss'
 
@@ -16,7 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
 type CategoryType = {
-  id: number;
+  _id: number;
   name: string;
   nTags: number;
 }
@@ -52,36 +52,19 @@ const batteryLevel: Function = (level: number) => {
 
 const { confirm } = Modal;
 
-const showConfirm: Function = () => {
-  confirm({
-    title: 'Você realmente desaja excluir a categoria?',
-    icon: <ExclamationCircleFilled />,
-    // content: 'Não poderá ser desfeita',
-    okText:"Excluir",
-    okType: 'danger',
-    cancelText: 'Não',
-    onOk() {
-      console.log('OK');
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-};
-
 const data: CategoryType[] = [
   {
-    id: 0,
+    _id: 0,
     name: "Britadeiras",
     nTags: 5
   },
   {
-    id: 1,
+    _id: 1,
     name: "Furadeiras",
     nTags: 8
   },
   {
-    id: 1,
+    _id: 1,
     name: "Motoserras",
     nTags: 4
   }
@@ -89,8 +72,42 @@ const data: CategoryType[] = [
 
 
 const List: any = (Parent: any) => {
+  const navigate = useNavigate()
   const handleActive: Function = (index: number) => {
     Parent.props.changePage(index)
+  }
+
+  const [categories, setCategories] = useState(Parent.props.categories)
+
+  useEffect(() => {
+    setCategories(Parent.props.categories)
+    console.log(categories)
+  }, [Parent.props.categories])
+
+  async function deleteCategory(id: string) {
+    await fetch(`http://10.254.18.38:8000/api/category/${id}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(() => Parent.props.getCategories()).then(() => navigate('/categories'))
+  }
+
+  const showConfirm: Function = (id: string) => {
+    confirm({
+      title: 'Você realmente desaja excluir a categoria?',
+      icon: <ExclamationCircleFilled />,
+      // content: 'Não poderá ser desfeita',
+      okText: "Excluir",
+      okType: 'danger',
+      cancelText: 'Não',
+      onOk() {
+        deleteCategory(id)
+      },
+      onCancel() {
+        console.log('Cancel')
+      },
+    })
   }
 
   const columns: ColumnsType<CategoryType> = [
@@ -101,8 +118,8 @@ const List: any = (Parent: any) => {
     },
     {
       title: 'Número de Tags',
-      dataIndex: 'nTags',
-      key: 'nTags',
+      dataIndex: 'results',
+      key: 'results',
     },
     // {
     //   title: 'Categoria',
@@ -112,15 +129,18 @@ const List: any = (Parent: any) => {
     {
       title: 'Ações',
       key: 'action',
-      render: (_, obj, index) => (
+      render: (_, obj: any, index: number) => (
         <Space size="middle">
           <Link onClick={() => handleActive(index)} to={"/"}>
             <VisibilityIcon className='actionIcon' />
           </Link>
-          <Link to={"/categories/edit"}>
+          <Link
+            to={`/categories/edit/${obj._id}`}
+            state={{ name: obj }}
+          >
             <EditIcon className='actionIcon' />
           </Link>
-          <DeleteIcon onClick={() => showConfirm()} className='actionIcon' />
+          <DeleteIcon onClick={() => showConfirm(obj._id)} className='actionIcon' />
         </Space>
       )
     }
@@ -133,7 +153,7 @@ const List: any = (Parent: any) => {
           <Button>Adicionar Categoria</Button>
         </Link>
       </div>
-      <Table rowKey="name" className='table' columns={columns} dataSource={data} pagination={{ pageSize: 5 }} />
+      <Table rowKey="name" className='table' columns={columns} dataSource={categories} pagination={{ pageSize: 5 }} />
     </div>
   )
 }

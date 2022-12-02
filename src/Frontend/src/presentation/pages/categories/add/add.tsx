@@ -6,48 +6,27 @@ import {
   Select
 } from 'antd';
 import './add.scss'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-type CategoryType = {
-  id: number;
-  name: string;
-}
+const Add: any = (Parent: any) => {
+  const navigate = useNavigate()
 
-type Devices = {
-  id: number;
-  macAddress: string;
-}
+  async function createCategory(values: any) {
+    await fetch("http://10.254.18.38:8000/api/category", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    }).then(() => Parent.props.getCategories()).then(() => navigate('/categories'))
+  }
 
-const Add: React.FC = () => {
-  const categories: CategoryType[] = [
-    {
-      id: 0,
-      name: "Furadeiras"
-    },
-    {
-      id: 1,
-      name: "Britadeiras"
-    },
-    {
-      id: 2,
-      name: "Motoserras"
+  const onFinish: any = (values: any) => {
+    if (values) {
+      console.log(values)
+      createCategory(values)
     }
-  ]
-
-  const newDevices: Devices[] = [
-    {
-      id: 0,
-      macAddress: "58-91-D3-93-8D-5F"
-    },
-    {
-      id: 1,
-      macAddress: "B6-50-D2-73-87-96"
-    },
-    {
-      id: 2,
-      macAddress: "3F-B5-45-50-DC-A4"
-    }
-  ]
+  }
 
   return (
     <div id="categories-add">
@@ -59,14 +38,14 @@ const Add: React.FC = () => {
 
         requiredMark={false}
         initialValues={{ remember: true }}
-        // onFinish={onFinish}
+        onFinish={onFinish}
         // onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <Form.Item
           label="Nome da Categoria"
-          name="username"
-          rules={[{ required: true, message: 'Por favor, preencha com o seu registro! ' }]}
+          name="name"
+          rules={[{ required: true, message: 'Preencha com o nome' }]}
         >
           <Input />
         </Form.Item>

@@ -35,11 +35,6 @@ const Navbar: any = (Parent: any) => {
     //   icon: <TrackChangesIcon />
     // },
     {
-      name: 'Histórico',
-      url: '/history',
-      icon: <HistoryIcon />
-    },
-    {
       name: 'Categorias',
       url: '/categories',
       icon: <CategoryIcon />
