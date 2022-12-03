@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+// CRIA UM SCHEMA PARA O BANCO DE DADOS
 const tagSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -25,7 +25,7 @@ const tagSchema = new mongoose.Schema({
     default: Date.now(),
   },
 });
-
+// CRIA UM MODEL PARA O BANCO DE DADOS
 const Tag = new mongoose.model("Tag", tagSchema);
-
+// EXPORTA O MODEL
 module.exports = Tag;

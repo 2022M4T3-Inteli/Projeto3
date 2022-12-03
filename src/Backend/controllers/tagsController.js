@@ -2,6 +2,7 @@ const Tag = require("./../models/tagModel");
 ////////////////////////////////////////////////////////////////////////////////////
 
 // ROUTE HANDLERS
+// MANIPULA AS ROTAS
 exports.getAllTags = async function (req, res) {
   try {
     const _tags = await Tag.find();

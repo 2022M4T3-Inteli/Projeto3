@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// CRIA UM SCHEMA PARA O BANCO DE DADOS
 const categorySchema = new mongoose.Schema({
   name: {
     type: String,
@@ -8,6 +9,7 @@ const categorySchema = new mongoose.Schema({
   },
 });
 
+// CRIA UM MODEL PARA O BANCO DE DADOS
 const Category = new mongoose.model("Category", categorySchema);
-
+// EXPORTA O MODEL
 module.exports = Category;

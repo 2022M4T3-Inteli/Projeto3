@@ -2,6 +2,7 @@ const Category = require("../models/categoryModel");
 ////////////////////////////////////////////////////////////////////////////////////
 
 // ROUTE HANDLERS
+// MANIPULA AS ROTAS
 exports.getAllCategories = async function (req, res) {
   try {
     const _categories = await Category.find();

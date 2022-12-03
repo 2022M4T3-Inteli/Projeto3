@@ -4,6 +4,7 @@ const usersController = require("../controllers/usersController");
 const router = express.Router();
 
 // routes middleware
+// middleware de rotas
 router
   .route("/")
   .get(usersController.getAllUsers)
