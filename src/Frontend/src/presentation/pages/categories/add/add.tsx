@@ -6,47 +6,34 @@ import {
   Select
 } from 'antd';
 import './add.scss'
+import { Link, useNavigate } from 'react-router-dom';
 
-type CategoryType = {
-  id: number;
-  name: string;
-}
+// Tela de Cadastro de Categoria
+const Add: any = (Parent: any) => {
+  const navigate = useNavigate()
 
-type Devices = {
-  id: number;
-  macAddress: string;
-}
+  // Função que cria uma nova categoria, manda uma Requisição POST para o backend
+  async function createCategory(values: any) {
+    await fetch("http://localhost:8000/api/category", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      // Envia os dados do formulário
+      body: JSON.stringify(values) 
+    }).then(() => {
+      Parent.props.getCategories()
+      localStorage.setItem('message', "Categoria criada com sucesso!")
+    }).then(() => navigate('/categories')) // Após cadastrar, navega para a tela de listagem de categorias
+  }
 
-const Add: React.FC = () => {
-  const categories: CategoryType[] = [
-    {
-      id: 0,
-      name: "Furadeiras"
-    },
-    {
-      id: 1,
-      name: "Britadeiras"
-    },
-    {
-      id: 2,
-      name: "Motoserras"
+  // Função de envio de dados do formulário
+  const onFinish: any = (values: any) => {
+    if (values) {
+      console.log(values)
+      createCategory(values)
     }
-  ]
-
-  const newDevices: Devices[] = [
-    {
-      id: 0,
-      macAddress: "58-91-D3-93-8D-5F"
-    },
-    {
-      id: 1,
-      macAddress: "B6-50-D2-73-87-96"
-    },
-    {
-      id: 2,
-      macAddress: "3F-B5-45-50-DC-A4"
-    }
-  ]
+  }
 
   return (
     <div id="categories-add">
@@ -58,52 +45,27 @@ const Add: React.FC = () => {
 
         requiredMark={false}
         initialValues={{ remember: true }}
-        // onFinish={onFinish}
+        onFinish={onFinish}
         // onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <Form.Item
           label="Nome da Categoria"
-          name="username"
-          rules={[{ required: true, message: 'Por favor, preencha com o seu registro! ' }]}
+          name="name"
+          rules={[{ required: true, message: 'Preencha com o nome' }]}
         >
           <Input />
         </Form.Item>
 
-        {/* <Form.Item label="MAC Address da Tag">
-          <Select>
-            {
-              newDevices.map((device: Devices, index: number) => {
-                return (
-                  <Select.Option
-                    className="formSelect"
-                    bordered={false}
-                    value={device.macAddress}
-                    key={`${device.macAddress}-${index}`}>
-                    {device.macAddress}
-                  </Select.Option>
-                )
-              })
-            }
-          </Select>
-        </Form.Item>
-
-        <Form.Item label="Categoria da Tag">
-          <Select>
-            {
-              categories.map((category, index) => {
-                return (
-                  <Select.Option key={`${category}-${index}`} value={category.name}>{category.name}</Select.Option>
-                )
-              })
-            }
-          </Select>
-        </Form.Item> */}
-
         <Form.Item>
           <Button className='button' htmlType="submit">
-            Cadastrar Categoria
+            Cadastrar
           </Button>
+          <Link to={"/categories"} >
+            <Button className='button'>
+              Cancelar
+            </Button>
+          </Link>
         </Form.Item>
       </Form>
     </div>

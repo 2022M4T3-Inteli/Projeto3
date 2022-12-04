@@ -4,6 +4,7 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link } from 'react-router-dom';
 
+// Tela de aprovação, quando o usuário ainda não tem acesso a aplicação
 const Aproval: React.FC = () => {
   return (
     <div id="aproval">

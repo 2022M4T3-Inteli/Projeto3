@@ -5,8 +5,11 @@ import './header.scss'
 import Logo from '/src/assets/logo.png'
 import LogoutIcon from '@mui/icons-material/Logout';
 
+// Menu Superior com botão de logout
 const Header: React.FC = () => {
   const navigate = useNavigate()
+
+  // Função que desconecta o usuário e atualiza a página
   const handleClick: Function = () => {
     localStorage.setItem("logged", "false")
     window.location.reload()

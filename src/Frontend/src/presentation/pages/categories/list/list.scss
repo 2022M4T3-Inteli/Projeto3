@@ -13,7 +13,7 @@
   border: 0px;
 }
 
-#categories-list .ant-table thead tr:first-child th:last-child  {
+#categories-list .ant-table thead tr:first-child th:last-child {
   border-radius: 0 9px 0 0;
   border-top: 0px solid #d9d9d9;
   border-left: 0px solid #d9d9d9;
@@ -35,6 +35,11 @@
   color: #CCFE00;
 }
 
+.ant-modal-confirm-btns button:hover:not(.ant-btn-dangerous){
+  border: solid 1px #CCFE00 !important;
+  color: #CCFE00 !important;
+}
+
 #categories-list .table .icon {
   display: flex;
   top: 10%;
@@ -53,6 +58,7 @@
 
 #categories-list .table .actionIcon {
   color: #29292D;
+  cursor: pointer;
 }
 
 #categories-list .table .actionIcon:hover {

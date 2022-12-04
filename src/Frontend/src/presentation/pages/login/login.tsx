@@ -3,13 +3,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
 import './login.scss'
 
+// Tela de Login
 const Login: React.FC = () => {
   const navigate = useNavigate()
+
+  // Ao preencher corretamente o formulário de login, guarda a informação que o usuário está logado no localstorage
   const onFinish = (values: any) => {
     localStorage.setItem("logged", 'true')
     window.location.href = '/'
   };
 
+  // Caso tenha algum erro no formulário, exibe também esse erro no console
+  // os inputs já possuem um tratamento de erro próprio
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
