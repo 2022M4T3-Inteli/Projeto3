@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Select, Tag } from 'antd'
 import type { CustomTagProps } from 'rc-select/lib/BaseSelect'
 import { Input, Button, Popover } from 'antd'
-import { Header, Navbar } from '../../components'
 import './location.scss'
   ;
 import BatteryCharging20Icon from '@mui/icons-material/BatteryCharging20'
@@ -12,6 +11,7 @@ import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import { stringify } from 'rc-field-form/es/useWatch'
 
+// Define a tipagem de um beacon
 type BeaconType = {
   id: number;
   macAddress: string;
@@ -19,6 +19,7 @@ type BeaconType = {
   position: [number, number];
 }
 
+// Define a tipagem de uma Tag
 type TagType = {
   id: number;
   macAddress: string;
@@ -29,11 +30,7 @@ type TagType = {
   lastPosition: [number, number];
 }
 
-type CategoryType = {
-  id: number;
-  name: string;
-}
-
+// Função responsável por enviar para o backend a ativação de uma Tag específica
 const sendStatus: Function = async (id: number, status: boolean) => {
   console.log(id)
   await fetch(`http://10.254.18.38:8000/api/tags/${id}`, {
@@ -43,15 +40,18 @@ const sendStatus: Function = async (id: number, status: boolean) => {
       'Content-Type': 'application/json'
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
+    // Envia para o backend se a Tag está ativada ou não
     body: JSON.stringify({ activated: status })
     // credentials: 'same-origin',
     // referrerPolicy: 'unsafe-url'
   }).then((response) => response.json())
     .then((json) => {
+      // Console para verificar se o dado foi enviado corretamente
       console.log(json)
     })
 }
 
+// Função para renderizar as categorias de uma Tag
 const tagRender = (props: CustomTagProps) => {
   const { label, value, closable, onClose } = props
   const onPreventMouseDown = (event: React.MouseEvent<HTMLSpanElement>) => {
@@ -71,6 +71,7 @@ const tagRender = (props: CustomTagProps) => {
   )
 }
 
+// Função usada para converter o nível da bateria para um dos ícones de níveis de bateria
 const batteryLevel: Function = (level: number) => {
   let type = 0
   let difference = Math.abs(20 - level)
@@ -100,8 +101,9 @@ const batteryLevel: Function = (level: number) => {
   }
 }
 
-
+// Tela de localização, responsável por exibir visualmente onde as Tags estão
 const Location: any = (Parent: any) => {
+  // Define estados importantes de ações com a interface
   const [active, setActive] = useState(-1)
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState([''])
@@ -109,6 +111,7 @@ const Location: any = (Parent: any) => {
 
   const [categories, setCategories] = useState(Parent.props.categories)
 
+  // Define os Beacons
   const beacons: BeaconType[] = [
     {
       id: 0,
@@ -126,34 +129,24 @@ const Location: any = (Parent: any) => {
       id: 0,
       macAddress: 'ada32',
       name: 'Beacon 3',
-      position: [5, 50]
+      position: [5, 90]
     },
 
   ]
 
-  const tagExamples: TagType[] = [
-    {
-      id: 0,
-      macAddress: 'abc',
-      name: "Objeto 1",
-      battery: batteryLevel(28),
-      category: "Furadeiras",
-      isMoving: true,
-      lastPosition: [100, 250]
-    }
-  ]
-
+  // Hook para definir as Tags e Categorias com base nos dados armazenados pelo componente pai
   useEffect(() => {
     setTags(Parent.props.tags)
     setCategories(Parent.props.categories)
     console.log(tags)
   }, [Parent.props.tags, Parent.props.categories])
 
+  // Define a Tag ativa de acordo com a propriedade passada pelo componente pai
   useEffect(() => {
     setActive(Parent.props.actualTag)
   }, [Parent.props.actualTag])
 
-
+  // Função para selecionar Tags no menu lateral e deixá-las em evicência, delay para melhorar o feedback
   const handleActive: Function = (index: number) => {
     if (index !== active) {
       setTimeout(() => Parent.props.changeTag(index), 80)
@@ -166,13 +159,18 @@ const Location: any = (Parent: any) => {
     }
   }
 
+  // Função que altera o valor pesquisado quando o input de pesquisa é alterado, utilizada para filtrar entre tags
   const handleSearch: Function = (value: string) => {
     setSearch(value)
+
+    // Verifica se há uma tag ativa, se houver troca para -1, para que nenhuma tag fique ativa na interface
+    // Tag ativa significa que ela ficará grifada visualmente na tela, evidenciando que ela está selecionada 
     if (active != -1) {
       handleActive(-1)
     }
   }
 
+  // Função que altera o valor do filtro de categoria, utilizada para filtrar Tags de acordo com sua categoria
   const handleFilter: Function = (value: string[]) => {
     if (active != -1) {
       handleActive(-1)
@@ -180,15 +178,18 @@ const Location: any = (Parent: any) => {
     setFilter(value)
   }
 
+  // Função que retorna uma Tag no mapa de Tags, posicionado ela de acordo com a sua posição
   const showTag: Function = (tag: any, index: number) => {
+    // Verificações se a Tag satisfaz os filtros aplicados, caso não, ela não será mostrada
     if (tag.name.toLowerCase().includes(search.toLowerCase()) && tag.name !== '') {
       if (filter.includes(tag.category) || !filter[0]) {
         if (active !== -1) {
+          // Verifica se a Tag está ativa, se estiver ela é evidênciada em relação as outras
           if (index === active) {
             return (
               // <Popover content={showInfo(index)} title={tag.name} trigger="focus">
               <div
-                key={`tag-${tag.name}`}
+                key={`tag-${tag._id}`}
                 onClick={() => handleActive(index)}
                 className={`tag ${tag.isMoving ? 'active' : ''}`}
                 style={
@@ -200,11 +201,12 @@ const Location: any = (Parent: any) => {
               // </Popover>
             )
           }
+          // Caso não esteja ativa, a Tag ficará com uma coloração mais clara, evidênciando apenas a Tag ativa
           else {
             return (
               // <Popover content={showInfo(index)} title={tag.name} trigger="focus">
               <div
-                key={`tag-location-${tag.name}`}
+                key={`tag-location-${tag._id}`}
                 onClick={() => handleActive(index)}
                 className={`tag outFocus ${tag.isMoving ? 'active' : ''}`}
                 style={
@@ -217,11 +219,12 @@ const Location: any = (Parent: any) => {
             )
           }
         }
+        // Caso não haja Tag ativa, renderiza a Tag sem nenhuma característica visualmente diferente
         else {
           return (
             // <Popover content={showInfo(index)} title={tag.name} trigger="focus">
             <div
-              key={`tag-location-${tag.name}`}
+              key={`tag-location-${tag._id}`}
               onClick={() => handleActive(index)}
               className={`tag ${tag.isMoving ? 'active' : ''}`}
               style={
@@ -240,14 +243,17 @@ const Location: any = (Parent: any) => {
 
   const [buttonActivated, setButtonActivated] = useState(false)
 
+  // Função que será responsável por chamar a função que ativa fisicamente uma Tag, assim como definir o botão da Tag como ativado
   const handleActivated: Function = (id: number) => {
     sendStatus(id, !buttonActivated)
     setButtonActivated(!buttonActivated)
   }
 
+  // Função que renderiza os beacons no mapa
   const showBeacons: Function = () => {
     let content: any = []
 
+    // Para cada Beacon, renderiza e o posiciona em sua respectiva posição
     beacons.map((beacon, index) => {
       switch (index) {
         case 0:
@@ -298,6 +304,7 @@ const Location: any = (Parent: any) => {
     return content
   }
 
+  // Função que renderiza a info que é mostrada ao deixa alguma das Tags ativa, ou seja, quando a Tag é clicada pelo mapa ou pelo meno lateral
   const showInfo: Function = () => {
     if (active != -1) {
       return (
@@ -320,14 +327,16 @@ const Location: any = (Parent: any) => {
     }
   }
 
+  // Função que renderiza as Tags no menu lateral, de acordo com as filtragens e a Tag que está ativa
   const showTags: Function = () => {
     let content: any = []
 
+    // Verifica se há uma Tag ativa, e se ela satisfaz a filtragem
     if (active !== -1 && tags[active].name.toLowerCase().includes(search.toLowerCase()) && tags[active].name !== '') {
       if (filter.includes(tags[active].category) || !filter[0]) {
         content.push(
           <div
-            key={`tag-${tags[active].name}`}
+            key={`tag-${tags[active]._id}`}
             onClick={() => handleActive(active)}
             className={`item active`}
           >
@@ -345,12 +354,13 @@ const Location: any = (Parent: any) => {
       }
     }
 
+    // Para cada Tag que não é ativa, irá renderizá-las caso satisfaçam os filtros
     tags.map((tag: any, index: number) => {
       if (index != active && tag.name.toLowerCase().includes(search.toLowerCase())) {
         if (filter.includes(tag.category) || !filter[0]) {
           content.push(
             <div
-              key={`tag-${tag.name}`}
+              key={`tag-${tag._id}`}
               onClick={() => handleActive(index)}
               className={index === active ? 'item active' : 'item'}
             >
@@ -369,6 +379,7 @@ const Location: any = (Parent: any) => {
       }
     })
 
+    // Caso nenhuma Tag tenha sido encontrada ou satisfeito os filtros, mostra que não há tags encontradas
     if (content.length === 0) {
       content.push(
         <p key={`text-0`} className='text'>Nenhuma tag encontrada</p>
@@ -380,6 +391,7 @@ const Location: any = (Parent: any) => {
 
   const { Search } = Input
 
+  // Construtor das opções de categorias utilizadas no filtro de categoria
   const options = [
     ...categories.map((category: any) => (
       {
@@ -415,6 +427,7 @@ const Location: any = (Parent: any) => {
           }
 
           {
+            // Para cada tag, chama a função que renderiza a Tag no mapa
             tags.map((tag: any, index: number) => {
               if (tag.name !== '') {
                 return showTag(tag, index)

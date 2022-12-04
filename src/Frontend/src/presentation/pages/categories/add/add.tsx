@@ -8,19 +8,23 @@ import {
 import './add.scss'
 import { Link, useNavigate } from 'react-router-dom';
 
+// Tela de Cadastro de Categoria
 const Add: any = (Parent: any) => {
   const navigate = useNavigate()
 
+  // Função que cria uma nova categoria, manda uma Requisição POST para o backend
   async function createCategory(values: any) {
-    await fetch("http://10.254.18.38:8000/api/category", {
+    await fetch("http://localhost:8000/api/category", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(values)
-    }).then(() => Parent.props.getCategories()).then(() => navigate('/categories'))
+      // Envia os dados do formulário
+      body: JSON.stringify(values) 
+    }).then(() => Parent.props.getCategories()).then(() => navigate('/categories')) // Após cadastrar, navega para a tela de listagem de categorias
   }
 
+  // Função de envio de dados do formulário
   const onFinish: any = (values: any) => {
     if (values) {
       console.log(values)

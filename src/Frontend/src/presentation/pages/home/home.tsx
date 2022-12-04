@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Route, Routes, useLocation } from "react-router-dom"
-import { Header, Navbar } from '../../components'
+import { Header, Sidebar } from '../../components'
 import './home.scss'
 
 import { Location, CategoriesList, CategoriesAdd, CategoriesEdit, TagsList, TagsAdd, TagsEdit } from '../../../presentation/pages'
@@ -22,51 +22,59 @@ const verifyPage: Function = () => {
   }
 }
 
+// Roteamento de páginas, é o componente que será responsável por mudar de páginas sem recarregá-la
 const Home: React.FC = () => {
+  // Define todos os estados de Tags e Categorias, usados por boa parte das telas
   const [actualTag, setActualTag] = useState(-1)
   const [actualPage, setActualPage] = useState(verifyPage())
   const [tags, setTags] = useState([])
   const [newTags, setNewTags] = useState([])
   const [categories, setCategories] = useState([])
 
+  // Função responsável por requisitar ao Backend todas as tags existentes
   async function getTags() {
-    await fetch("http://10.254.18.38:8000/api/tags", {
+    await fetch("http://localhost:8000/api/tags", {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'
       }
     }).then((response) => response.json())
       .then((json) => {
+        // Atualiza as Tags com as tags retornadas pela requisição
         setTags(json.data)
       })
   }
 
+  // Função responsável por requisitar todas as novas tags, aquelas que ainda não forma cadastradas
   async function getNewTags() {
-    await fetch("http://10.254.18.38:8000/api/tags/?name=&category=", {
+    await fetch("http://localhost:8000/api/tags/?name=&category=", {
 
       headers: {
         'Content-Type': 'application/json',
       }
     }).then((response) => response.json())
       .then((json) => {
-        console.log(json.data)
+        // Atualiza as novas tags de acordo com os dados retornados
         setNewTags(json.data)
       })
   }
 
+  // Função responsável por solicitar ao backend todas as categorias existentes
   async function getCategories() {
-    await fetch("http://10.254.18.38:8000/api/category", {
+    await fetch("http://localhost:8000/api/category", {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'
       }
     }).then((response) => response.json())
       .then((json) => {
-        console.log('teste')
+        // Após retornar a solicitação, atualiza as categorias com os dados do backend
         setCategories(json.data)
       })
   }
 
+  // Objeto que possui todas as funções e estados das páginas
+  // utilizada para passar para qualquer componente filho funcionalidades da aplicação
   const props: any = {
     changeTag: (index: number) => setActualTag(index),
     changePage: (index: number) => setActualPage(index),
@@ -80,6 +88,7 @@ const Home: React.FC = () => {
     getCategories: getCategories
   }
 
+  // Ao carregar a página chama todas as funções que requistam dados do backend
   useEffect(() => {
     if (tags.length <= 1) {
       getTags()
@@ -91,17 +100,18 @@ const Home: React.FC = () => {
       getNewTags()
     }
 
+    // Define um intervalo para ficar solicitando novos dados do backend, está configurado para fazer isso a cada 5 segundos
     setInterval(() => {
       getTags()
       getCategories()
       getNewTags()
-    }, 30000)
+    }, 5000)
   }, [])
 
   return (
     <div id="home" >
       <Header />
-      <Navbar props={props} />
+      <Sidebar props={props} />
 
       <div className="container">
         <Routes>

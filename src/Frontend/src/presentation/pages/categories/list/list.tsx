@@ -15,84 +15,75 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { ExclamationCircleFilled } from '@ant-design/icons';
 
+// Define a tipagem de uma categoria
 type CategoryType = {
   _id: number;
   name: string;
   nTags: number;
 }
 
-const batteryLevel: Function = (level: number) => {
-  let type = 0
-  let difference = Math.abs(20 - level)
+// const batteryLevel: Function = (level: number) => {
+//   let type = 0
+//   let difference = Math.abs(20 - level)
 
-  if (Math.abs(50 - level) < difference) {
-    difference = Math.abs(50 - level)
-    type = 1
-  }
-  if (Math.abs(80 - level) < difference) {
-    difference = Math.abs(80 - level)
-    type = 2
-  }
-  if (Math.abs(100 - level) < difference) {
-    difference = Math.abs(100 - level)
-    type = 3
-  }
+//   if (Math.abs(50 - level) < difference) {
+//     difference = Math.abs(50 - level)
+//     type = 1
+//   }
+//   if (Math.abs(80 - level) < difference) {
+//     difference = Math.abs(80 - level)
+//     type = 2
+//   }
+//   if (Math.abs(100 - level) < difference) {
+//     difference = Math.abs(100 - level)
+//     type = 3
+//   }
 
-  switch (type) {
-    case 0:
-      return <BatteryCharging20Icon className='icon low' />
-    case 1:
-      return <BatteryCharging50Icon className='icon' />
-    case 2:
-      return <BatteryCharging80Icon className='icon' />
-    case 3:
-      return <BatteryChargingFullIcon className='icon' />
-  }
-}
+//   switch (type) {
+//     case 0:
+//       return <BatteryCharging20Icon className='icon low' />
+//     case 1:
+//       return <BatteryCharging50Icon className='icon' />
+//     case 2:
+//       return <BatteryCharging80Icon className='icon' />
+//     case 3:
+//       return <BatteryChargingFullIcon className='icon' />
+//   }
+// }
 
+// Define o modal de confirmação
 const { confirm } = Modal;
 
-const data: CategoryType[] = [
-  {
-    _id: 0,
-    name: "Britadeiras",
-    nTags: 5
-  },
-  {
-    _id: 1,
-    name: "Furadeiras",
-    nTags: 8
-  },
-  {
-    _id: 1,
-    name: "Motoserras",
-    nTags: 4
-  }
-]
 
-
+// Tela de Listagem de Categorias
 const List: any = (Parent: any) => {
   const navigate = useNavigate()
+
+  // Função que chama uma função de troca de página de seu componente pai
   const handleActive: Function = (index: number) => {
     Parent.props.changePage(index)
   }
 
+  // Define as categorias com os valores que estão sendo passados pelo componente pai
   const [categories, setCategories] = useState(Parent.props.categories)
 
+  // Hook para que ao ter uma atualização nas categorias, atualizá-las e renderizá-las novamente na tela
   useEffect(() => {
     setCategories(Parent.props.categories)
     console.log(categories)
   }, [Parent.props.categories])
 
+  // Função que deletará a categoria, fazendo uma requisição para o backend utilizando do ID como parâmetro
   async function deleteCategory(id: string) {
-    await fetch(`http://10.254.18.38:8000/api/category/${id}`, {
+    await fetch(`http://localhost:8000/api/category/${id}`, {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(() => Parent.props.getCategories()).then(() => navigate('/categories'))
+    }).then(() => Parent.props.getCategories()).then(() => navigate('/categories')) // Navega para a tela de listagem de categorias após excluir categoria
   }
 
+  // Função que exibe o modal de confirmação de exclusão de categoria
   const showConfirm: Function = (id: string) => {
     confirm({
       title: 'Você realmente desaja excluir a categoria?',
@@ -110,6 +101,7 @@ const List: any = (Parent: any) => {
     })
   }
 
+  // Estruturação da tabela de categorias
   const columns: ColumnsType<CategoryType> = [
     {
       title: 'Categoria',

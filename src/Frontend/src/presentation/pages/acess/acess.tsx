@@ -5,6 +5,7 @@ import { Login, Signup, Aproval } from '../../../presentation/pages'
 import './acess.scss'
 import Logo from '/src/assets/logo.png'
 
+// Tela de acesso, permite que o usuário logue, se cadastre ou entre na tela de acesso não autorizado
 const Acess: React.FC = () => {
   const location = useLocation()
   return (
@@ -16,6 +17,7 @@ const Acess: React.FC = () => {
           </div> : ''
       }
       {/* <div className="right"> */}
+      
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/signup' element={<Signup />} />

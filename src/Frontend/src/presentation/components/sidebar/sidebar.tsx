@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import './navbar.scss'
+import './sidebar.scss'
 import { Tooltip } from 'antd'
 
 import HomeIcon from '@mui/icons-material/Home'
@@ -12,7 +12,8 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import { Link } from 'react-router-dom'
 import { TagsAdd } from '../../pages'
 
-const Navbar: any = (Parent: any) => {
+
+const Sidebar: any = (Parent: any) => {
   const goTo: Function = (url: string) => {
     window.location.href = url
   }
@@ -52,7 +53,7 @@ const Navbar: any = (Parent: any) => {
   }
 
   return (
-    <div id="navbar">
+    <div id="sidebar">
       <div className="itemsContainer">
         {
           items.map((item, index) => {
@@ -81,4 +82,4 @@ const Navbar: any = (Parent: any) => {
   )
 }
 
-export default Navbar
+export default Sidebar

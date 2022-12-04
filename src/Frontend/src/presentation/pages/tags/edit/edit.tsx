@@ -9,7 +9,9 @@ import {
 } from 'antd'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
+// Tela de edição de Tag
 const Edit: any = (Parent: any) => {
+  // Define os estados utilizados na tela assim como pega o ID passado pela URL
   const navigate = useNavigate()
   const location = useLocation()
   const params = useParams()
@@ -22,39 +24,47 @@ const Edit: any = (Parent: any) => {
   })
   const [categories, setCategories] = useState(Parent.props.categories)
 
+  // Hook para verificar se há mudança nas categorias de acordo com o componente pai
   useEffect(() => {
+    // Define as categorias como as categorias definadas no componente pai
     setCategories(Parent.props.categories)
   }, [Parent.props.categories])
 
+  // Função responsável por requisitar uma Tag específica, passando como parametro o ID da tag
   async function getTag() {
-    await fetch(`http://10.254.18.38:8000/api/tags/${id}`, {
+    await fetch(`http://localhost:8000/api/tags/${id}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'
       }
     }).then((response) => response.json())
       .then((json) => {
+        // Ao receber a resposta da requisição, armazena a Tag em seu estado
         setTag(json.data._tag)
         console.log(json.data._tag)
       })
   }
 
+  // Função responsável por fazer a requisição que irá editar a Tag, passando como parâmetro o ID da Tag
   async function editTag(values: any) {
-    await fetch(`http://10.254.18.38:8000/api/tags/${id}`, {
+    await fetch(`http://localhost:8000/api/tags/${id}`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json',
       },
+      // Envia para o backend os valores informados no formulário de edição
       body: JSON.stringify(values)
-    }).then(() => Parent.props.getTags()).then(() => navigate('/tags'))
+    }).then(() => Parent.props.getTags()).then(() => navigate('/tags')) // Após, navega para a tela de listagem de Tags
   }
 
+  // Ao finalizar o formulário, chama a função de edição de Tag
   const onFinish: any = (values: any) => {
     if (values) {
       editTag(values)
     }
   }
 
+  // Ao carregar a página, chama a função que irá requisitar a Tag a ser editada
   useEffect(() => {
     getTag()
   }, [])
@@ -87,9 +97,9 @@ const Edit: any = (Parent: any) => {
             <Select.Option
               className="formSelect"
               bordered={false}
-              value={tag.macAdress}
-              key={`${tag.macAdress}-0`}>
-              {tag.macAdress}
+              value={tag.macAddress}
+              key={`${tag.macAddress}-0`}>
+              {tag.macAddress}
             </Select.Option>
             )
           </Select>
@@ -98,7 +108,8 @@ const Edit: any = (Parent: any) => {
         <Form.Item name="category" initialValue={tag.category} label="Categoria da Tag">
           <Select>
             {
-              categories.map((category, index) => {
+              // Para cada categoria, cria uma opção para poder editar a categoria da Tag
+              categories.map((category: any, index: number) => {
                 return (
                   <Select.Option key={`${category}-${index}`} value={category.name}>{category.name}</Select.Option>
                 )

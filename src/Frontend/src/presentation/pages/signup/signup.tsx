@@ -4,20 +4,26 @@ import './signup.scss'
 import Logo from '/src/assets/logo.png'
 import { Link } from 'react-router-dom'
 
+// Tela de cadastro
 const Signup: React.FC = () => {
+  // Função que será executada quando todos os dados do formulário estiverem corretos
   const onFinish: any = (values: any) => {
+    // Caso a senha e a confirmação de senha estejam iguais, manda o usuário para a tela de aprovação 
     if (values.password === values.passwordConfirmation) {
       window.location.href = '/aproval'
     }
     else {
+      // Chama a função que exibe a mensagem na tela de que as senhas não coincidem
       info()
     }
   };
 
+  // Caso tenha algum erro no formulário, os informa no console
   const onFinishFailed: any = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
+  // Função responsável por mostrar a mensagem de erro na tela
   const info: Function = () => {
     message.info('As senhas não coincidem', 3);
   };
