@@ -54,7 +54,10 @@ const Edit: any = (Parent: any) => {
       },
       // Envia para o backend os valores informados no formulário de edição
       body: JSON.stringify(values)
-    }).then(() => Parent.props.getTags()).then(() => navigate('/tags')) // Após, navega para a tela de listagem de Tags
+    }).then(() => {
+      Parent.props.getTags()
+      localStorage.setItem("message", "Tag editada com sucesso!")
+    }).then(() => navigate('/tags')) // Após, navega para a tela de listagem de Tags
   }
 
   // Ao finalizar o formulário, chama a função de edição de Tag

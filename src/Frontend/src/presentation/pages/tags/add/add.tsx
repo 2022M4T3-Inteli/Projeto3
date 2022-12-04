@@ -24,7 +24,10 @@ const Add: any = (Parent: any) => {
       },
       // Envia para o backend os valores inseridos no formulário de cadastro
       body: JSON.stringify(values)
-    }).then(() => Parent.props.getTags()).then(() => navigate('/tags')) // Navega para a tela de Lista de Tags após cadastrar
+    }).then(() => {
+      Parent.props.getTags()
+      localStorage.setItem("message", "Tag criada com sucesso!")
+    }).then(() => navigate('/tags')) // Navega para a tela de Lista de Tags após cadastrar
   }
 
   // Ao preencher corretamente o formulário, chama a função de criação de Tag caso os dados estejam corretos

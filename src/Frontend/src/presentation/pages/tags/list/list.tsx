@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Space, Table, Button, Popover, Modal } from 'antd'
+import { Space, Table, Button, Popover, Modal, message } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -151,6 +151,12 @@ const List: any = (Parent: any) => {
 
   // Hook para definir as tags de acordo com os dados do componente pai sempre que houver uma mudança
   useEffect(() => {
+    let messageText = localStorage.getItem("message")
+    if (messageText) {
+      message.success(messageText, 3);
+      localStorage.removeItem("message")
+    }
+
     setTags(Parent.props.tags)
     console.log(tags)
   }, [Parent.props.tags])
@@ -168,7 +174,10 @@ const List: any = (Parent: any) => {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(() => Parent.props.getTags()).then(() => navigate('/tags')) // Após,navega novamente para listagem de tags para atualizar a tela
+    }).then(() => {
+      localStorage.setItem("message", "Tag deletada com sucesso!")
+      Parent.props.getTags()
+    }).then(() => navigate('/tags')) // Após,navega novamente para listagem de tags para atualizar a tela
   }
 
   // Função que renderiza o modal de confirmação de exclusão de tags

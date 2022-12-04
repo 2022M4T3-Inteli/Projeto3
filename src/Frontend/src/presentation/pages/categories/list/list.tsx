@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Space, Table, Button, Modal } from 'antd'
+import { Space, Table, Button, Modal, message } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -69,6 +69,12 @@ const List: any = (Parent: any) => {
 
   // Hook para que ao ter uma atualização nas categorias, atualizá-las e renderizá-las novamente na tela
   useEffect(() => {
+    let messageText = localStorage.getItem("message")
+    if (messageText) {
+      message.success(messageText, 3);
+      localStorage.removeItem("message")
+    }
+
     setCategories(Parent.props.categories)
     console.log(categories)
   }, [Parent.props.categories])
@@ -80,7 +86,10 @@ const List: any = (Parent: any) => {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then(() => Parent.props.getCategories()).then(() => navigate('/categories')) // Navega para a tela de listagem de categorias após excluir categoria
+    }).then(() => {
+      localStorage.setItem("message", "Categoria deletada com sucesso!")
+      Parent.props.getCategories()
+    })
   }
 
   // Função que exibe o modal de confirmação de exclusão de categoria
@@ -128,7 +137,7 @@ const List: any = (Parent: any) => {
           </Link>
           <Link
             to={`/categories/edit/${obj._id}`}
-            state={{ name: obj }}
+            state={{ name: obj.name }}
           >
             <EditIcon className='actionIcon' />
           </Link>

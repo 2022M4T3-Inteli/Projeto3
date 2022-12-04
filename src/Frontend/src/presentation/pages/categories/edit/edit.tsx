@@ -46,7 +46,11 @@ const Edit: any = (Parent: any) => {
       },
       // Envia para o backend os dados do formulário
       body: JSON.stringify({name: values.category})
-    }).then(() => Parent.props.getCategories()).then(() => navigate('/categories'))
+    }).then(() => {
+      Parent.props.getCategories()
+      localStorage.setItem('message', "Categoria editada com sucesso!")
+    }
+      ).then(() => navigate('/categories'))
   }
 
   // Função que envia os dados do formulário

@@ -21,7 +21,10 @@ const Add: any = (Parent: any) => {
       },
       // Envia os dados do formulário
       body: JSON.stringify(values) 
-    }).then(() => Parent.props.getCategories()).then(() => navigate('/categories')) // Após cadastrar, navega para a tela de listagem de categorias
+    }).then(() => {
+      Parent.props.getCategories()
+      localStorage.setItem('message', "Categoria criada com sucesso!")
+    }).then(() => navigate('/categories')) // Após cadastrar, navega para a tela de listagem de categorias
   }
 
   // Função de envio de dados do formulário
