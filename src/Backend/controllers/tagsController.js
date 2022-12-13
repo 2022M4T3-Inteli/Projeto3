@@ -19,6 +19,7 @@ exports.getAllTags = asyncHandler(async function (req, res, next) {
 });
 
 exports.createNewTag = asyncHandler(async function (req, res, next) {
+  console.log(req.body);
   const allTags = await Tag.find();
 
   let _tagExists = false;
@@ -39,10 +40,17 @@ exports.createNewTag = asyncHandler(async function (req, res, next) {
     _tag = await Tag.create(req.body);
   }
 
+  console.log({
+    status: "success",
+    activated: _tag.activated,
+    data: _tag,
+  });
+
   res
     .status(201)
     .json({
       status: "success",
+      activated: _tag.activated,
       data: _tag,
     })
     .end();
@@ -63,9 +71,11 @@ exports.getTag = asyncHandler(async function (req, res, next) {
 });
 
 exports.updateTag = asyncHandler(async function (req, res, next) {
+  console.log(req.body);
   const _tag = await Tag.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
+  console.log(await Tag.findById(req.params.id));
 
   if (!_tag) return next(new CustomError("ID not found", 404));
 
