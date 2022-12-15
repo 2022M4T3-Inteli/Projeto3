@@ -1,4 +1,5 @@
 const { CustomError, asyncHandler } = require("../utils/lib");
+const { Triangulation } = require("./../utils/triangulation");
 const Tag = require("./../models/tagModel");
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -19,7 +20,14 @@ exports.getAllTags = asyncHandler(async function (req, res, next) {
 });
 
 exports.createNewTag = asyncHandler(async function (req, res, next) {
-  console.log(req.body);
+  const _espData = req.body.distances;
+  const _newTriang = new Triangulation();
+  _newTriang.Triangulation(8, 13, _espData[0], _espData[1], _espData[2]);
+  const _coords = {
+    lastPosition: [_newTriang.pointXMedian(), _newTriang.pointYMedian()],
+  };
+  req.body.lastPosition = _coords;
+
   const allTags = await Tag.find();
 
   let _tagExists = false;
@@ -33,18 +41,10 @@ exports.createNewTag = asyncHandler(async function (req, res, next) {
 
   let _tag = new Object();
   if (_tagExists) {
-    _tag = await Tag.findByIdAndUpdate(_idTag, req.body, {
-      new: true,
-    });
+    _tag = await Tag.findByIdAndUpdate(_idTag, req.body);
   } else {
     _tag = await Tag.create(req.body);
   }
-
-  console.log({
-    status: "success",
-    activated: _tag.activated,
-    data: _tag,
-  });
 
   res
     .status(201)
@@ -71,11 +71,17 @@ exports.getTag = asyncHandler(async function (req, res, next) {
 });
 
 exports.updateTag = asyncHandler(async function (req, res, next) {
-  console.log(req.body);
+  // const _lastPos = req.body.lastPosition;
+
+  // const _newTriang = new Triangulation();
+  // _newTriang.Triangulation(8, 13, _lastPos[0], _lastPos[1], _lastPos[2]);
+  // const _coords = {
+  //   lastPosition: [_newTriang.pointXMedian(), _newTriang.pointYMedian()],
+  // };
+
   const _tag = await Tag.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
-  console.log(await Tag.findById(req.params.id));
 
   if (!_tag) return next(new CustomError("ID not found", 404));
 
