@@ -1,3 +1,5 @@
+const Beacon = require("../models/beaconModel");
+
 class Point {
   #coordX = 0;
   #coordY = 0;
@@ -89,10 +91,5 @@ class Triangulation {
     this.putDistance(2, distance3);
   }
 }
-
-// const y = new Triangulation();
-// y.Triangulation(8, 13, 5, 4, 3);
-// console.log("pointXMedian: ", y.pointXMedian());
-// console.log("pointYMedian: ", y.pointYMedian());
 
 module.exports = { Triangulation };
