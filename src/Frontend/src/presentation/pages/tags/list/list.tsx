@@ -252,12 +252,6 @@ const List: any = (Parent: any) => {
 
   return (
     <div id="tags-list">
-      <div className="buttonContainer">
-        {haveNewTags()}
-        <Link to={"/tags/add"}>
-          <Button>Adicionar Tag</Button>
-        </Link>
-      </div>
       <Table rowKey="name" className='table' columns={columns} dataSource={tags} pagination={{ pageSize: 5 }} />
     </div>
   )

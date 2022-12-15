@@ -36,7 +36,7 @@ const Home: React.FC = () => {
     await fetch("http://localhost:8000/api/tags", {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
     }).then((response) => response.json())
       .then((json) => {

@@ -33,7 +33,7 @@ type TagType = {
 // Função responsável por enviar para o backend a ativação de uma Tag específica
 const sendStatus: Function = async (id: number, status: boolean) => {
   console.log(id)
-  await fetch(`http://10.254.18.38:8000/api/tags/${id}`, {
+  await fetch(`http://localhost:8000/api/tags/${id}`, {
     method: "PATCH",
     // mode: 'cors',
     headers: {
@@ -98,6 +98,18 @@ const batteryLevel: Function = (level: number) => {
       return <BatteryCharging80Icon className='icon' />
     case 3:
       return <BatteryChargingFullIcon className='icon' />
+  }
+}
+
+const generatePosition: Function = (position: number) => {
+  if(position > 90) {
+    // return "90%"
+  }
+  else if(position < 5) {
+    return "5%"
+  }
+  else {
+    return `${position}%`
   }
 }
 
@@ -194,8 +206,8 @@ const Location: any = (Parent: any) => {
                 className={`tag ${tag.isMoving ? 'active' : ''}`}
                 style={
                   {
-                    top: `${tag.lastPosition[0]}%`,
-                    left: `${tag.lastPosition[1]}%`
+                    top: generatePosition(tag.lastPosition[0]),
+                    left: generatePosition(tag.lastPosition[1])
                   }}>
               </div>
               // </Popover>
@@ -211,8 +223,8 @@ const Location: any = (Parent: any) => {
                 className={`tag outFocus ${tag.isMoving ? 'active' : ''}`}
                 style={
                   {
-                    top: `${tag.lastPosition[0]}%`,
-                    left: `${tag.lastPosition[1]}%`
+                    top: generatePosition(tag.lastPosition[0]),
+                    left: generatePosition(tag.lastPosition[1])
                   }}>
               </div>
               // </Popover>
@@ -229,8 +241,8 @@ const Location: any = (Parent: any) => {
               className={`tag ${tag.isMoving ? 'active' : ''}`}
               style={
                 {
-                  top: `${tag.lastPosition[0]}%`,
-                  left: `${tag.lastPosition[1]}%`
+                  top: generatePosition(tag.lastPosition[0]),
+                  left: generatePosition(tag.lastPosition[1])
                 }}>
             </div>
             // </Popover>
@@ -240,13 +252,12 @@ const Location: any = (Parent: any) => {
     }
   }
 
-
   const [buttonActivated, setButtonActivated] = useState(false)
 
   // Função que será responsável por chamar a função que ativa fisicamente uma Tag, assim como definir o botão da Tag como ativado
-  const handleActivated: Function = (id: number) => {
-    sendStatus(id, !buttonActivated)
-    setButtonActivated(!buttonActivated)
+  const handleActivated: Function = async (id: number, activated: boolean) => {
+    await sendStatus(id, !activated)
+    // setButtonActivated(!buttonActivated)
   }
 
   // Função que renderiza os beacons no mapa
@@ -312,15 +323,15 @@ const Location: any = (Parent: any) => {
           className="info"
           style={
             {
-              top: `${tags[active].lastPosition[0]}%`,
-              left: `calc(${tags[active].lastPosition[1]}% + 60px)`
+              top: generatePosition(tags[active].lastPosition[0]),
+              left: `calc(${generatePosition(tags[active].lastPosition[1])} + 60px`
             }
           }>
           <div className="name">
             {tags[active].name}
           </div>
-          <div onClick={() => handleActivated(tags[active]._id)} className='buttonContainer'>
-            <div className={buttonActivated ? 'buttonActivated' : 'buttonDesactived'}>Acionar Tag</div>
+          <div onClick={() => handleActivated(tags[active]._id, tags[active].activated)} className='buttonContainer'>
+            <div className={tags[active].activated ? 'buttonActivated' : 'buttonDesactived'}>Acionar Tag</div>
           </div>
         </div>
       )
