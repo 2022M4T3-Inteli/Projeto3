@@ -117,11 +117,6 @@ const List: any = (Parent: any) => {
       dataIndex: 'name',
       key: 'name',
     },
-    {
-      title: 'Número de Tags',
-      dataIndex: 'results',
-      key: 'results',
-    },
     // {
     //   title: 'Categoria',
     //   dataIndex: 'category',
