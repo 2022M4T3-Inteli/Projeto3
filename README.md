@@ -137,8 +137,41 @@ Dentre os arquivos presentes na raiz do projeto, definem-se:
 
 
 ## 💻 Execução dos projetos
+Acesso ao projeto
+* Clone o projeto em sua máquina utilizando ferramentas como Git e Github, ou então baixe a pasta zipada na raiz deste repositório.
+* Caso tenha baixado a pasta zipada, descompate ela em uma diretório em seu computador
+* Ao final terá 100% de acesso ao projeto
 
-Seguir o manual de instrução corretamente.
+
+configuração do Back-end
+* Acesse a pasta src da raiz do projeto, haverá lá uma pasta chamada backend, abra ela
+* Na pasta backend será necessário criar um arquivo chamado config.env, arquivo responsável por definir o PATH do servidor, usado para que seja possível acessar os endpoints por fora da aplicação
+* Dentro do arquivo config.env deverá ser escrito os seguintes valores:
+
+  NODE_ENV=development
+  
+  PORT=8000 - 8000 ou outra porta desejada
+ 
+  HOST=[IP da conexão WIFI - Usar o ipconfig para descobrí-lo]
+  
+  DATABASE=mongodb+srv:[PATH do mongoDB criado]
+  
+  DATABASE_PASSWORD=[SENHA do mongoDB criado]
+  
+* Feito isso, basta agora abrir o terminal na pasta backend e dar npm install
+* Pronto para executar, use o comando npm run start:dev
+
+Configuração do Front-end
+* Acesse a raiz do projeto, entre na pasta src, abra a pasta frontend
+* Na pasta frontend, crie um arquivo chamado .env.local
+* Abra o arquivo .env.local e insera o seguinte código:
+
+  VITE_HOST=["IP da rede WIFI - Usar o mesmo IP aplicado no backend"]
+  VITE_PORT="8000" - 8000 ou outra porta desejada [deverá ser a mesma do backend]
+
+* Nessa pasta será necessário abrir o terminal, inserir o comando npm install
+* Após completar a instalação, sera necessário apenas rodar o comando npm run dev
+* Ao finalizar o dev build, acesse a url que será mostrada no terminal para usar a interface
 
 ## 🗃 Histórico de lançamentos
 
@@ -159,8 +192,6 @@ Seguir o manual de instrução corretamente.
     * Sistema completo construído (versão final).
     * Código fonte do sistema (versão final).
     * Documentação refinada.
-
-
 
 ## 📋 Licença/License
 
