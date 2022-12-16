@@ -7,21 +7,20 @@ import {
   Input,
   Select
 } from 'antd'
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-// Tela de edição de Tag
+// Tela de configuração de Beacons
 const Settings: any = (Parent: any) => {
-  // Define os estados utilizados na tela assim como pega o ID passado pela URL
   const navigate = useNavigate()
   const [beacons, setBeacons] = useState(Parent.props.beacons)
 
-  // Hook para verificar se há mudança nas categorias de acordo com o componente pai
+  // Hook para verificar se há mudança nos beacons de acordo com o componente pai
   useEffect(() => {
-    // Define as categorias como as categorias definadas no componente pai
+    // Define os beacons como os beacons definadas no componente pai
     setBeacons(Parent.props.beacons)
   }, [Parent.props.beacons])
 
-  // Função responsável por fazer a requisição que irá editar a Tag, passando como parâmetro o ID da Tag
+  // Função responsável por fazer a requisição que irá editar os Beacons
   async function editBeacons(values: any) {
     await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/tags/beacons`, {
       method: "PATCH",
@@ -32,12 +31,11 @@ const Settings: any = (Parent: any) => {
       body: JSON.stringify(values)
     }).then(() => {
       Parent.props.getBeacons()
-    }).then(() => navigate('/')) // Após, navega para a tela de listagem de Tags
+    }).then(() => navigate('/')) // Após, navega para a tela Home
   }
 
-  // Ao finalizar o formulário, chama a função de edição de Tag
+  // Ao finalizar o formulário, chama a função de edição de Beacons
   const onFinish: any = (values: any) => {
-    console.log(values)
     if (values) {
       editBeacons(values)
     }
@@ -70,7 +68,7 @@ const Settings: any = (Parent: any) => {
           label="Distância entre Beacon 1 e 2 (metros)"
           name="beaconX"
           rules={[{ required: true, message: 'Preencha com o nome' }]}
-          initialValue={beacons.beaconX}
+          initialValue={beacons.beaconX | 0}
         >
           <Input type='number' />
         </Form.Item>
@@ -79,7 +77,7 @@ const Settings: any = (Parent: any) => {
           label="Distância entre Beacon 1 e 3 (metros)"
           name="beaconY"
           rules={[{ required: true, message: 'Preencha com o nome' }]}
-          initialValue={beacons.beaconY}
+          initialValue={beacons.beaconY | 0}
         >
           <Input type='number' />
         </Form.Item>
