@@ -14,7 +14,7 @@ const Add: any = (Parent: any) => {
 
   // Função que cria uma nova categoria, manda uma Requisição POST para o backend
   async function createCategory(values: any) {
-    await fetch("http://localhost:8000/api/category", {
+    await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/category`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'

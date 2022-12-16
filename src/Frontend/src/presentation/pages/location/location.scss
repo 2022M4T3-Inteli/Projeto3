@@ -87,13 +87,15 @@
 
 #location .leftSide .beacon {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 45px;
   height: 45px;
   background-color: #d9d9d9;
-  // border-left: 35px solid transparent;
-  // border-right: 35px solid transparent;
-
-  // border-bottom: 35px solid #E50000;
+  
+  font-weight: bold;
+  font-size: 22px;
   border: 2px solid #d9d9d9;
   border-radius: 50%;
   cursor: pointer;
@@ -137,7 +139,7 @@
 #location .leftSide .info .buttonActivated  {
   padding: 8px;
   border-radius: 9px;
-  border: 1px solid #CCFE00;
+  border: 2px solid #CCFE00;
   color: #CCFE00;
   cursor: pointer;
 }

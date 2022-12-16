@@ -6,7 +6,10 @@ const router = express.Router();
 /**
  * routes middleware
  */
-router.route("/beacons").patch(tagsController.setBeacons);
+router
+  .route("/beacons")
+  .get(tagsController.getBeacons)
+  .patch(tagsController.setBeacons);
 
 router
   .route("/")

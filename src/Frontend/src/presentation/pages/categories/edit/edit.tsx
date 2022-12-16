@@ -25,7 +25,7 @@ const Edit: any = (Parent: any) => {
 
   // Função que pega a categoria a ser editada, requisitando ela para o backend
   async function getCategory() {
-    await fetch(`http://localhost:8000/api/category/${id}`, {
+    await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/category/${id}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ const Edit: any = (Parent: any) => {
 
   // Função que edita a categoria, fazendo uma requisição para o backend
   async function editCategory(values: any) {
-    await fetch(`http://localhost:8000/api/category/${id}`, {
+    await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/category/${id}`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json',

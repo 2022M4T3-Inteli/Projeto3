@@ -32,7 +32,7 @@ const Edit: any = (Parent: any) => {
 
   // Função responsável por requisitar uma Tag específica, passando como parametro o ID da tag
   async function getTag() {
-    await fetch(`http://localhost:8000/api/tags/${id}`, {
+    await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/tags/${id}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ const Edit: any = (Parent: any) => {
 
   // Função responsável por fazer a requisição que irá editar a Tag, passando como parâmetro o ID da Tag
   async function editTag(values: any) {
-    await fetch(`http://localhost:8000/api/tags/${id}`, {
+    await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/tags/${id}`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json',

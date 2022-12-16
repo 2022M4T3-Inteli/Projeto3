@@ -39,7 +39,7 @@ exports.createNewTag = asyncHandler(async function (req, res, next) {
       ? (_newTriang.pointXMedian() / _beacon.beaconX) * 100
       : 0;
   _coords[1] =
-    _newTriang.pointYMedian > 0
+    _newTriang.pointYMedian() > 0
       ? (_newTriang.pointYMedian() / _beacon.beaconY) * 100
       : 0;
 
@@ -122,6 +122,19 @@ exports.deleteTag = asyncHandler(async function (req, res, next) {
     .json({
       status: "sucess",
       data: null,
+    })
+    .end();
+});
+
+exports.getBeacons = asyncHandler(async function (req, res, next) {
+  const _beacons = await Beacon.find(req.query);
+
+  res
+    .status(200)
+    .json({
+      status: "success",
+      results: _beacons.length,
+      data: _beacons,
     })
     .end();
 });

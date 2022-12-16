@@ -81,7 +81,7 @@ const List: any = (Parent: any) => {
 
   // Função que deletará a categoria, fazendo uma requisição para o backend utilizando do ID como parâmetro
   async function deleteCategory(id: string) {
-    await fetch(`http://localhost:8000/api/category/${id}`, {
+    await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/category/${id}`, {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json'

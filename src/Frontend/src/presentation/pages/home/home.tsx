@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom"
 import { Header, Sidebar } from '../../components'
 import './home.scss'
 
-import { Location, CategoriesList, CategoriesAdd, CategoriesEdit, TagsList, TagsAdd, TagsEdit } from '../../../presentation/pages'
+import { Location, CategoriesList, CategoriesAdd, CategoriesEdit, TagsList, TagsAdd, TagsEdit, Settings } from '../../../presentation/pages'
 
 const verifyPage: Function = () => {
   let path = String(useLocation().pathname)
@@ -14,7 +14,7 @@ const verifyPage: Function = () => {
   else if (path.includes("/tags")) {
     return 2
   }
-  else if (path.includes("/configuration")) {
+  else if (path.includes("/settings")) {
     return 4
   }
   else {
@@ -27,13 +27,14 @@ const Home: React.FC = () => {
   // Define todos os estados de Tags e Categorias, usados por boa parte das telas
   const [actualTag, setActualTag] = useState(-1)
   const [actualPage, setActualPage] = useState(verifyPage())
+  const [beacons, setBeacons] = useState([])
   const [tags, setTags] = useState([])
   const [newTags, setNewTags] = useState([])
   const [categories, setCategories] = useState([])
 
   // Função responsável por requisitar ao Backend todas as tags existentes
   async function getTags() {
-    await fetch("http://localhost:8000/api/tags", {
+    await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/tags`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -45,9 +46,25 @@ const Home: React.FC = () => {
       })
   }
 
+  // Função responsável por requisitar ao Backend as distâncias dos beacons
+  async function getBeacons() {
+    await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/tags/beacons`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then((response) => response.json())
+      .then((json) => {
+        console.log(json.data[0])
+        // Atualiza as Tags com as tags retornadas pela requisição
+        setBeacons(json.data[0])
+      })
+  }
+  
+
   // Função responsável por requisitar todas as novas tags, aquelas que ainda não forma cadastradas
   async function getNewTags() {
-    await fetch("http://localhost:8000/api/tags/?name=&category=", {
+    await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/tags/?name=&category=`, {
 
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +78,7 @@ const Home: React.FC = () => {
 
   // Função responsável por solicitar ao backend todas as categorias existentes
   async function getCategories() {
-    await fetch("http://localhost:8000/api/category", {
+    await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/category`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json'
@@ -80,6 +97,8 @@ const Home: React.FC = () => {
     changePage: (index: number) => setActualPage(index),
     actualTag: actualTag,
     actualPage: actualPage,
+    beacons: beacons,
+    getBeacons: getBeacons,
     tags: tags,
     getTags: getTags,
     newTags: newTags,
@@ -99,9 +118,13 @@ const Home: React.FC = () => {
     if (newTags.length <= 1) {
       getNewTags()
     }
+    if(beacons.length <= 1) {
+      getBeacons()
+    } 
 
     // Define um intervalo para ficar solicitando novos dados do backend, está configurado para fazer isso a cada 5 segundos
     setInterval(() => {
+      getBeacons()
       getTags()
       getCategories()
       getNewTags()
@@ -122,7 +145,7 @@ const Home: React.FC = () => {
           <Route path='tags' element={<TagsList props={props} />} />
           <Route path='tags/add' element={<TagsAdd props={props} />} />
           <Route path='tags/edit/:id' element={<TagsEdit props={props} />} />
-          <Route path='settings' element={<Location props={props} />} />
+          <Route path='settings' element={<Settings props={props} />} />
         </Routes>
       </div>
     </div >

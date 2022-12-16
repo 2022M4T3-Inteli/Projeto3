@@ -30,27 +30,6 @@ type TagType = {
   lastPosition: [number, number];
 }
 
-// Função responsável por enviar para o backend a ativação de uma Tag específica
-const sendStatus: Function = async (id: number, status: boolean) => {
-  console.log(id)
-  await fetch(`http://localhost:8000/api/tags/${id}`, {
-    method: "PATCH",
-    // mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    // Envia para o backend se a Tag está ativada ou não
-    body: JSON.stringify({ activated: status })
-    // credentials: 'same-origin',
-    // referrerPolicy: 'unsafe-url'
-  }).then((response) => response.json())
-    .then((json) => {
-      // Console para verificar se o dado foi enviado corretamente
-      console.log(json)
-    })
-}
-
 // Função para renderizar as categorias de uma Tag
 const tagRender = (props: CustomTagProps) => {
   const { label, value, closable, onClose } = props
@@ -102,10 +81,10 @@ const batteryLevel: Function = (level: number) => {
 }
 
 const generatePosition: Function = (position: number) => {
-  if(position > 90) {
-    // return "90%"
+  if (position > 90) {
+    return "90%"
   }
-  else if(position < 5) {
+  else if (position < 5) {
     return "5%"
   }
   else {
@@ -141,7 +120,7 @@ const Location: any = (Parent: any) => {
       id: 0,
       macAddress: 'ada32',
       name: 'Beacon 3',
-      position: [5, 90]
+      position: [5, 5]
     },
 
   ]
@@ -157,6 +136,28 @@ const Location: any = (Parent: any) => {
   useEffect(() => {
     setActive(Parent.props.actualTag)
   }, [Parent.props.actualTag])
+
+  // Função responsável por enviar para o backend a ativação de uma Tag específica
+  const sendStatus: Function = async (id: number, status: boolean) => {
+    console.log(id)
+    await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/tags/${id}`, {
+      method: "PATCH",
+      // mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      // Envia para o backend se a Tag está ativada ou não
+      body: JSON.stringify({ activated: status })
+      // credentials: 'same-origin',
+      // referrerPolicy: 'unsafe-url'
+    }).then((response) => response.json())
+      .then((json) => {
+        Parent.props.getTags()
+        // Console para verificar se o dado foi enviado corretamente
+        console.log(json)
+      })
+  }
 
   // Função para selecionar Tags no menu lateral e deixá-las em evicência, delay para melhorar o feedback
   const handleActive: Function = (index: number) => {
@@ -278,6 +279,7 @@ const Location: any = (Parent: any) => {
                     top: `${beacon.position[0]}%`,
                     left: `${beacon.position[1]}%`
                   }}>
+                A1
               </div>
             )
           )
@@ -289,9 +291,10 @@ const Location: any = (Parent: any) => {
                 className={`beacon`}
                 style={
                   {
-                    top: `${beacon.position[0]}%`,
-                    right: `${beacon.position[1]}%`
+                    bottom: `${beacon.position[0]}%`,
+                    left: `${beacon.position[1]}%`
                   }}>
+                A2
               </div>
             )
           )
@@ -303,9 +306,10 @@ const Location: any = (Parent: any) => {
                 className={`beacon`}
                 style={
                   {
-                    bottom: `${beacon.position[0]}%`,
-                    left: `${beacon.position[1]}%`
+                    top: `${beacon.position[0]}%`,
+                    right: `${beacon.position[1]}%`
                   }}>
+                A3
               </div>
             )
           )
@@ -318,12 +322,14 @@ const Location: any = (Parent: any) => {
   // Função que renderiza a info que é mostrada ao deixa alguma das Tags ativa, ou seja, quando a Tag é clicada pelo mapa ou pelo meno lateral
   const showInfo: Function = () => {
     if (active != -1) {
+      let top = generatePosition(tags[active].lastPosition[0])
+      let left = generatePosition(tags[active].lastPosition[1])
       return (
         <div
           className="info"
           style={
             {
-              top: generatePosition(tags[active].lastPosition[0]),
+              top: top === '90%' ? `calc(${top} - 60px)` : top,
               left: `calc(${generatePosition(tags[active].lastPosition[1])} + 60px`
             }
           }>
@@ -416,7 +422,7 @@ const Location: any = (Parent: any) => {
     <div id="location">
       {/* <div className="container"> */}
       <div className="filter">
-        <Search className='search' allowClear placeholder="Buscar por Tag" onChange={(e) => handleSearch(e.target.value)} value={search} />
+        <Search className='search' allowClear placeholder="Buscar por Tag" onChange={(e: any) => handleSearch(e.target.value)} value={search} />
         <Select
           className='select'
           mode="multiple"
