@@ -133,7 +133,7 @@ Dentre os arquivos presentes na raiz do projeto, definem-se:
 
 - <b>documentos</b>: aqui estão todos os documentos do projeto.
 
-- <b>src</b>: nesta pasta encontra-se todo o código fonte do modelo preditivo.
+- <b>src</b>: nesta pasta encontra-se todos os códigos fontes do projeto de IOT.
 
 
 ## 💻 Execução dos projetos
