@@ -30,7 +30,6 @@ const Add: any = (Parent: any) => {
   // Função de envio de dados do formulário
   const onFinish: any = (values: any) => {
     if (values) {
-      console.log(values)
       createCategory(values)
     }
   }

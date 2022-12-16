@@ -129,7 +129,6 @@ const Location: any = (Parent: any) => {
   useEffect(() => {
     setTags(Parent.props.tags)
     setCategories(Parent.props.categories)
-    console.log(tags)
   }, [Parent.props.tags, Parent.props.categories])
 
   // Define a Tag ativa de acordo com a propriedade passada pelo componente pai
@@ -139,7 +138,6 @@ const Location: any = (Parent: any) => {
 
   // Função responsável por enviar para o backend a ativação de uma Tag específica
   const sendStatus: Function = async (id: number, status: boolean) => {
-    console.log(id)
     await fetch(`http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}/api/tags/${id}`, {
       method: "PATCH",
       // mode: 'cors',
@@ -155,7 +153,6 @@ const Location: any = (Parent: any) => {
       .then((json) => {
         Parent.props.getTags()
         // Console para verificar se o dado foi enviado corretamente
-        console.log(json)
       })
   }
 

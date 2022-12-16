@@ -33,7 +33,6 @@ const Add: any = (Parent: any) => {
   // Ao preencher corretamente o formulário, chama a função de criação de Tag caso os dados estejam corretos
   const onFinish: any = (values: any) => {
     if (values) {
-      console.log(values)
       createTag(values)
     }
   }

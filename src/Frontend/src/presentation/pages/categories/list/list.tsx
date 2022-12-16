@@ -76,7 +76,6 @@ const List: any = (Parent: any) => {
     }
 
     setCategories(Parent.props.categories)
-    console.log(categories)
   }, [Parent.props.categories])
 
   // Função que deletará a categoria, fazendo uma requisição para o backend utilizando do ID como parâmetro

@@ -41,7 +41,6 @@ const Edit: any = (Parent: any) => {
       .then((json) => {
         // Ao receber a resposta da requisição, armazena a Tag em seu estado
         setTag(json.data._tag)
-        console.log(json.data._tag)
       })
   }
 

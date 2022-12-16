@@ -55,7 +55,6 @@ const Home: React.FC = () => {
       }
     }).then((response) => response.json())
       .then((json) => {
-        console.log(json.data[0])
         // Atualiza as Tags com as tags retornadas pela requisição
         setBeacons(json.data[0])
       })

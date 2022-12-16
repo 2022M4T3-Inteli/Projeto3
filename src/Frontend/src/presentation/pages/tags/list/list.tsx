@@ -49,7 +49,6 @@ const List: any = (Parent: any) => {
     }
 
     setTags(Parent.props.tags)
-    console.log(tags)
   }, [Parent.props.tags])
 
   // Hook para verificar se há alguma mudança nas tags não cadastradas de acordo com o componente pai 
