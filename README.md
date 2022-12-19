@@ -58,15 +58,15 @@ https://github.com/2022M4T3-Inteli/Sauron/blob/main/documentos/T3_G3_V3_Instruct
 
 <br>
 
-Acesso ao projeto
+<b>Acesso ao projeto</b>
 
 * Clone o projeto em sua máquina utilizando ferramentas como Git e Github, ou então baixe a pasta zipada na raiz deste repositório.
 * Caso tenha baixado a pasta zipada, descompate ela em uma diretório em seu computador
 * Ao final terá 100% de acesso ao projeto
 
-<br><br>
+<br>
 
-Configuração do Back-end
+<b>Configuração do Back-end</b>
 
 * Acesse a pasta src da raiz do projeto, haverá lá uma pasta chamada backend, abra ela
 * Na pasta backend será necessário criar um arquivo chamado config.env, arquivo responsável por definir o PATH do servidor, usado para que seja possível acessar os endpoints por fora da aplicação
@@ -85,9 +85,9 @@ Configuração do Back-end
 * Feito isso, basta agora abrir o terminal na pasta backend e dar npm install
 * Pronto para executar, use o comando npm run start:dev
 
-<br><br>
+<br>
 
-Configuração do Front-end
+<b>Configuração do Front-end</b>
 
 * Acesse a raiz do projeto, entre na pasta src, abra a pasta frontend
 * Na pasta frontend, crie um arquivo chamado .env.local
@@ -100,7 +100,7 @@ Configuração do Front-end
 * Após completar a instalação, sera necessário apenas rodar o comando npm run dev
 * Ao finalizar o dev build, acesse a url que será mostrada no terminal para usar a interface
 
-<br><br>
+<br>
 
 ## 🗃 Histórico de lançamentos
 
