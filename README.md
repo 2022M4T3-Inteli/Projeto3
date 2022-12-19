@@ -24,126 +24,50 @@ A Atech é uma empresa brasileira, com sede em São Paulo, Brasil. O seu modelo 
 Segundo a companhia, alguns dos seus clientes precisam rastrear seus ativos dentro de um local específico. Nosso projeto visa desenvolver um mvp capaz de fazer a localização dos ativos, a solução inclui tanto o sofware quanto o hardware.
 
 ## 📁 Estrutura de pastas
+
+
 |--> documentos<br>
-  &emsp;| .DS_Store<br>
-  &emsp;| IoTDoc - v4.docx<br>
-  &emsp;| IoTDoc - v4.pdf<br>
-  &emsp;| Manual de Instruções - v2.docx<br>
-  &emsp;| Manual de Instruções - v2.pdf<br>
-
-|--> imagens<br>
-
+  &emsp;| --> outros <br>
+  &emsp;| T3_G3_V5_IoT_Document.pdf<br>
+  &emsp;| T3_G3_V5_IoT_Document.docx<br>
+  &emsp;| T3_G3_V3_Instruction_Manual.pdf<br>
+  &emsp;| T3_G3_V3_Instruction_Manual.docx<br>
 |--> src<br>
-  &emsp;|--> Backend <br>
-    &emsp; &emsp;|--> controllers<br>
-      &emsp; &emsp;&emsp;|categoryController.js<br>
-      &emsp; &emsp;&emsp;|errController.js<br>
-      &emsp; &emsp;&emsp;|tagsController.js<br>
-      &emsp; &emsp;&emsp;|usersController.js<br>
-  &emsp; &emsp;|--> models<br>
-      &emsp; &emsp;&emsp;|categoryModel.js<br>
-      &emsp; &emsp;&emsp;|tagModel.js<br>
-      &emsp; &emsp;&emsp;|usersModel.js<br>
-  &emsp; &emsp;|--> routers<br>
-      &emsp; &emsp;&emsp;|categoryRouter.js<br>
-      &emsp; &emsp;&emsp;|tagsRouter.js<br>
-      &emsp; &emsp;&emsp;|usersRouter.js<br>
-  &emsp; &emsp;|--> utils<br>
-      &emsp; &emsp;&emsp;|convertion.js<br>
-      &emsp; &emsp;&emsp;|lib.js<br>
-      &emsp; &emsp;&emsp;|triangulation.js<br>
-
-  &emsp;|--> Circuito <br>
-    &emsp;&emsp;| beacon.ino<br>
-    &emsp;&emsp;| beacon1<br>
-    &emsp;&emsp;| beacon2.ino<br>
-    &emsp;&emsp;| beacon3.ino<br>
-    &emsp;&emsp;| tag.ino<br>
-      
+  &emsp;|--> Backend<br>
+  &emsp;|--> Circuito<br>
   &emsp;|--> Frontend<br>
-    &emsp;&emsp;|-->public<br>
-    &emsp;&emsp;&emsp;|vite.svg<br>
-    &emsp;&emsp;|-->src<br>
-      &emsp;&emsp;&emsp;|-->assets<br>
-        &emsp;&emsp;&emsp;&emsp;|blueprint.png<br>
-        &emsp;&emsp;&emsp;&emsp;|blueprint2.png<br>
-        &emsp;&emsp;&emsp;&emsp;|blueprint3.png<br>
-        &emsp;&emsp;&emsp;&emsp;|blueprint4.png<br>
-        &emsp;&emsp;&emsp;&emsp;|blueprint5.png<br>
-        &emsp;&emsp;&emsp;&emsp;|location.png<br>
-        &emsp;&emsp;&emsp;&emsp;|logo.png<br>
-        &emsp;&emsp;&emsp;&emsp;|logo2.png<br>
-      &emsp;&emsp;&emsp;|-->main/routes<br>
-        &emsp;&emsp;&emsp;&emsp;|router.tsx<br>
-      &emsp;&emsp;&emsp;|-->presentation<br>
-        &emsp;&emsp;&emsp;&emsp;&emsp;|-->components<br> 
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|-->header<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|header.scss<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|header.tsx<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|-->sidebar<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|sidebar.scss<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|side.tsx<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|index.tsx<br>
-        &emsp;&emsp;&emsp;&emsp;&emsp;|-->pages<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|-->acess<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|acess.scss<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|acess.tsx<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|-->aproval<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|aproval.scss<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|aproval.tsx<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|-->categories<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|categories.scss<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|categories.tsx<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|-->home<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|home.scss<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|home.tsx<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|-->location<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|location.scss<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|location.tsx<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|-->login<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|login.scss<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|login.tsx<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|-->settings<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|settings.scss<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|settings.tsx<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|-->signup<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|signup.scss<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|signup.tsx<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|-->tags<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|tags.scss<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|tags.tsx<br>
-          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|index.tsx<br>
-         &emsp;&emsp;&emsp;&emsp;&emsp;|-->styles<br>
-         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|global.scss<br>
-      &emsp;&emsp;&emsp;|index.d.ts<br>
-      &emsp;&emsp;&emsp;|main.tsx<br>
-    &emsp;&emsp;| .gitignore<br>
-    &emsp;&emsp;| package-lock.json<br>
-    &emsp;&emsp;| package.json<br>
-    &emsp;&emsp;| tsconfig.json<br>
-    &emsp;&emsp;| tsconfig.node.json<br>
-    &emsp;&emsp;| vite.config.ts<br>
+| readme.md<br>
 
-|README.md
-  
+Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 
-Dentre os arquivos presentes na raiz do projeto, definem-se:
+- <b>readme.md</b>: arquivo que serve como guia e explicação geral sobre o projeto (o mesmo que você está lendo agora).
 
-- <b>README.md</b>: arquivo que serve como guia e explicação geral sobre o projeto (o mesmo que você está lendo agora).
+- <b>documentos</b>: aqui estão todos os documentos do projeto, incluindo o manual de instruções. Há também uma pasta denominada <b>outros</b> onde estão presentes outros documentos complementares.
 
-- <b>documentos</b>: aqui estão todos os documentos do projeto.
+- <b>src</b>: todo o código fonte criado para o desenvolvimento do projeto, incluindo os blocos de código do circuito, backend e frontend se aplicáveis.
 
-- <b>src</b>: nesta pasta encontra-se todos os códigos fontes do projeto de IOT.
+## 💻 Execução do projeto
 
+Um guia para a execução desse projeto pode ser encontrado no conteúdo do documento "Manual de Instruções", dentro da pasta "documentos".
 
-## 💻 Execução dos projetos
+Se preferir, também é possível acessá-lo a partir do seguinte link:
+
+https://github.com/2022M4T3-Inteli/Sauron/blob/main/documentos/T3_G3_V3_Instruction_Manual.pdf
+
+### 👇 Instruções relevantes:
+
+<br>
+
 Acesso ao projeto
+
 * Clone o projeto em sua máquina utilizando ferramentas como Git e Github, ou então baixe a pasta zipada na raiz deste repositório.
 * Caso tenha baixado a pasta zipada, descompate ela em uma diretório em seu computador
 * Ao final terá 100% de acesso ao projeto
 
+<br><br>
 
-configuração do Back-end
+Configuração do Back-end
+
 * Acesse a pasta src da raiz do projeto, haverá lá uma pasta chamada backend, abra ela
 * Na pasta backend será necessário criar um arquivo chamado config.env, arquivo responsável por definir o PATH do servidor, usado para que seja possível acessar os endpoints por fora da aplicação
 * Dentro do arquivo config.env deverá ser escrito os seguintes valores:
@@ -161,7 +85,10 @@ configuração do Back-end
 * Feito isso, basta agora abrir o terminal na pasta backend e dar npm install
 * Pronto para executar, use o comando npm run start:dev
 
+<br><br>
+
 Configuração do Front-end
+
 * Acesse a raiz do projeto, entre na pasta src, abra a pasta frontend
 * Na pasta frontend, crie um arquivo chamado .env.local
 * Abra o arquivo .env.local e insera o seguinte código:
@@ -172,6 +99,8 @@ Configuração do Front-end
 * Nessa pasta será necessário abrir o terminal, inserir o comando npm install
 * Após completar a instalação, sera necessário apenas rodar o comando npm run dev
 * Ao finalizar o dev build, acesse a url que será mostrada no terminal para usar a interface
+
+<br><br>
 
 ## 🗃 Histórico de lançamentos
 
@@ -200,6 +129,6 @@ Configuração do Front-end
 
 ## 🎓 Referências
 
-Nossas referências foram apenas as aulas e o material fornecido pelo do Inteli.
+Nossas referências foram apenas as aulas e o material fornecido pelo Inteli.
 
 
